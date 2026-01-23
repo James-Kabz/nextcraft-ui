@@ -8,5 +8,6 @@ export default defineConfig({
   clean: true,
   target: "es2019",
   outDir: "dist",
+  tsconfig: "tsconfig.lib.json",
   external: ["react", "react-dom", "next"],
 });

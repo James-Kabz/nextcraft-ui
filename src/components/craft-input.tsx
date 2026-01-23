@@ -5,9 +5,12 @@ import { cn } from "../utils/cn";
 type CraftInputTone = "aurora" | "ember" | "ocean";
 type CraftInputSize = "sm" | "md" | "lg";
 
-export type CraftInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type CraftInputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size"
+> & {
   tone?: CraftInputTone;
-  size?: CraftInputSize;
+  inputSize?: CraftInputSize;
   glow?: boolean;
 };
 
@@ -27,7 +30,7 @@ const sizeClasses: Record<CraftInputSize, string> = {
 
 export const CraftInput = React.forwardRef<HTMLInputElement, CraftInputProps>(
   (
-    { className, tone = "aurora", size = "md", glow = true, ...props },
+    { className, tone = "aurora", inputSize = "md", glow = true, ...props },
     ref
   ) => {
     return (
@@ -38,7 +41,7 @@ export const CraftInput = React.forwardRef<HTMLInputElement, CraftInputProps>(
           "shadow-[inset_0_0_0_1px_rgba(15,23,42,0.05)]",
           "focus:outline-none focus:ring-2",
           "transition",
-          sizeClasses[size],
+          sizeClasses[inputSize],
           toneClasses[tone],
           glow ? "shadow-[0_20px_50px_-35px_rgba(56,189,248,0.7)]" : "",
           className

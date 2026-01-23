@@ -7,7 +7,8 @@
     "emitDeclarationOnly": false,
     "outDir": "dist",
     "rootDir": "src",
-    "plugins": []
+    "plugins": [],
+    "incremental": false
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "src/app/**"]
