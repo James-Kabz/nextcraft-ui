@@ -6,11 +6,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jameskabz/nextcraft-ui.git"
+    "url": "git+https://github.com/James-Kabz/nextcraft-ui.git"
   },
-  "homepage": "https://github.com/jameskabz/nextcraft-ui#readme",
+  "homepage": "https://github.com/James-Kabz/nextcraft-ui#readme",
   "bugs": {
-    "url": "https://github.com/jameskabz/nextcraft-ui/issues"
+    "url": "https://github.com/James-Kabz/nextcraft-ui/issues"
   },
   "type": "module",
   "files": [
