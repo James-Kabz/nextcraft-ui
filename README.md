@@ -5,13 +5,13 @@ Bold, crafted UI components for Next.js + Tailwind CSS.
 ## Install
 
 ```bash
-npm install @stl-packages/nextcraft-ui
+npm install @jameskabz/nextcraft-ui
 ```
 
 ## Usage
 
 ```tsx
-import { CraftButton, GlassCard } from "@stl-packages/nextcraft-ui";
+import { CraftButton, GlassCard } from "@jameskabz/nextcraft-ui";
 
 export default function Example() {
   return (
@@ -36,7 +36,7 @@ for the package so the classes are generated:
 export default {
   content: [
     "./src/**/*.{ts,tsx}",
-    "./node_modules/@stl-packages/nextcraft-ui/dist/**/*.{js,mjs}"
+    "./node_modules/@jameskabz/nextcraft-ui/dist/**/*.{js,mjs}"
   ]
 };
 ```
