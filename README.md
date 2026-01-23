@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nextcraft UI
 
-## Getting Started
+Bold, crafted UI components for Next.js + Tailwind CSS.
 
-First, run the development server:
+## Install
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install @stl-packages/nextcraft-ui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```tsx
+import { CraftButton, GlassCard } from "@stl-packages/nextcraft-ui";
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+export default function Example() {
+  return (
+    <GlassCard tone="aurora" className="max-w-md">
+      <h3 className="text-xl font-semibold">Nextcraft UI</h3>
+      <p className="mt-2 text-sm text-white/80">
+        Crafted components with a bold, modern edge.
+      </p>
+      <CraftButton className="mt-6">Launch</CraftButton>
+    </GlassCard>
+  );
+}
+```
 
-## Learn More
+## Tailwind setup
 
-To learn more about Next.js, take a look at the following resources:
+This library ships class names only. Make sure Tailwind scans your node_modules
+for the package so the classes are generated:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```ts
+// tailwind.config.ts
+export default {
+  content: [
+    "./src/**/*.{ts,tsx}",
+    "./node_modules/@stl-packages/nextcraft-ui/dist/**/*.{js,mjs}"
+  ]
+};
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts
 
-## Deploy on Vercel
+- `npm run build` builds the library with `tsup`.
+- `npm run typecheck` runs TypeScript checks.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
