@@ -24,7 +24,7 @@ export function CraftDrawer({
   defaultOpen = false,
   onOpenChange,
   tone,
-  side = "right",
+  side = "left",
   title,
   children,
   trigger,
@@ -55,7 +55,7 @@ export function CraftDrawer({
   const content = isOpen ? (
     <div className="fixed inset-0 z-50 overflow-hidden">
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 backdrop-blur-sm"
         onClick={() => setOpen(false)}
       />
       <div

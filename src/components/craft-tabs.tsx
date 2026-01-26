@@ -70,7 +70,7 @@ export function CraftTabs({
             className={cn(
               "rounded-full px-4 py-2 text-sm font-semibold transition-all",
               activeValue === tab.value
-                ? "bg-[rgb(var(--nc-accent-1)/0.25)] text-white shadow-[0_10px_20px_rgb(var(--nc-accent-1)/0.35)]"
+                ? "bg-[rgb(var(--nc-accent-1)/0.65)] text-white shadow-[0_7px_5px_rgb(var(--nc-accent-1)/0.35)]"
                 : "text-[rgb(var(--nc-fg-muted))] hover:text-[rgb(var(--nc-fg))]"
             )}
           >
