@@ -41,6 +41,34 @@ export default {
 };
 ```
 
+## Troubleshooting: Module not found
+
+If your app (for example, a folder named `spendwise`) shows:
+
+```
+Module not found: Can't resolve '@jameskabz/nextcraft-ui'
+```
+
+Do the following:
+
+1) Ensure the package is installed in the app:
+```bash
+npm install @jameskabz/nextcraft-ui
+```
+
+2) If you are developing locally from this repo, build and install it from a path:
+```bash
+# in this repo
+npm run build
+
+# in your app (spendwise)
+npm install ../nextcraft-ui
+```
+
+3) Verify the package exports point to the built files:
+- This repo expects ESM at `dist/index.js` and CJS at `dist/index.cjs`.
+- If you change build outputs, update `package.json` `module` and `exports` accordingly.
+
 ## Scripts
 
 - `npm run build` builds the library with `tsup`.
