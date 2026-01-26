@@ -11,6 +11,11 @@ import { CraftDrawer } from "@/components/craft-drawer";
 import { CraftTabs } from "@/components/craft-tabs";
 import { CraftTooltip } from "@/components/craft-tooltip";
 import { CraftToastHost, useCraftToast } from "@/components/craft-toast";
+import { CraftSkeleton } from "@/components/craft-skeleton";
+import { CraftEmptyState } from "@/components/craft-empty-state";
+import { CraftDatePicker } from "@/components/craft-date-picker";
+import { CraftNumberInput } from "@/components/craft-number-input";
+import { CraftCurrencyInput } from "@/components/craft-currency-input";
 import { GlassCard } from "@/components/glass-card";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Image from "next/image";
@@ -235,6 +240,50 @@ export default function Home() {
                 </div>
               ),
             }}
+          />
+        </CraftCard>
+
+        {/* Utility Components */}
+        <CraftCard className="space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold">Utility Components</h2>
+              <p className="text-white/60">Skeletons, empty states, and formatted inputs</p>
+            </div>
+            <CraftBadge variant="outline">Phase 3</CraftBadge>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-white/80">Date Picker</label>
+              <CraftDatePicker placeholder="Pick a date" />
+            </div>
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-white/80">Number Input</label>
+              <CraftNumberInput placeholder="42" />
+            </div>
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-white/80">Currency Input</label>
+              <CraftCurrencyInput placeholder="0.00" />
+            </div>
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-white/80">Skeleton</label>
+              <div className="space-y-3">
+                <CraftSkeleton className="h-6 w-40" />
+                <CraftSkeleton className="h-4 w-full" />
+                <CraftSkeleton className="h-4 w-5/6" />
+              </div>
+            </div>
+          </div>
+
+          <CraftEmptyState
+            title="No activity yet"
+            description="Connect your first data source to unlock insights."
+            action={(
+              <button className="rounded-xl bg-[rgb(var(--nc-accent-1))] px-5 py-2 text-sm font-semibold text-white">
+                Connect Source
+              </button>
+            )}
           />
         </CraftCard>
 
