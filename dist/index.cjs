@@ -36,67 +36,87 @@ __export(index_exports, {
 });
 module.exports = __toCommonJS(index_exports);
 
-// src/utils/cn.ts
-function cn(...values) {
-  return values.filter(Boolean).join(" ");
-}
-
 // src/components/craft-button.tsx
 var import_jsx_runtime = require("react/jsx-runtime");
+var cn = (...classes) => classes.filter(Boolean).join(" ");
 var sizeClasses = {
-  sm: "h-9 px-3 text-xs",
-  md: "h-11 px-4 text-sm",
-  lg: "h-12 px-5 text-base"
+  sm: "h-9 px-4 text-xs",
+  md: "h-11 px-6 text-sm",
+  lg: "h-13 px-8 text-base"
 };
 var variantClasses = {
-  solid: "bg-[radial-gradient(120%_120%_at_10%_10%,_#D4FF7B_0%,_#79F2C0_35%,_#0EA5E9_100%)] text-slate-950 shadow-[0_10px_30px_-12px_rgba(14,165,233,0.6)] hover:brightness-105",
-  ghost: "bg-white/5 text-white hover:bg-white/10 border border-white/10",
-  outline: "bg-transparent text-white border border-sky-300/40 hover:border-sky-200/60"
+  solid: "bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/60 hover:scale-[1.02] active:scale-[0.98]",
+  ghost: "bg-white/5 text-white hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20",
+  outline: "bg-transparent text-sky-400 border-2 border-sky-400/50 hover:border-sky-400 hover:bg-sky-400/10",
+  gradient: "bg-gradient-to-r from-violet-600 via-fuchsia-500 to-pink-500 text-white shadow-lg shadow-fuchsia-500/50 hover:shadow-xl hover:shadow-fuchsia-500/60 hover:scale-[1.02] active:scale-[0.98]"
 };
 function CraftButton({
   className,
   variant = "solid",
   size = "md",
   glow = true,
+  disabled,
   ...props
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
     "button",
     {
       className: cn(
-        "relative inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-wide transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/80",
+        "relative inline-flex items-center justify-center gap-2 rounded-xl font-semibold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
         sizeClasses[size],
         variantClasses[variant],
-        glow && variant === "solid" ? "before:absolute before:-inset-0.5 before:rounded-full before:bg-sky-400/40 before:blur-lg before:-z-10" : "",
+        glow && (variant === "solid" || variant === "gradient") ? "before:absolute before:-inset-1 before:rounded-xl before:bg-linear-to-r before:from-sky-400/20 before:via-blue-500/20 before:to-indigo-600/20 before:blur-xl before:-z-10 before:opacity-0 hover:before:opacity-100 before:transition-opacity" : "",
         className
       ),
+      disabled,
       ...props
     }
   );
 }
 
+// src/utils/cn.ts
+function cn2(...values) {
+  return values.filter(Boolean).join(" ");
+}
+
 // src/components/glass-card.tsx
 var import_jsx_runtime2 = require("react/jsx-runtime");
-var toneClasses = {
-  aurora: "from-emerald-300/20 via-sky-300/10 to-indigo-400/20 border-emerald-200/20",
-  ember: "from-amber-300/20 via-rose-300/10 to-fuchsia-400/20 border-amber-200/20",
-  ocean: "from-sky-300/20 via-cyan-300/10 to-blue-400/20 border-sky-200/20"
+var cardToneClasses = {
+  aurora: "bg-gradient-to-br from-emerald-400/15 via-teal-400/10 to-cyan-400/15 border-emerald-300/30",
+  ember: "bg-gradient-to-br from-amber-400/15 via-orange-400/10 to-rose-400/15 border-amber-300/30",
+  ocean: "bg-gradient-to-br from-sky-400/15 via-blue-400/10 to-indigo-400/15 border-sky-300/30",
+  midnight: "bg-gradient-to-br from-violet-400/15 via-purple-400/10 to-fuchsia-400/15 border-violet-300/30",
+  cosmic: "bg-gradient-to-br from-pink-400/15 via-purple-400/10 to-indigo-400/15 border-pink-300/30"
+};
+var intensityClasses = {
+  subtle: "backdrop-blur-md bg-opacity-50",
+  medium: "backdrop-blur-xl bg-opacity-70",
+  strong: "backdrop-blur-2xl bg-opacity-90"
 };
 function GlassCard({
   className,
-  tone = "aurora",
+  tone = "ocean",
+  intensity = "medium",
+  bordered = true,
+  children,
   ...props
 }) {
   return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
     "div",
     {
-      className: cn(
-        "relative overflow-hidden rounded-2xl border bg-linear-to-br p-6 text-white shadow-[0_25px_70px_-45px_rgba(15,23,42,0.9)]",
-        "backdrop-blur-xl",
-        toneClasses[tone],
+      className: cn2(
+        "relative overflow-hidden rounded-3xl p-6 text-white",
+        "shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
+        "transition-all duration-300",
+        "hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]",
+        intensityClasses[intensity],
+        cardToneClasses[tone],
+        bordered ? "border-2" : "border-0",
+        "before:absolute before:inset-0 before:bg-linear-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
         className
       ),
-      ...props
+      ...props,
+      children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative z-10", children })
     }
   );
 }
@@ -104,35 +124,45 @@ function GlassCard({
 // src/components/craft-input.tsx
 var React = __toESM(require("react"), 1);
 var import_jsx_runtime3 = require("react/jsx-runtime");
-var toneClasses2 = {
-  aurora: "border-emerald-200/30 focus:border-emerald-200/60 focus:ring-emerald-300/40",
-  ember: "border-amber-200/30 focus:border-amber-200/60 focus:ring-amber-300/40",
-  ocean: "border-sky-200/30 focus:border-sky-200/60 focus:ring-sky-300/40"
+var cn3 = (...classes) => classes.filter(Boolean).join(" ");
+var inputToneClasses = {
+  aurora: "border-emerald-400/30 focus:border-emerald-400/80 focus:ring-emerald-400/30 placeholder:text-emerald-200/40",
+  ember: "border-amber-400/30 focus:border-amber-400/80 focus:ring-amber-400/30 placeholder:text-amber-200/40",
+  ocean: "border-sky-400/30 focus:border-sky-400/80 focus:ring-sky-400/30 placeholder:text-sky-200/40",
+  midnight: "border-violet-400/30 focus:border-violet-400/80 focus:ring-violet-400/30 placeholder:text-violet-200/40"
 };
-var sizeClasses2 = {
-  sm: "h-9 px-3 text-sm",
-  md: "h-11 px-4 text-sm",
-  lg: "h-12 px-4 text-base"
+var inputSizeClasses = {
+  sm: "h-10 px-4 text-sm",
+  md: "h-12 px-5 text-base",
+  lg: "h-14 px-6 text-lg"
 };
 var CraftInput = React.forwardRef(
-  ({ className, tone = "aurora", inputSize = "md", glow = true, ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-      "input",
-      {
-        ref,
-        className: cn(
-          "w-full rounded-full border bg-white/5 text-white placeholder:text-white/40",
-          "shadow-[inset_0_0_0_1px_rgba(15,23,42,0.05)]",
-          "focus:outline-none focus:ring-2",
-          "transition",
-          sizeClasses2[inputSize],
-          toneClasses2[tone],
-          glow ? "shadow-[0_20px_50px_-35px_rgba(56,189,248,0.7)]" : "",
-          className
-        ),
-        ...props
-      }
-    );
+  ({ className, tone = "ocean", inputSize = "md", glow = true, icon, ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "relative w-full", children: [
+      icon && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-white/50", children: icon }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+        "input",
+        {
+          ref,
+          className: cn3(
+            "w-full rounded-2xl border-2 bg-white/5 text-white backdrop-blur-xl",
+            "shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]",
+            "focus:outline-none focus:ring-4",
+            "transition-all duration-300",
+            "disabled:opacity-50 disabled:cursor-not-allowed",
+            inputSizeClasses[inputSize],
+            inputToneClasses[tone],
+            glow ? "focus:shadow-[0_0_30px_-5px_var(--glow-color)]" : "",
+            icon ? "pl-12" : "",
+            className
+          ),
+          style: {
+            "--glow-color": tone === "aurora" ? "rgba(52,211,153,0.5)" : tone === "ember" ? "rgba(251,191,36,0.5)" : tone === "midnight" ? "rgba(167,139,250,0.5)" : "rgba(56,189,248,0.5)"
+          },
+          ...props
+        }
+      )
+    ] });
   }
 );
 CraftInput.displayName = "CraftInput";

@@ -26,15 +26,19 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./styles.css": "./dist/styles.css"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup",
+    "dev": "next dev",
+    "build": "tsup && npm run build:css",
+    "build:css": "tailwindcss -i ./src/app/globals.css -o ./dist/styles.css",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.lib.json --noEmit",
     "test:unit:run": "echo \"No unit tests specified\"",
@@ -47,6 +51,7 @@
     "tailwindcss": "^4"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
