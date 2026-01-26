@@ -10,10 +10,137 @@ import { Grid } from "@/components/layout/grid";
 import { CraftCard } from "@/components/craft-card";
 import { CraftBadge } from "@/components/craft-badge";
 import { CraftButton } from "@/components/craft-button";
+import { CraftForm } from "@/components/craft-form";
+import { CraftFormField } from "@/components/craft-form-field";
+import { CraftConfirmDialog } from "@/components/craft-confirm-dialog";
+import { CraftCreateEditDrawer } from "@/components/craft-create-edit-drawer";
+import { CraftFilterBar } from "@/components/craft-filter-bar";
+import { CraftDataTable, type CraftDataTableColumn, type CraftDataTableSort } from "@/components/craft-data-table";
+import { CraftSelect } from "@/components/craft-select";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import React from "react";
+
+type DemoFormValues = {
+  name: string;
+  email: string;
+  password: string;
+  description: string;
+  plan: string;
+  status: string;
+  tags: string[];
+  notify: boolean;
+  realtime: boolean;
+  startDate: string;
+  budget: string;
+  seats: number;
+  color: string;
+  time: string;
+  datetime: string;
+  month: string;
+  week: string;
+  website: string;
+  phone: string;
+  search: string;
+  range: number;
+  attachment: FileList | null;
+  assets: FileList | null;
+};
+
+type DemoRow = {
+  id: string;
+  name: string;
+  status: string;
+  owner: string;
+  budget: string;
+  updated: string;
+};
+
+const demoRows: DemoRow[] = [
+  { id: "nc-1001", name: "Aurora OS", status: "Active", owner: "Jade", budget: "$42,000", updated: "Jan 12" },
+  { id: "nc-1002", name: "Ember Cloud", status: "Paused", owner: "Miles", budget: "$18,500", updated: "Jan 09" },
+  { id: "nc-1003", name: "Ocean Pulse", status: "Active", owner: "Iris", budget: "$63,200", updated: "Jan 05" },
+  { id: "nc-1004", name: "Cosmic Relay", status: "Draft", owner: "Avery", budget: "$7,800", updated: "Dec 28" },
+  { id: "nc-1005", name: "Midnight Ops", status: "Active", owner: "Noah", budget: "$24,900", updated: "Dec 20" },
+];
 
 export default function LayoutDemoPage() {
+  const form = useForm<DemoFormValues>({
+    mode: "onChange",
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      description: "",
+      plan: "",
+      status: "active",
+      tags: [],
+      notify: false,
+      realtime: true,
+      startDate: "",
+      budget: "",
+      seats: 5,
+      color: "#38bdf8",
+      time: "",
+      datetime: "",
+      month: "",
+      week: "",
+      website: "",
+      phone: "",
+      search: "",
+      range: 40,
+      attachment: null,
+      assets: null,
+    },
+  });
+
+  const drawerForm = useForm<DemoFormValues>({
+    mode: "onChange",
+    defaultValues: {
+      name: "Aurora OS",
+      email: "team@nextcraft.io",
+      password: "",
+      description: "Realtime dashboards and analytics.",
+      plan: "growth",
+      status: "active",
+      tags: ["design", "infra"],
+      notify: true,
+      realtime: true,
+      startDate: "2026-01-12",
+      budget: "42000",
+      seats: 12,
+      color: "#38bdf8",
+      time: "09:30",
+      datetime: "2026-01-12T09:30",
+      month: "2026-01",
+      week: "2026-W02",
+      website: "https://nextcraft.io",
+      phone: "+1 555 013 774",
+      search: "",
+      range: 60,
+      attachment: null,
+      assets: null,
+    },
+  });
+
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [filters, setFilters] = React.useState<Record<string, string>>({});
+  const [sortBy, setSortBy] = React.useState<CraftDataTableSort | null>(null);
+  const [pageIndex, setPageIndex] = React.useState(0);
+  const [pageSize, setPageSize] = React.useState(4);
+
+  const columns = React.useMemo<CraftDataTableColumn<DemoRow>[]>(
+    () => [
+      { id: "name", header: "Project", accessor: "name", sortable: true, filterable: true },
+      { id: "status", header: "Status", accessor: "status", sortable: true, filterable: true },
+      { id: "owner", header: "Owner", accessor: "owner", sortable: true, filterable: true },
+      { id: "budget", header: "Budget", accessor: "budget", sortable: true },
+      { id: "updated", header: "Updated", accessor: "updated", sortable: true, align: "right" },
+    ],
+    []
+  );
+
   return (
     <AppShell
       sidebar={
@@ -84,6 +211,186 @@ export default function LayoutDemoPage() {
             </CraftCard>
           ))}
         </Grid>
+
+        <PageHeader
+          title="Forms & CRUD Speed"
+          description="Reusable modal forms, confirmation dialogs, drawers, and data tables."
+          actions={<CraftBadge>New</CraftBadge>}
+        />
+
+        <CraftCard className="space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 className="text-xl font-semibold">Form Modal</h3>
+              <p className="text-sm text-white/60">CraftForm + CraftFormField + CraftSubmitButton.</p>
+            </div>
+            <CraftForm
+              form={form}
+              title="Create project"
+              description="All input types are supported, styled, and validated via React Hook Form."
+              submitLabel="Create project"
+              trigger={<CraftButton size="sm">Open Form</CraftButton>}
+              onSubmit={(values) => {
+                console.log("Form submit", values);
+              }}
+            >
+              <div className="grid gap-4 md:grid-cols-2">
+                <CraftFormField name="name" label="Project name" placeholder="Nextcraft UI" />
+                <CraftFormField name="email" type="email" label="Owner email" placeholder="team@nextcraft.io" />
+                <CraftFormField name="password" type="password" label="Admin password" placeholder="••••••••" />
+                <CraftFormField name="seats" type="number" label="Seats" placeholder="12" />
+                <CraftFormField name="budget" type="currency" label="Budget" placeholder="$42,000" />
+                <CraftFormField name="startDate" type="date" label="Start date" />
+                <CraftFormField name="color" type="color" label="Brand color" />
+                <CraftFormField name="time" type="time" label="Daily sync time" />
+                <CraftFormField name="datetime" type="datetime-local" label="Launch datetime" />
+                <CraftFormField name="month" type="month" label="Billing month" />
+                <CraftFormField name="week" type="week" label="Sprint week" />
+                <CraftFormField name="website" type="url" label="Website" placeholder="https://nextcraft.io" />
+                <CraftFormField name="phone" type="tel" label="Phone" placeholder="+1 555 013 774" />
+              </div>
+              <CraftFormField name="description" type="textarea" label="Description" placeholder="Tell us about the project..." />
+              <div className="grid gap-4 md:grid-cols-2">
+                <CraftFormField
+                  name="plan"
+                  type="select"
+                  label="Plan"
+                  placeholder="Select a plan"
+                  options={[
+                    { label: "Starter", value: "starter" },
+                    { label: "Growth", value: "growth" },
+                    { label: "Enterprise", value: "enterprise" },
+                  ]}
+                />
+                <CraftFormField
+                  name="tags"
+                  type="multiselect"
+                  label="Tags"
+                  options={[
+                    { label: "Design", value: "design" },
+                    { label: "Product", value: "product" },
+                    { label: "Infra", value: "infra" },
+                  ]}
+                />
+                <CraftFormField
+                  name="status"
+                  type="radio"
+                  label="Status"
+                  options={[
+                    { label: "Active", value: "active" },
+                    { label: "Paused", value: "paused" },
+                    { label: "Draft", value: "draft" },
+                  ]}
+                />
+                <CraftFormField name="range" type="range" label="Confidence" />
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <CraftFormField name="attachment" type="file" label="Project brief" />
+                <CraftFormField name="assets" type="multifile" label="Assets" />
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <CraftFormField name="notify" type="checkbox" label="Email updates" description="Get progress updates." />
+                <CraftFormField name="realtime" type="switch" label="Realtime mode" description="Stream live events." />
+              </div>
+            </CraftForm>
+          </div>
+        </CraftCard>
+
+        <CraftCard className="space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 className="text-xl font-semibold">Confirm Dialog & Drawer</h3>
+              <p className="text-sm text-white/60">Reusable confirmation and create/edit flows.</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <CraftConfirmDialog
+                title="Delete project?"
+                description="This action cannot be undone."
+                confirmLabel="Delete"
+                trigger={<CraftButton size="sm" variant="outline">Confirm Delete</CraftButton>}
+                onConfirm={() => {
+                  console.log("Delete confirmed");
+                }}
+              />
+              <CraftCreateEditDrawer
+                mode="edit"
+                form={drawerForm}
+                title="Edit project"
+                description="Update the project details and save your changes."
+                trigger={<CraftButton size="sm" variant="ghost">Open Drawer</CraftButton>}
+                onSubmit={(values) => {
+                  console.log("Drawer submit", values);
+                }}
+              >
+                <CraftFormField name="name" label="Project name" />
+                <CraftFormField name="email" type="email" label="Owner email" />
+                <CraftFormField name="description" type="textarea" label="Description" />
+                <CraftFormField name="status" type="select" label="Status" options={[
+                  { label: "Active", value: "active" },
+                  { label: "Paused", value: "paused" },
+                  { label: "Draft", value: "draft" },
+                ]} />
+                <CraftFormField name="notify" type="checkbox" label="Email updates" />
+              </CraftCreateEditDrawer>
+            </div>
+          </div>
+        </CraftCard>
+
+        <CraftCard className="space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 className="text-xl font-semibold">Filter Bar + Data Table</h3>
+              <p className="text-sm text-white/60">Sorting, filtering, column visibility, selection, pagination.</p>
+            </div>
+          </div>
+
+          <CraftDataTable
+            data={demoRows}
+            columns={columns}
+            enableColumnVisibility
+            enableRowSelection
+            enableSorting
+            enableFiltering
+            enablePagination
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            filters={filters}
+            onFiltersChange={setFilters}
+            globalFilter={globalFilter}
+            onGlobalFilterChange={setGlobalFilter}
+            pageIndex={pageIndex}
+            pageSize={pageSize}
+            onPageChange={setPageIndex}
+            onPageSizeChange={setPageSize}
+            toolbar={
+              <CraftFilterBar
+                title="Projects"
+                description="Search and filter the project pipeline."
+                searchValue={globalFilter}
+                onSearchChange={setGlobalFilter}
+                actions={
+                  <CraftButton size="sm">Export</CraftButton>
+                }
+                filters={
+                  <div className="flex items-center gap-3">
+                    <CraftSelect
+                      value={filters.status ?? ""}
+                      onChange={(event) => setFilters({ ...filters, status: event.target.value })}
+                    >
+                      <option value="">All status</option>
+                      <option value="Active">Active</option>
+                      <option value="Paused">Paused</option>
+                      <option value="Draft">Draft</option>
+                    </CraftSelect>
+                    <CraftButton size="sm" variant="ghost" onClick={() => setFilters({})}>
+                      Reset
+                    </CraftButton>
+                  </div>
+                }
+              />
+            }
+          />
+        </CraftCard>
       </Container>
     </AppShell>
   );
