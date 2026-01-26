@@ -14,13 +14,13 @@ export const CraftSelect = React.forwardRef<HTMLSelectElement, CraftSelectProps>
         <select
           ref={ref}
           className={cn(
-            "w-full appearance-none rounded-2xl border-2 bg-white/5 text-white backdrop-blur-xl",
+            "w-full appearance-none rounded-2xl border-2 bg-[rgb(var(--nc-surface)/0.08)] text-[rgb(var(--nc-fg))] backdrop-blur-xl",
             "shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]",
             "focus:outline-none focus:ring-4",
             "transition-all duration-300",
             "disabled:opacity-50 disabled:cursor-not-allowed",
-            "border-[color:rgb(var(--nc-accent-1)/0.3)]",
-            "focus:border-[color:rgb(var(--nc-accent-1)/0.8)] focus:ring-[color:rgb(var(--nc-accent-1)/0.3)]",
+            "border-[rgb(var(--nc-border)/0.35)]",
+            "focus:border-[rgb(var(--nc-accent-1)/0.8)] focus:ring-[rgb(var(--nc-accent-1)/0.3)]",
             "px-5 py-3 pr-10 text-base",
             className
           )}
@@ -29,7 +29,7 @@ export const CraftSelect = React.forwardRef<HTMLSelectElement, CraftSelectProps>
           {children}
         </select>
         <svg
-          className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/70"
+          className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[rgb(var(--nc-fg-soft))]"
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"

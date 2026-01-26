@@ -57,7 +57,7 @@ export function CraftTabs({
   return (
     <div className={cn("space-y-4", className)} data-nc-theme={tone}>
       <div
-        className="inline-flex flex-wrap items-center gap-2 rounded-full border border-white/10 bg-white/5 p-2"
+        className="inline-flex flex-wrap items-center gap-2 rounded-full border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-2"
         role="tablist"
         onKeyDown={onKeyDown}
       >
@@ -70,15 +70,15 @@ export function CraftTabs({
             className={cn(
               "rounded-full px-4 py-2 text-sm font-semibold transition-all",
               activeValue === tab.value
-                ? "bg-[color:rgb(var(--nc-accent-1)/0.25)] text-white shadow-[0_10px_20px_rgb(var(--nc-accent-1)/0.35)]"
-                : "text-white/60 hover:text-white"
+                ? "bg-[rgb(var(--nc-accent-1)/0.25)] text-white shadow-[0_10px_20px_rgb(var(--nc-accent-1)/0.35)]"
+                : "text-[rgb(var(--nc-fg-muted))] hover:text-[rgb(var(--nc-fg))]"
             )}
           >
             {tab.label}
           </button>
         ))}
       </div>
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+      <div className="rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-4 text-[rgb(var(--nc-fg))]">
         {panels[activeValue]}
       </div>
     </div>

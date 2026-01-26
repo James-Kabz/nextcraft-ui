@@ -4,6 +4,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --nc-fg: 17 24 39;
+  --nc-fg-muted: 71 85 105;
+  --nc-fg-soft: 100 116 139;
+  --nc-surface: 255 255 255;
+  --nc-surface-muted: 248 250 252;
+  --nc-border: 148 163 184;
   --nc-accent-1: 56 189 248;
   --nc-accent-2: 59 130 246;
   --nc-accent-3: 99 102 241;
@@ -32,6 +38,12 @@
 [data-nc-mode="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --nc-fg: 255 255 255;
+  --nc-fg-muted: 226 232 240;
+  --nc-fg-soft: 148 163 184;
+  --nc-surface: 15 23 42;
+  --nc-surface-muted: 30 41 59;
+  --nc-border: 148 163 184;
 }
 
 :root,

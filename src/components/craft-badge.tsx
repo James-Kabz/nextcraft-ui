@@ -14,9 +14,9 @@ const variantClasses: Record<CraftBadgeVariant, string> = {
   solid:
     "bg-[color:rgb(var(--nc-accent-1))] text-white shadow-[0_10px_20px_rgb(var(--nc-accent-1)/0.35)]",
   soft:
-    "bg-[color:rgb(var(--nc-accent-1)/0.2)] text-[color:rgb(var(--nc-accent-soft))]",
+    "bg-[color:rgb(var(--nc-accent-1)/0.2)] text-[rgb(var(--nc-fg))]",
   outline:
-    "border border-[color:rgb(var(--nc-accent-1)/0.6)] text-[color:rgb(var(--nc-accent-soft))]",
+    "border border-[color:rgb(var(--nc-accent-1)/0.6)] text-[rgb(var(--nc-fg))]",
 };
 
 export function CraftBadge({

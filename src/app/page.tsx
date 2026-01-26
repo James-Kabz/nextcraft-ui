@@ -295,6 +295,79 @@ export default function Home() {
           />
         </CraftCard>
 
+        {/* Layout Kit Preview */}
+        <CraftCard className="space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold">Layout Kit</h2>
+              <p className="text-white/60">A compact preview of the navigation system.</p>
+            </div>
+            <a
+              href="/layout-demo"
+              className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition hover:text-white hover:bg-white/10"
+            >
+              Open Full Demo
+            </a>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-[220px_1fr]">
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-4 space-y-4">
+              <div className="text-sm font-semibold text-white">Nextcraft</div>
+              <div className="space-y-2 text-sm">
+                <div className="rounded-2xl bg-[rgb(var(--nc-accent-1)/0.25)] px-3 py-2 text-white">
+                  Dashboard
+                </div>
+                {[
+                  "Projects",
+                  "Analytics",
+                  "Billing",
+                  "Team",
+                ].map((label) => (
+                  <div
+                    key={label}
+                    className="rounded-2xl px-3 py-2 text-white/70 hover:bg-white/10"
+                  >
+                    {label}
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-xs text-white/60">
+                Theme-ready sidebar
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-4 flex flex-wrap items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="text-xs text-white/50">Home / Dashboard</div>
+                  <div className="text-lg font-semibold text-white">Workspace</div>
+                </div>
+                <div className="flex gap-2">
+                  <button className="rounded-xl border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/80">
+                    Filter
+                  </button>
+                  <button className="rounded-xl bg-[rgb(var(--nc-accent-1)/0.25)] px-3 py-1 text-xs text-white">
+                    Create
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                {["Revenue", "Users", "Latency"].map((metric) => (
+                  <div
+                    key={metric}
+                    className="rounded-3xl border border-white/10 bg-white/5 p-4 space-y-2"
+                  >
+                    <div className="text-xs text-white/50">{metric}</div>
+                    <div className="text-xl font-semibold text-white">+14%</div>
+                    <div className="text-xs text-white/40">vs last week</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </CraftCard>
+
         {/* Glass Card Showcase */}
         <div className="space-y-6">
           <h2 className="text-2xl font-bold text-white">Glass Card Variants</h2>

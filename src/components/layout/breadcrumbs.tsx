@@ -13,21 +13,21 @@ export type BreadcrumbsProps = React.HTMLAttributes<HTMLElement> & {
 
 export function Breadcrumbs({ className, items, ...props }: BreadcrumbsProps) {
   return (
-    <nav className={cn("flex items-center text-sm text-white/60", className)} {...props}>
+    <nav className={cn("flex items-center text-sm text-[rgb(var(--nc-fg-muted))]", className)} {...props}>
       {items.map((item, index) => {
         const content = item.href ? (
-          <a href={item.href} className="transition hover:text-white">
+          <a href={item.href} className="transition hover:text-[rgb(var(--nc-fg))]">
             {item.label}
           </a>
         ) : (
-          <span className="text-white/80">{item.label}</span>
+          <span className="text-[rgb(var(--nc-fg))]">{item.label}</span>
         );
 
         return (
           <span key={`${item.label}-${index}`} className="flex items-center">
             {content}
             {index < items.length - 1 && (
-              <span className="mx-2 text-white/40">/</span>
+              <span className="mx-2 text-[rgb(var(--nc-fg-soft))]">/</span>
             )}
           </span>
         );

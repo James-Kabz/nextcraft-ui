@@ -45,6 +45,12 @@ export default function LayoutDemoPage() {
           }
           actions={
             <div className="flex items-center gap-3">
+              <a
+                href="/"
+                className="rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/80 transition hover:text-white"
+              >
+                Back to Home
+              </a>
               <CraftButton size="sm">New Project</CraftButton>
               <CraftButton size="sm" variant="ghost">Invite</CraftButton>
             </div>

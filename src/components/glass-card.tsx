@@ -24,7 +24,7 @@ export function GlassCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-3xl p-6 text-white",
+        "relative overflow-hidden rounded-3xl p-6 text-[rgb(var(--nc-fg))]",
         "shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
         "transition-all duration-300",
         "hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]",

@@ -17,7 +17,7 @@ export const CraftCheckbox = React.forwardRef<HTMLInputElement, CraftCheckboxPro
     return (
       <label
         className={cn(
-          "flex items-start gap-3 text-sm text-white",
+          "flex items-start gap-3 text-sm text-[rgb(var(--nc-fg))]",
           props.disabled ? "opacity-60" : "cursor-pointer",
           className
         )}
@@ -33,14 +33,14 @@ export const CraftCheckbox = React.forwardRef<HTMLInputElement, CraftCheckboxPro
           <span
             className={cn(
               "flex h-5 w-5 items-center justify-center rounded-md border-2",
-              "border-[color:rgb(var(--nc-accent-1)/0.45)] bg-white/5",
+              "border-[rgb(var(--nc-border)/0.45)] bg-[rgb(var(--nc-surface)/0.08)]",
               "transition-all duration-200",
-              "peer-checked:border-[color:rgb(var(--nc-accent-1))] peer-checked:bg-[color:rgb(var(--nc-accent-1)/0.25)]",
-              "peer-focus-visible:ring-2 peer-focus-visible:ring-[color:rgb(var(--nc-accent-1)/0.5)]"
+              "peer-checked:border-[rgb(var(--nc-accent-1))] peer-checked:bg-[rgb(var(--nc-accent-1)/0.25)]",
+              "peer-focus-visible:ring-2 peer-focus-visible:ring-[rgb(var(--nc-accent-1)/0.5)]"
             )}
           >
             <svg
-              className="h-3 w-3 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+              className="h-3 w-3 text-[rgb(var(--nc-fg))] opacity-0 transition-opacity peer-checked:opacity-100"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -54,9 +54,9 @@ export const CraftCheckbox = React.forwardRef<HTMLInputElement, CraftCheckboxPro
           </span>
         </span>
         <span className="space-y-1">
-          {label && <span className="block font-medium text-white">{label}</span>}
+          {label && <span className="block font-medium text-[rgb(var(--nc-fg))]">{label}</span>}
           {description && (
-            <span className="block text-xs text-white/60">{description}</span>
+            <span className="block text-xs text-[rgb(var(--nc-fg-muted))]">{description}</span>
           )}
         </span>
       </label>

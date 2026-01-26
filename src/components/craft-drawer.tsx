@@ -60,16 +60,16 @@ export function CraftDrawer({
       />
       <div
         className={cn(
-          "absolute top-0 h-full w-full max-w-md border border-white/10 bg-white/10 text-white shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl",
+          "absolute top-0 h-full w-full max-w-md border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] text-[rgb(var(--nc-fg))] shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl",
           side === "right" ? "right-0" : "left-0",
           className
         )}
         data-nc-theme={tone}
       >
-        <div className="flex items-center justify-between border-b border-white/10 p-6">
+        <div className="flex items-center justify-between border-b border-[rgb(var(--nc-border)/0.3)] p-6">
           {title && <h3 className="text-xl font-semibold">{title}</h3>}
           <button
-            className="rounded-full border border-white/10 bg-white/10 p-2 text-white/70 transition hover:text-white"
+            className="rounded-full border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-2 text-[rgb(var(--nc-fg-soft))] transition hover:text-[rgb(var(--nc-fg))]"
             onClick={() => setOpen(false)}
             aria-label="Close"
           >
@@ -81,7 +81,7 @@ export function CraftDrawer({
         <div className="p-6 space-y-4 overflow-y-auto h-[calc(100%-5.5rem)]">
           {children}
         </div>
-        {footer && <div className="border-t border-white/10 p-6">{footer}</div>}
+        {footer && <div className="border-t border-[rgb(var(--nc-border)/0.3)] p-6">{footer}</div>}
       </div>
     </div>
   ) : null;

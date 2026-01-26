@@ -17,15 +17,15 @@ export function ThemeSwitcher({ className, showLabels = true, ...props }: ThemeS
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]",
+        "flex flex-wrap items-center gap-3 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] px-4 py-3 text-sm text-[rgb(var(--nc-fg))] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]",
         className
       )}
       {...props}
     >
       <label className="flex items-center gap-2">
-        {showLabels && <span className="text-white/70">Theme</span>}
+        {showLabels && <span className="text-[rgb(var(--nc-fg-muted))]">Theme</span>}
         <select
-          className="rounded-lg border border-white/10 bg-white/10 px-3 py-1 text-white outline-none focus:ring-2 focus:ring-[rgb(var(--nc-accent-1)/0.5)]"
+          className="rounded-lg border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-1 text-[rgb(var(--nc-fg))] outline-none focus:ring-2 focus:ring-[rgb(var(--nc-accent-1)/0.5)]"
           value={theme}
           onChange={(event) => setTheme(event.target.value as ThemeName)}
         >
@@ -37,9 +37,9 @@ export function ThemeSwitcher({ className, showLabels = true, ...props }: ThemeS
         </select>
       </label>
       <label className="flex items-center gap-2">
-        {showLabels && <span className="text-white/70">Mode</span>}
+        {showLabels && <span className="text-[rgb(var(--nc-fg-muted))]">Mode</span>}
         <select
-          className="rounded-lg border border-white/10 bg-white/10 px-3 py-1 text-white outline-none focus:ring-2 focus:ring-[rgb(var(--nc-accent-1)/0.5)]"
+          className="rounded-lg border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-1 text-[rgb(var(--nc-fg))] outline-none focus:ring-2 focus:ring-[rgb(var(--nc-accent-1)/0.5)]"
           value={mode}
           onChange={(event) => setMode(event.target.value as ThemeMode)}
         >

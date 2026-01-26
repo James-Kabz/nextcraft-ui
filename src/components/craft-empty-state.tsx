@@ -23,7 +23,7 @@ export function CraftEmptyState({
   return (
     <div
       className={cn(
-        "rounded-3xl border border-white/10 bg-white/5 p-8 text-center text-white backdrop-blur-xl",
+        "rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-8 text-center text-[rgb(var(--nc-fg))] backdrop-blur-xl",
         "shadow-[0_18px_40px_rgba(0,0,0,0.25)]",
         className
       )}
@@ -31,12 +31,12 @@ export function CraftEmptyState({
       {...props}
     >
       {icon && (
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:rgb(var(--nc-accent-1)/0.2)] text-[color:rgb(var(--nc-accent-1))]">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[rgb(var(--nc-accent-1)/0.2)] text-[rgb(var(--nc-accent-1))]">
           {icon}
         </div>
       )}
       <h3 className="text-xl font-semibold">{title}</h3>
-      {description && <p className="mt-2 text-sm text-white/60">{description}</p>}
+      {description && <p className="mt-2 text-sm text-[rgb(var(--nc-fg-muted))]">{description}</p>}
       {action && <div className="mt-6 flex justify-center">{action}</div>}
     </div>
   );

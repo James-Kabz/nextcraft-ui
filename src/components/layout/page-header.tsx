@@ -21,8 +21,8 @@ export function PageHeader({
       {...props}
     >
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-white">{title}</h1>
-        {description && <p className="text-white/60">{description}</p>}
+        <h1 className="text-3xl font-bold text-[rgb(var(--nc-fg))]">{title}</h1>
+        {description && <p className="text-[rgb(var(--nc-fg-muted))]">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-3">{actions}</div>}
     </div>

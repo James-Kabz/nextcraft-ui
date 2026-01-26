@@ -11,8 +11,8 @@ export function CraftSkeleton({ className, tone, ...props }: CraftSkeletonProps)
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl bg-white/10",
-        "after:absolute after:inset-0 after:translate-x-[-100%] after:bg-linear-to-r after:from-transparent after:via-white/20 after:to-transparent",
+        "relative overflow-hidden rounded-2xl bg-[rgb(var(--nc-surface)/0.12)]",
+        "after:absolute after:inset-0 after:-translate-x-full after:bg-linear-to-r after:from-transparent after:via-white/20 after:to-transparent",
         "after:animate-[shimmer_1.6s_infinite]",
         className
       )}

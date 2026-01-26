@@ -12,7 +12,7 @@ export function TopNav({ className, title, actions, breadcrumb, ...props }: TopN
   return (
     <header
       className={cn(
-        "flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 px-6 py-4 text-white backdrop-blur-xl",
+        "flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] px-6 py-4 text-[rgb(var(--nc-fg))] backdrop-blur-xl",
         className
       )}
       {...props}

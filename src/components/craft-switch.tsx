@@ -16,7 +16,7 @@ export const CraftSwitch = React.forwardRef<HTMLInputElement, CraftSwitchProps>(
     return (
       <label
         className={cn(
-          "inline-flex items-center gap-3 text-sm text-white",
+          "inline-flex items-center gap-3 text-sm text-[rgb(var(--nc-fg))]",
           props.disabled ? "opacity-60" : "cursor-pointer",
           className
         )}
@@ -25,17 +25,17 @@ export const CraftSwitch = React.forwardRef<HTMLInputElement, CraftSwitchProps>(
         <input ref={ref} type="checkbox" className="peer sr-only" {...props} />
         <span
           className={cn(
-            "relative h-6 w-11 rounded-full border-2 border-white/10 bg-white/10",
+            "relative h-6 w-11 rounded-full border-2 border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.08)]",
             "transition-all duration-200",
-            "peer-focus-visible:ring-2 peer-focus-visible:ring-[color:rgb(var(--nc-accent-1)/0.5)]",
-            "peer-checked:border-[color:rgb(var(--nc-accent-1)/0.6)] peer-checked:bg-[color:rgb(var(--nc-accent-1)/0.25)]"
+            "peer-focus-visible:ring-2 peer-focus-visible:ring-[rgb(var(--nc-accent-1)/0.5)]",
+            "peer-checked:border-[rgb(var(--nc-accent-1)/0.6)] peer-checked:bg-[rgb(var(--nc-accent-1)/0.25)]"
           )}
         >
           <span
             className={cn(
-              "absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white/80",
+              "absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-[rgb(var(--nc-surface-muted)/0.9)]",
               "transition-all duration-200",
-              "peer-checked:translate-x-5 peer-checked:bg-white"
+              "peer-checked:translate-x-5 peer-checked:bg-[rgb(var(--nc-surface-muted))]"
             )}
           />
         </span>

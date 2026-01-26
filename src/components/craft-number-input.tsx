@@ -17,13 +17,13 @@ export const CraftNumberInput = React.forwardRef<
         ref={ref}
         type="number"
         className={cn(
-          "w-full rounded-2xl border-2 bg-white/5 text-white backdrop-blur-xl",
+          "w-full rounded-2xl border-2 bg-[rgb(var(--nc-surface)/0.08)] text-[rgb(var(--nc-fg))] backdrop-blur-xl",
           "shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]",
           "focus:outline-none focus:ring-4",
           "transition-all duration-300",
           "disabled:opacity-50 disabled:cursor-not-allowed",
-          "border-[color:rgb(var(--nc-accent-1)/0.3)]",
-          "focus:border-[color:rgb(var(--nc-accent-1)/0.8)] focus:ring-[color:rgb(var(--nc-accent-1)/0.3)]",
+          "border-[rgb(var(--nc-border)/0.35)]",
+          "focus:border-[rgb(var(--nc-accent-1)/0.8)] focus:ring-[rgb(var(--nc-accent-1)/0.3)]",
           "px-5 py-3 text-base",
           className
         )}

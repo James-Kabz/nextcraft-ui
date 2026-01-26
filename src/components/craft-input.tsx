@@ -34,22 +34,22 @@ export const CraftInput = React.forwardRef<HTMLInputElement, CraftInputProps>(
     return (
       <div className="relative w-full" data-nc-theme={tone}>
         {icon && (
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgb(var(--nc-fg-soft))]">
             {icon}
           </div>
         )}
         <input
           ref={ref}
           className={cn(
-            "w-full rounded-2xl border-2 bg-white/5 text-white backdrop-blur-xl",
+            "w-full rounded-2xl border-2 bg-[rgb(var(--nc-surface)/0.08)] text-[rgb(var(--nc-fg))] backdrop-blur-xl",
             "shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]",
             "focus:outline-none focus:ring-4",
             "transition-all duration-300",
             "disabled:opacity-50 disabled:cursor-not-allowed",
             inputSizeClasses[inputSize],
-            "border-[rgb(var(--nc-accent-1)/0.3)]",
+            "border-[rgb(var(--nc-border)/0.35)]",
             "focus:border-[rgb(var(--nc-accent-1)/0.8)] focus:ring-[rgb(var(--nc-accent-1)/0.3)]",
-            "placeholder:text-[rgb(var(--nc-accent-soft)/0.4)]",
+            "placeholder:text-[rgb(var(--nc-fg-soft))]",
             glow ? "focus:shadow-[0_0_30px_-5px_var(--glow-color)]" : "",
             icon ? "pl-12" : "",
             className

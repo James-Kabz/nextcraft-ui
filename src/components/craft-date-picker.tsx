@@ -142,18 +142,18 @@ export function CraftDatePicker({
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         className={cn(
-          "flex w-full items-center justify-between rounded-2xl border-2 bg-white/5 px-5 py-3 text-left text-base text-white backdrop-blur-xl",
+          "flex w-full items-center justify-between rounded-2xl border-2 bg-[rgb(var(--nc-surface)/0.08)] px-5 py-3 text-left text-base text-[rgb(var(--nc-fg))] backdrop-blur-xl",
           "shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]",
           "transition-all duration-300",
-          "border-[rgb(var(--nc-accent-1)/0.3)]",
+          "border-[rgb(var(--nc-border)/0.35)]",
           "focus:outline-none focus:ring-4 focus:ring-[rgb(var(--nc-accent-1)/0.3)]",
           className
         )}
       >
-        <span className={selectedValue ? "text-white" : "text-white/50"}>
+        <span className={selectedValue ? "text-[rgb(var(--nc-fg))]" : "text-[rgb(var(--nc-fg-soft))]"}>
           {selectedValue || placeholder}
         </span>
-        <svg className="h-4 w-4 text-white/70" viewBox="0 0 20 20" fill="currentColor">
+        <svg className="h-4 w-4 text-[rgb(var(--nc-fg-soft))]" viewBox="0 0 20 20" fill="currentColor">
           <path d="M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h1a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zm10 6H4v8h12V8z" />
         </svg>
       </button>
@@ -161,7 +161,7 @@ export function CraftDatePicker({
       {open && (
         <div
           className={cn(
-            "absolute left-0 top-full z-20 mt-3 w-full rounded-3xl border border-white/5 bg-slate-950/90 p-4 text-white shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-3xl"
+            "absolute left-0 top-full z-20 mt-3 w-full rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-4 text-[rgb(var(--nc-fg))] shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-3xl"
           )}
           onKeyDown={handleKeyDown}
           tabIndex={-1}
@@ -169,7 +169,7 @@ export function CraftDatePicker({
           <div className="flex items-center justify-between">
             <button
               type="button"
-              className="rounded-xl border border-white/10 bg-white/10 px-3 py-1 text-sm"
+              className="rounded-xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-1 text-sm text-[rgb(var(--nc-fg))]"
               onClick={() =>
                 setViewDate(
                   new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1)
@@ -183,7 +183,7 @@ export function CraftDatePicker({
             </div>
             <button
               type="button"
-              className="rounded-xl border border-white/10 bg-white/10 px-3 py-1 text-sm"
+              className="rounded-xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-1 text-sm text-[rgb(var(--nc-fg))]"
               onClick={() =>
                 setViewDate(
                   new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1)
@@ -194,7 +194,7 @@ export function CraftDatePicker({
             </button>
           </div>
 
-          <div className="mt-4 grid grid-cols-7 gap-2 text-xs text-white/60">
+          <div className="mt-4 grid grid-cols-7 gap-2 text-xs text-[rgb(var(--nc-fg-muted))]">
             {WEEK_DAYS.map((day) => (
               <div key={day} className="text-center">
                 {day}
@@ -216,8 +216,8 @@ export function CraftDatePicker({
                   className={cn(
                     "rounded-lg py-2 text-sm transition-all",
                     selected
-                      ? "bg-[rgb(var(--nc-accent-1)/0.3)] text-white"
-                      : "text-white/80 hover:bg-white/10",
+                      ? "bg-[rgb(var(--nc-accent-1)/0.3)] text-[rgb(var(--nc-fg))]"
+                      : "text-[rgb(var(--nc-fg-muted))] hover:bg-[rgb(var(--nc-surface)/0.12)]",
                     disabled && "opacity-40 hover:bg-transparent"
                   )}
                 >

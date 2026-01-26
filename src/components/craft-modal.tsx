@@ -115,7 +115,7 @@ export function CraftModal({
         ref={ref}
         tabIndex={-1}
         className={cn(
-          "relative z-10 w-full max-w-lg rounded-3xl border border-white/10 bg-white/10 p-6 text-white shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl",
+          "relative z-10 w-full max-w-lg rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-6 text-[rgb(var(--nc-fg))] shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl",
           className
         )}
         data-nc-theme={tone}
@@ -123,10 +123,10 @@ export function CraftModal({
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1">
             {title && <h3 className="text-2xl font-semibold">{title}</h3>}
-            {description && <p className="text-white/60">{description}</p>}
+            {description && <p className="text-[rgb(var(--nc-fg-muted))]">{description}</p>}
           </div>
           <button
-            className="rounded-full border border-white/10 bg-white/10 p-2 text-white/70 transition hover:text-white"
+            className="rounded-full border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-2 text-[rgb(var(--nc-fg-soft))] transition hover:text-[rgb(var(--nc-fg))]"
             onClick={() => setOpen(false)}
             aria-label="Close"
           >

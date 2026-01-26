@@ -53,7 +53,7 @@ export function CraftToastHost({ toasts, onDismiss, tone }: CraftToastHostProps)
         <div
           key={toast.id}
           className={cn(
-            "rounded-2xl border bg-white/10 p-4 text-white shadow-[0_15px_35px_rgba(0,0,0,0.35)] backdrop-blur-xl",
+            "rounded-2xl border bg-[rgb(var(--nc-surface)/0.12)] p-4 text-[rgb(var(--nc-fg))] shadow-[0_15px_35px_rgba(0,0,0,0.35)] backdrop-blur-xl",
             variantClasses[toast.variant ?? "info"]
           )}
         >
@@ -61,11 +61,11 @@ export function CraftToastHost({ toasts, onDismiss, tone }: CraftToastHostProps)
             <div>
               <p className="text-sm font-semibold">{toast.title}</p>
               {toast.description && (
-                <p className="text-xs text-white/60">{toast.description}</p>
+                <p className="text-xs text-[rgb(var(--nc-fg-muted))]">{toast.description}</p>
               )}
             </div>
             <button
-              className="text-white/60 hover:text-white"
+              className="text-[rgb(var(--nc-fg-soft))] hover:text-[rgb(var(--nc-fg))]"
               onClick={() => onDismiss(toast.id)}
             >
               ✕
