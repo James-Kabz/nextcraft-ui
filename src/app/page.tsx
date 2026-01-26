@@ -1,5 +1,11 @@
 "use client";
 import { CraftInput } from "@/components/craft-input";
+import { CraftTextarea } from "@/components/craft-textarea";
+import { CraftSelect } from "@/components/craft-select";
+import { CraftCheckbox } from "@/components/craft-checkbox";
+import { CraftSwitch } from "@/components/craft-switch";
+import { CraftBadge } from "@/components/craft-badge";
+import { CraftCard } from "@/components/craft-card";
 import { GlassCard } from "@/components/glass-card";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Image from "next/image";
@@ -98,6 +104,38 @@ export default function Home() {
             </div>
           </div>
         </GlassCard>
+
+        {/* Core Components */}
+        <CraftCard className="space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold">Core Components</h2>
+              <p className="text-white/60">Theme-aware inputs and controls</p>
+            </div>
+            <CraftBadge>Core UI</CraftBadge>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-white/80">Textarea</label>
+              <CraftTextarea placeholder="Tell us about your project..." />
+            </div>
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-white/80">Select</label>
+              <CraftSelect defaultValue="">
+                <option value="" disabled className="text-slate-900">Pick a plan</option>
+                <option value="starter" className="text-slate-900">Starter</option>
+                <option value="growth" className="text-slate-900">Growth</option>
+                <option value="enterprise" className="text-slate-900">Enterprise</option>
+              </CraftSelect>
+            </div>
+            <CraftCheckbox
+              label="Email updates"
+              description="Get updates on releases and new components."
+            />
+            <CraftSwitch label="Enable realtime mode" />
+          </div>
+        </CraftCard>
 
         {/* Glass Card Showcase */}
         <div className="space-y-6">
