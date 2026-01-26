@@ -40,6 +40,14 @@ export default function Home() {
           <div className="flex justify-center pt-4">
             <ThemeSwitcher />
           </div>
+          <div className="flex justify-center pt-2">
+            <a
+              href="/layout-demo"
+              className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition hover:text-white hover:bg-white/10"
+            >
+              View Layout Demo
+            </a>
+          </div>
         </div>
 
         {/* Input Showcase */}

@@ -55,6 +55,30 @@ export type { CraftNumberInputProps } from "./components/craft-number-input";
 export { CraftCurrencyInput } from "./components/craft-currency-input";
 export type { CraftCurrencyInputProps } from "./components/craft-currency-input";
 
+export { AppShell } from "./components/layout/app-shell";
+export type { AppShellProps } from "./components/layout/app-shell";
+
+export { Sidebar } from "./components/layout/sidebar";
+export type { SidebarProps, SidebarItem } from "./components/layout/sidebar";
+
+export { TopNav } from "./components/layout/top-nav";
+export type { TopNavProps } from "./components/layout/top-nav";
+
+export { PageHeader } from "./components/layout/page-header";
+export type { PageHeaderProps } from "./components/layout/page-header";
+
+export { Breadcrumbs } from "./components/layout/breadcrumbs";
+export type { BreadcrumbsProps, BreadcrumbItem } from "./components/layout/breadcrumbs";
+
+export { AuthLayout } from "./components/layout/auth-layout";
+export type { AuthLayoutProps } from "./components/layout/auth-layout";
+
+export { Container } from "./components/layout/container";
+export type { ContainerProps } from "./components/layout/container";
+
+export { Grid } from "./components/layout/grid";
+export type { GridProps } from "./components/layout/grid";
+
 export { ThemeSwitcher } from "./components/theme-switcher";
 export type { ThemeSwitcherProps } from "./components/theme-switcher";
 
