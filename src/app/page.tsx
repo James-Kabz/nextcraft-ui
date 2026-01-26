@@ -18,7 +18,6 @@ import { CraftNumberInput } from "@/components/craft-number-input";
 import { CraftCurrencyInput } from "@/components/craft-currency-input";
 import { GlassCard } from "@/components/glass-card";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import Image from "next/image";
 import React from "react";
 
 export default function Home() {

@@ -11,6 +11,7 @@ import { CraftCard } from "@/components/craft-card";
 import { CraftBadge } from "@/components/craft-badge";
 import { CraftButton } from "@/components/craft-button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import Link from "next/link";
 
 export default function LayoutDemoPage() {
   return (
@@ -45,12 +46,12 @@ export default function LayoutDemoPage() {
           }
           actions={
             <div className="flex items-center gap-3">
-              <a
+              <Link
                 href="/"
                 className="rounded-xl border px-4 py-2 text-sm transition"
               >
                 Back to Home
-              </a>
+              </Link>
               <CraftButton size="sm">New Project</CraftButton>
               <CraftButton size="sm" variant="ghost">Invite</CraftButton>
             </div>

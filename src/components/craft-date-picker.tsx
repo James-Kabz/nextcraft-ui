@@ -67,7 +67,7 @@ export function CraftDatePicker({
 
   React.useEffect(() => {
     if (selectedDate) setViewDate(selectedDate);
-  }, [selectedValue]);
+  }, [selectedDate]);
 
   const wrapperRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -117,7 +117,7 @@ export function CraftDatePicker({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!open) return;
     if (!selectedDate) return;
-    let next = new Date(selectedDate);
+    const next = new Date(selectedDate);
     if (event.key === "ArrowRight") next.setDate(next.getDate() + 1);
     if (event.key === "ArrowLeft") next.setDate(next.getDate() - 1);
     if (event.key === "ArrowDown") next.setDate(next.getDate() + 7);
@@ -161,7 +161,7 @@ export function CraftDatePicker({
       {open && (
         <div
           className={cn(
-            "absolute left-0 top-full z-20 mt-3 w-full rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-4 text-[rgb(var(--nc-fg))] shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-3xl"
+            "absolute left-0 top-full z-20 mt-3 w-full rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/1.52)] p-4 text-[rgb(var(--nc-fg))] shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-10xl"
           )}
           onKeyDown={handleKeyDown}
           tabIndex={-1}
