@@ -6,6 +6,11 @@ import { CraftCheckbox } from "@/components/craft-checkbox";
 import { CraftSwitch } from "@/components/craft-switch";
 import { CraftBadge } from "@/components/craft-badge";
 import { CraftCard } from "@/components/craft-card";
+import { CraftModal } from "@/components/craft-modal";
+import { CraftDrawer } from "@/components/craft-drawer";
+import { CraftTabs } from "@/components/craft-tabs";
+import { CraftTooltip } from "@/components/craft-tooltip";
+import { CraftToastHost, useCraftToast } from "@/components/craft-toast";
 import { GlassCard } from "@/components/glass-card";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Image from "next/image";
@@ -14,10 +19,12 @@ import React from "react";
 export default function Home() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { toasts, push, remove } = useCraftToast();
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-8">
-      <div className="max-w-6xl w-full space-y-12">
+    <>
+      <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-8">
+        <div className="max-w-6xl w-full space-y-12">
         
         {/* Header */}
         <div className="text-center space-y-3">
@@ -135,6 +142,100 @@ export default function Home() {
             />
             <CraftSwitch label="Enable realtime mode" />
           </div>
+        </CraftCard>
+
+        {/* Interactive Components */}
+        <CraftCard className="space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold">Interactive Components</h2>
+              <p className="text-white/60">Modals, drawers, tabs, tooltips, toasts</p>
+            </div>
+            <CraftBadge variant="outline">Phase 2</CraftBadge>
+          </div>
+
+          <div className="flex flex-wrap gap-4">
+            <CraftModal
+              title="Craft Modal"
+              description="A focus-trapped modal with theme styling."
+              trigger={
+                <button className="rounded-xl bg-[rgb(var(--nc-accent-1))] px-5 py-2 text-white font-semibold">
+                  Open Modal
+                </button>
+              }
+              footer={
+                <div className="flex justify-end gap-3">
+                  <button className="rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-sm">
+                    Cancel
+                  </button>
+                  <button className="rounded-xl bg-[rgb(var(--nc-accent-1))] px-4 py-2 text-sm font-semibold text-white">
+                    Confirm
+                  </button>
+                </div>
+              }
+            >
+              <p className="text-white/70">
+                The modal responds to the active theme tokens and traps focus for accessibility.
+              </p>
+            </CraftModal>
+
+            <CraftDrawer
+              title="Craft Drawer"
+              trigger={
+                <button className="rounded-xl border border-white/10 bg-white/10 px-5 py-2 text-white">
+                  Open Drawer
+                </button>
+              }
+            >
+              <p className="text-white/70">
+                Use drawers for settings, filters, or context panels.
+              </p>
+            </CraftDrawer>
+
+            <CraftTooltip content="A themed tooltip" side="bottom">
+              <button className="rounded-xl border border-white/10 bg-white/10 px-5 py-2 text-white">
+                Hover Tooltip
+              </button>
+            </CraftTooltip>
+
+            <button
+              className="rounded-xl border border-white/10 bg-white/10 px-5 py-2 text-white"
+              onClick={() =>
+                push({
+                  title: "Toast message",
+                  description: "Theme-aware toast with quick feedback.",
+                  variant: "info",
+                })
+              }
+            >
+              Show Toast
+            </button>
+          </div>
+
+          <CraftTabs
+            tabs={[
+              { value: "overview", label: "Overview" },
+              { value: "details", label: "Details" },
+              { value: "updates", label: "Updates" },
+            ]}
+            panels={{
+              overview: (
+                <div className="text-white/70">
+                  A quick snapshot of the system and key highlights.
+                </div>
+              ),
+              details: (
+                <div className="text-white/70">
+                  Detailed breakdowns of components and theme tokens.
+                </div>
+              ),
+              updates: (
+                <div className="text-white/70">
+                  New releases, fixes, and upcoming changes.
+                </div>
+              ),
+            }}
+          />
         </CraftCard>
 
         {/* Glass Card Showcase */}
@@ -262,7 +363,9 @@ export default function Home() {
           </div>
         </GlassCard>
 
+        </div>
       </div>
-    </div>
+      <CraftToastHost toasts={toasts} onDismiss={remove} />
+    </>
   );
 }

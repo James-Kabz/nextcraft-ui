@@ -25,6 +25,21 @@ export type { CraftBadgeProps } from "./components/craft-badge";
 export { CraftCard } from "./components/craft-card";
 export type { CraftCardProps } from "./components/craft-card";
 
+export { CraftModal } from "./components/craft-modal";
+export type { CraftModalProps } from "./components/craft-modal";
+
+export { CraftDrawer } from "./components/craft-drawer";
+export type { CraftDrawerProps } from "./components/craft-drawer";
+
+export { CraftTabs } from "./components/craft-tabs";
+export type { CraftTabsProps } from "./components/craft-tabs";
+
+export { CraftTooltip } from "./components/craft-tooltip";
+export type { CraftTooltipProps } from "./components/craft-tooltip";
+
+export { CraftToastHost, useCraftToast } from "./components/craft-toast";
+export type { CraftToast, CraftToastHostProps } from "./components/craft-toast";
+
 export { ThemeSwitcher } from "./components/theme-switcher";
 export type { ThemeSwitcherProps } from "./components/theme-switcher";
 
