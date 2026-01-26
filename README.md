@@ -11,6 +11,7 @@ npm install @jameskabz/nextcraft-ui
 ## Usage
 
 ```tsx
+import "@jameskabz/nextcraft-ui/styles.css";
 import { CraftButton, GlassCard } from "@jameskabz/nextcraft-ui";
 
 export default function Example() {
@@ -26,19 +27,46 @@ export default function Example() {
 }
 ```
 
-## Tailwind setup
+## Styles setup
 
-This library ships class names only. Make sure Tailwind scans your node_modules
-for the package so the classes are generated:
+This library ships a precompiled stylesheet. Import it once in your app’s
+global entry:
 
 ```ts
-// tailwind.config.ts
-export default {
-  content: [
-    "./src/**/*.{ts,tsx}",
-    "./node_modules/@jameskabz/nextcraft-ui/dist/**/*.{js,mjs}"
-  ]
-};
+// App Router (Next.js)
+import "@jameskabz/nextcraft-ui/styles.css";
+```
+
+## Themes
+
+Wrap your app once to enable theme switching:
+
+```tsx
+import { ThemeProvider } from "@jameskabz/nextcraft-ui";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider>
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+Add a switcher anywhere in your UI:
+
+```tsx
+import { ThemeSwitcher } from "@jameskabz/nextcraft-ui";
+
+export function Settings() {
+  return <ThemeSwitcher />;
+}
+```
+
+Per-component theme override:
+
+```tsx
+<GlassCard tone="ember">...</GlassCard>
 ```
 
 ## Troubleshooting: Module not found

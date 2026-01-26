@@ -6,3 +6,9 @@ export type { GlassCardProps } from "./components/glass-card";
 
 export { CraftInput } from "./components/craft-input";
 export type { CraftInputProps } from "./components/craft-input";
+
+export { ThemeSwitcher } from "./components/theme-switcher";
+export type { ThemeSwitcherProps } from "./components/theme-switcher";
+
+export { ThemeProvider, useTheme } from "./theme/theme-context";
+export type { ThemeName, ThemeMode } from "./theme/theme-context";

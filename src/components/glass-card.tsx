@@ -1,22 +1,10 @@
 import { cn } from "@/utils/cn";
+import type { ThemeName } from "@/theme/theme-context";
 
 export type GlassCardProps = React.HTMLAttributes<HTMLDivElement> & {
-  tone?: "aurora" | "ember" | "ocean" | "midnight" | "cosmic";
+  tone?: ThemeName;
   intensity?: "subtle" | "medium" | "strong";
   bordered?: boolean;
-};
-
-const cardToneClasses: Record<NonNullable<GlassCardProps["tone"]>, string> = {
-  aurora:
-    "bg-gradient-to-br from-emerald-400/15 via-teal-400/10 to-cyan-400/15 border-emerald-300/30",
-  ember: 
-    "bg-gradient-to-br from-amber-400/15 via-orange-400/10 to-rose-400/15 border-amber-300/30",
-  ocean: 
-    "bg-gradient-to-br from-sky-400/15 via-blue-400/10 to-indigo-400/15 border-sky-300/30",
-  midnight:
-    "bg-gradient-to-br from-violet-400/15 via-purple-400/10 to-fuchsia-400/15 border-violet-300/30",
-  cosmic:
-    "bg-gradient-to-br from-pink-400/15 via-purple-400/10 to-indigo-400/15 border-pink-300/30",
 };
 
 const intensityClasses: Record<NonNullable<GlassCardProps["intensity"]>, string> = {
@@ -27,7 +15,7 @@ const intensityClasses: Record<NonNullable<GlassCardProps["intensity"]>, string>
 
 export function GlassCard({
   className,
-  tone = "ocean",
+  tone,
   intensity = "medium",
   bordered = true,
   children,
@@ -41,11 +29,13 @@ export function GlassCard({
         "transition-all duration-300",
         "hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]",
         intensityClasses[intensity],
-        cardToneClasses[tone],
+        "bg-linear-to-br from-[rgb(var(--nc-accent-1)/0.15)] via-[rgb(var(--nc-accent-2)/0.10)] to-[rgb(var(--nc-accent-3)/0.15)]",
+        "border-[rgb(var(--nc-accent-1)/0.3)]",
         bordered ? "border-2" : "border-0",
         "before:absolute before:inset-0 before:bg-linear-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
         className
       )}
+      data-nc-theme={tone}
       {...props}
     >
       <div className="relative z-10">{children}</div>
