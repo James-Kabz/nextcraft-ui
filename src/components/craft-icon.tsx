@@ -49,10 +49,15 @@ export function CraftIcon({
     );
   }
 
-  if (React.isValidElement(icon)) {
-    const iconProps = icon.props as { className?: string };
+  type IconElementProps = {
+    className?: string;
+    "aria-hidden"?: boolean;
+    "aria-label"?: string;
+  };
+
+  if (React.isValidElement<IconElementProps>(icon)) {
     return React.cloneElement(icon, {
-      className: cn(iconProps.className, className),
+      className: cn(icon.props.className, className),
       "aria-hidden": ariaLabel ? undefined : true,
       "aria-label": ariaLabel,
     });
