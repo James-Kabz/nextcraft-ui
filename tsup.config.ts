@@ -6,6 +6,7 @@ export default defineConfig({
     "src/components/**/*.ts",
     "src/components/**/*.tsx",
     "src/theme/**/*.ts",
+    "src/theme/**/*.tsx",
     "src/utils/**/*.ts",
   ],
   bundle: false,

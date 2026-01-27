@@ -1,7 +1,7 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React from 'react';
 import { LinkProps } from 'next/link';
-import { a as ThemeName } from '../theme-context-EVI9PfKv.cjs';
+import { ThemeName } from '../theme/theme-context.cjs';
 
 type CraftLinkVariant = "default" | "muted" | "button" | "ghost";
 type CraftLinkProps = LinkProps & React.AnchorHTMLAttributes<HTMLAnchorElement> & {

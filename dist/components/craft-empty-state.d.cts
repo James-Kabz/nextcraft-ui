@@ -1,6 +1,6 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React from 'react';
-import { a as ThemeName } from '../theme-context-EVI9PfKv.cjs';
+import { ThemeName } from '../theme/theme-context.cjs';
 
 type CraftEmptyStateProps = React.HTMLAttributes<HTMLDivElement> & {
     tone?: ThemeName;

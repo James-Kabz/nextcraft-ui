@@ -1,7 +1,7 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React from 'react';
 import { FieldValues, Path, RegisterOptions } from 'react-hook-form';
-import { a as ThemeName } from '../theme-context-EVI9PfKv.js';
+import { ThemeName } from '../theme/theme-context.js';
 import { CraftFormFieldType, CraftFormFieldOption } from './craft-form-field.js';
 
 type CraftFormBuilderField<TValues extends FieldValues> = {

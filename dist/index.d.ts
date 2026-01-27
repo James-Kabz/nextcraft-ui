@@ -47,7 +47,7 @@ export { AuthLayout, AuthLayoutProps } from './components/layout/auth-layout.js'
 export { Container, ContainerProps } from './components/layout/container.js';
 export { Grid, GridProps } from './components/layout/grid.js';
 export { ThemeSwitcher, ThemeSwitcherProps } from './components/theme-switcher.js';
-export { T as ThemeMode, a as ThemeName, b as ThemeProvider, u as useTheme } from './theme-context-EVI9PfKv.js';
+export { ThemeMode, ThemeName, ThemeProvider, useTheme } from './theme/theme-context.js';
 import 'react/jsx-runtime';
 import 'react';
 import 'next/link';

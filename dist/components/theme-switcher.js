@@ -1,7 +1,7 @@
 "use client";
 import { jsx, jsxs } from "react/jsx-runtime";
 import { cn } from "../utils/cn";
-import { THEME_NAMES, useTheme } from "@/theme/theme-context";
+import { THEME_NAMES, useTheme } from "../theme/theme-context";
 const MODE_OPTIONS = ["system", "light", "dark"];
 function ThemeSwitcher({ className, showLabels = true, ...props }) {
   const { theme, mode, setTheme, setMode } = useTheme();

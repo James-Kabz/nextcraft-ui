@@ -1,7 +1,7 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
-import { a as ThemeName } from '../theme-context-EVI9PfKv.cjs';
+import { ThemeName } from '../theme/theme-context.cjs';
 
 type CraftCreateEditDrawerProps<TValues extends FieldValues> = {
     mode?: "create" | "edit";

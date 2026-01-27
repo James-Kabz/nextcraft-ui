@@ -24,7 +24,7 @@ __export(theme_switcher_exports, {
 module.exports = __toCommonJS(theme_switcher_exports);
 var import_jsx_runtime = require("react/jsx-runtime");
 var import_cn = require("../utils/cn");
-var import_theme_context = require("@/theme/theme-context");
+var import_theme_context = require("../theme/theme-context");
 const MODE_OPTIONS = ["system", "light", "dark"];
 function ThemeSwitcher({ className, showLabels = true, ...props }) {
   const { theme, mode, setTheme, setMode } = (0, import_theme_context.useTheme)();

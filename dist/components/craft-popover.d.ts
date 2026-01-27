@@ -1,6 +1,6 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React from 'react';
-import { a as ThemeName } from '../theme-context-EVI9PfKv.js';
+import { ThemeName } from '../theme/theme-context.js';
 
 type PopoverAlign = "start" | "center" | "end";
 type CraftPopoverProps = {

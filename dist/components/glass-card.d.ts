@@ -1,5 +1,5 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
-import { a as ThemeName } from '../theme-context-EVI9PfKv.js';
+import { ThemeName } from '../theme/theme-context.js';
 import 'react';
 
 type GlassCardProps = React.HTMLAttributes<HTMLDivElement> & {
