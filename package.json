@@ -77,6 +77,11 @@
     "react-hook-form": "^7.71.1",
     "tailwindcss": "^4"
   },
+  "peerDependenciesMeta": {
+    "lucide-react": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@tailwindcss/cli": "^4",
     "@tailwindcss/postcss": "^4",

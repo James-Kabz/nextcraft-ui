@@ -9,6 +9,8 @@ export default defineConfig({
     "src/craft/theme.ts",
     "src/craft/table.ts",
   ],
+  bundle: false,
+  splitting: false,
   format: ["esm", "cjs"],
   dts: true,
   sourcemap: true,

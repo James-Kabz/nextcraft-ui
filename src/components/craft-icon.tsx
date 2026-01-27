@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { DynamicIcon } from "lucide-react/dynamic";
 
 import { cn } from "@/utils/cn";
 
@@ -26,6 +25,13 @@ export type CraftIconProps = {
   useLucide?: boolean;
 };
 
+type DynamicIconComponent = React.ComponentType<{
+  name: string;
+  className?: string;
+  "aria-hidden"?: boolean;
+  "aria-label"?: string;
+}>;
+
 export function CraftIcon({
   name,
   className,
@@ -36,12 +42,36 @@ export function CraftIcon({
   const contextRegistry = React.useContext(CraftIconContext);
   const registry = icons ?? contextRegistry;
   const icon = registry?.[name];
+  const [LucideIcon, setLucideIcon] = React.useState<DynamicIconComponent | null>(
+    null
+  );
+
+  React.useEffect(() => {
+    if (!useLucide || icon || LucideIcon) return;
+    let mounted = true;
+    (async () => {
+      try {
+        const mod = await (Function)(
+          "return import('lucide-react/dynamic')"
+        )();
+        if (mounted) {
+          setLucideIcon(() => mod.DynamicIcon as DynamicIconComponent);
+        }
+      } catch {
+        if (mounted) setLucideIcon(null);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [LucideIcon, icon, useLucide]);
 
   if (!icon) {
     if (!useLucide) return null;
+    if (!LucideIcon) return null;
     return (
-      <DynamicIcon
-        name={name as unknown as React.ComponentProps<typeof DynamicIcon>["name"]}
+      <LucideIcon
+        name={name}
         className={className}
         aria-hidden={ariaLabel ? undefined : true}
         aria-label={ariaLabel}
