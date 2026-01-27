@@ -31,32 +31,44 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var index_exports = {};
 __export(index_exports, {
   AppShell: () => AppShell,
+  AppTemplate: () => AppTemplate,
   AuthLayout: () => AuthLayout,
   Breadcrumbs: () => Breadcrumbs,
   Container: () => Container,
+  CraftAlert: () => CraftAlert,
   CraftBadge: () => CraftBadge,
   CraftButton: () => CraftButton,
   CraftCard: () => CraftCard,
   CraftCheckbox: () => CraftCheckbox,
+  CraftCommandPalette: () => CraftCommandPalette,
   CraftConfirmDialog: () => CraftConfirmDialog,
   CraftCreateEditDrawer: () => CraftCreateEditDrawer,
   CraftCurrencyInput: () => CraftCurrencyInput,
   CraftDataTable: () => CraftDataTable,
   CraftDatePicker: () => CraftDatePicker,
   CraftDrawer: () => CraftDrawer,
+  CraftDropdownMenu: () => CraftDropdownMenu,
   CraftEmptyState: () => CraftEmptyState,
+  CraftErrorState: () => CraftErrorState,
   CraftFilterBar: () => CraftFilterBar,
   CraftForm: () => CraftForm,
   CraftFormBuilder: () => CraftFormBuilder,
   CraftFormField: () => CraftFormField,
+  CraftIcon: () => CraftIcon,
+  CraftIconProvider: () => CraftIconProvider,
   CraftInput: () => CraftInput,
+  CraftLink: () => CraftLink,
+  CraftLoadingState: () => CraftLoadingState,
   CraftModal: () => CraftModal,
   CraftNumberInput: () => CraftNumberInput,
   CraftPagination: () => CraftPagination,
+  CraftPopover: () => CraftPopover,
   CraftSelect: () => CraftSelect,
   CraftSkeleton: () => CraftSkeleton,
+  CraftStatCard: () => CraftStatCard,
   CraftSubmitButton: () => CraftSubmitButton,
   CraftSwitch: () => CraftSwitch,
+  CraftTableToolbar: () => CraftTableToolbar,
   CraftTabs: () => CraftTabs,
   CraftTextarea: () => CraftTextarea,
   CraftToastHost: () => CraftToastHost,
@@ -68,6 +80,7 @@ __export(index_exports, {
   ThemeProvider: () => ThemeProvider,
   ThemeSwitcher: () => ThemeSwitcher,
   TopNav: () => TopNav,
+  layoutConfigSchema: () => layoutConfigSchema,
   useCraftToast: () => useCraftToast,
   useTheme: () => useTheme
 });
@@ -412,20 +425,149 @@ function CraftBadge({
   );
 }
 
-// src/components/craft-card.tsx
+// src/components/craft-alert.tsx
 var import_jsx_runtime9 = require("react/jsx-runtime");
-function CraftCard({ className, tone, elevated = true, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+var variantClasses3 = {
+  info: "border-[rgb(var(--nc-accent-1)/0.45)] bg-[rgb(var(--nc-accent-1)/0.12)]",
+  success: "border-[rgb(var(--nc-accent-2)/0.45)] bg-[rgb(var(--nc-accent-2)/0.12)]",
+  warning: "border-[rgb(var(--nc-accent-3)/0.45)] bg-[rgb(var(--nc-accent-3)/0.12)]",
+  error: "border-[rgb(var(--nc-accent-3)/0.65)] bg-[rgb(var(--nc-accent-3)/0.18)]"
+};
+function CraftAlert({
+  title,
+  description,
+  variant = "info",
+  icon,
+  actions,
+  tone,
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
     "div",
     {
       className: cn(
-        "rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-6 text-[rgb(var(--nc-fg))] backdrop-blur-xl",
-        elevated && "shadow-[0_18px_40px_rgba(0,0,0,0.35)]",
+        "rounded-2xl border p-4 text-[rgb(var(--nc-fg))] backdrop-blur-xl",
+        variantClasses3[variant],
+        className
+      ),
+      "data-nc-theme": tone,
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-start gap-3", children: [
+          icon && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "mt-1 text-[rgb(var(--nc-fg))]", children: icon }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "space-y-1", children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-sm font-semibold", children: title }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description })
+          ] })
+        ] }),
+        actions && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "mt-3 flex flex-wrap gap-2", children: actions })
+      ]
+    }
+  );
+}
+
+// src/components/craft-error-state.tsx
+var import_jsx_runtime10 = require("react/jsx-runtime");
+function CraftErrorState({
+  title = "Something went wrong",
+  description = "Try again or check your connection.",
+  actionLabel = "Retry",
+  onAction,
+  action,
+  tone,
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+    "div",
+    {
+      className: cn(
+        "rounded-3xl border border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.12)] p-6 text-[rgb(var(--nc-fg))] shadow-[0_12px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl",
+        className
+      ),
+      "data-nc-theme": tone,
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { className: "text-lg font-semibold", children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "mt-4", children: action != null ? action : onAction && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(CraftButton, { size: "sm", onClick: onAction, children: actionLabel }) })
+      ]
+    }
+  );
+}
+
+// src/components/craft-loading-state.tsx
+var import_jsx_runtime11 = require("react/jsx-runtime");
+var sizeClasses2 = {
+  sm: "h-4 w-4 border-2",
+  md: "h-6 w-6 border-2",
+  lg: "h-8 w-8 border-[3px]"
+};
+function CraftLoadingState({
+  label = "Loading...",
+  size = "md",
+  tone,
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+    "div",
+    {
+      className: cn("flex items-center gap-3 text-[rgb(var(--nc-fg))]", className),
+      "data-nc-theme": tone,
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          "span",
+          {
+            className: cn(
+              "inline-block animate-spin rounded-full border-[rgb(var(--nc-accent-1)/0.25)] border-t-[rgb(var(--nc-accent-1))]",
+              sizeClasses2[size]
+            ),
+            "aria-hidden": "true"
+          }
+        ),
+        label && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: label })
+      ]
+    }
+  );
+}
+
+// src/components/craft-card.tsx
+var import_jsx_runtime12 = require("react/jsx-runtime");
+var intensityClasses2 = {
+  subtle: "backdrop-blur-md bg-opacity-50",
+  medium: "backdrop-blur-xl bg-opacity-70",
+  strong: "backdrop-blur-2xl bg-opacity-90"
+};
+function CraftCard({
+  className,
+  tone,
+  elevated = true,
+  intensity = "medium",
+  bordered = true,
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    "div",
+    {
+      className: cn(
+        "relative overflow-hidden rounded-3xl p-6 text-[rgb(var(--nc-fg))]",
+        intensityClasses2[intensity],
+        "bg-linear-to-br from-[rgb(var(--nc-accent-1)/0.15)] via-[rgb(var(--nc-accent-2)/0.10)] to-[rgb(var(--nc-accent-3)/0.15)]",
+        bordered ? "border-2 border-[rgb(var(--nc-accent-1)/0.3)]" : "border-0",
+        elevated ? "shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]" : "shadow-none",
+        "before:absolute before:inset-0 before:bg-linear-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
         "transition-all duration-300",
         className
       ),
       "data-nc-theme": tone,
-      ...props
+      ...props,
+      children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "relative z-10", children })
     }
   );
 }
@@ -433,7 +575,7 @@ function CraftCard({ className, tone, elevated = true, ...props }) {
 // src/components/craft-modal.tsx
 var React6 = __toESM(require("react"), 1);
 var import_react_dom = require("react-dom");
-var import_jsx_runtime10 = require("react/jsx-runtime");
+var import_jsx_runtime13 = require("react/jsx-runtime");
 var FOCUSABLE_SELECTORS = [
   "a[href]",
   "button:not([disabled])",
@@ -507,15 +649,15 @@ function CraftModal({
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen, setOpen]);
   const ref = useFocusTrap(isOpen);
-  const content = isOpen ? /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "fixed inset-0 z-50 flex items-center justify-center px-4 py-8", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+  const content = isOpen ? /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "fixed inset-0 z-50 flex items-center justify-center px-4 py-8", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       "div",
       {
         className: "absolute inset-0 backdrop-blur-sm",
         onClick: () => setOpen(false)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
       "div",
       {
         ref,
@@ -527,29 +669,29 @@ function CraftModal({
         ),
         "data-nc-theme": tone,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex items-start justify-between gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "space-y-1", children: [
-              title && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { className: "text-2xl font-semibold", children: title }),
-              description && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "text-[rgb(var(--nc-fg-muted))]", children: description })
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-start justify-between gap-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "space-y-1", children: [
+              title && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h3", { className: "text-2xl font-semibold", children: title }),
+              description && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-[rgb(var(--nc-fg-muted))]", children: description })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
               "button",
               {
                 className: "rounded-full border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-2 text-[rgb(var(--nc-fg-soft))] transition hover:text-[rgb(var(--nc-fg))]",
                 onClick: () => setOpen(false),
                 "aria-label": "Close",
-                children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("svg", { viewBox: "0 0 20 20", className: "h-4 w-4", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("path", { d: "M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" }) })
+                children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("svg", { viewBox: "0 0 20 20", className: "h-4 w-4", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("path", { d: "M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" }) })
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "mt-5 space-y-4", children }),
-          footer && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "mt-6", children: footer })
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "mt-5 space-y-4", children }),
+          footer && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "mt-6", children: footer })
         ]
       }
     )
   ] }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
-    trigger && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
+    trigger && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       "span",
       {
         onClick: () => setOpen(true),
@@ -569,7 +711,7 @@ function CraftModal({
 // src/components/craft-drawer.tsx
 var React7 = __toESM(require("react"), 1);
 var import_react_dom2 = require("react-dom");
-var import_jsx_runtime11 = require("react/jsx-runtime");
+var import_jsx_runtime14 = require("react/jsx-runtime");
 function CraftDrawer({
   open,
   defaultOpen = false,
@@ -600,15 +742,15 @@ function CraftDrawer({
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen, setOpen]);
-  const content = isOpen ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "fixed inset-0 z-50 overflow-hidden", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+  const content = isOpen ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "fixed inset-0 z-50 overflow-hidden", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
       "div",
       {
         className: "absolute inset-0 backdrop-blur-sm",
         onClick: () => setOpen(false)
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
       "div",
       {
         className: cn(
@@ -618,26 +760,26 @@ function CraftDrawer({
         ),
         "data-nc-theme": tone,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-between border-b border-[rgb(var(--nc-border)/0.3)] p-6", children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { className: "text-xl font-semibold", children: title }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-center justify-between border-b border-[rgb(var(--nc-border)/0.3)] p-6", children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h3", { className: "text-xl font-semibold", children: title }),
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
               "button",
               {
                 className: "rounded-full border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-2 text-[rgb(var(--nc-fg-soft))] transition hover:text-[rgb(var(--nc-fg))]",
                 onClick: () => setOpen(false),
                 "aria-label": "Close",
-                children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("svg", { viewBox: "0 0 20 20", className: "h-4 w-4", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("path", { d: "M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" }) })
+                children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("svg", { viewBox: "0 0 20 20", className: "h-4 w-4", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { d: "M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" }) })
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "p-6 space-y-4 overflow-y-auto h-[calc(100%-5.5rem)]", children }),
-          footer && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "border-t border-[rgb(var(--nc-border)/0.3)] p-6", children: footer })
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "p-6 space-y-4 overflow-y-auto h-[calc(100%-5.5rem)]", children }),
+          footer && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "border-t border-[rgb(var(--nc-border)/0.3)] p-6", children: footer })
         ]
       }
     )
   ] }) : null;
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
-    trigger && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+    trigger && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
       "span",
       {
         onClick: () => setOpen(true),
@@ -656,7 +798,7 @@ function CraftDrawer({
 
 // src/components/craft-tabs.tsx
 var React8 = __toESM(require("react"), 1);
-var import_jsx_runtime12 = require("react/jsx-runtime");
+var import_jsx_runtime15 = require("react/jsx-runtime");
 function CraftTabs({
   value,
   defaultValue,
@@ -694,14 +836,14 @@ function CraftTabs({
       setValue(next.value);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: cn("space-y-4", className), "data-nc-theme": tone, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: cn("space-y-4", className), "data-nc-theme": tone, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
       "div",
       {
         className: "inline-flex flex-wrap items-center gap-2 rounded-full border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-2",
         role: "tablist",
         onKeyDown,
-        children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
           "button",
           {
             role: "tab",
@@ -717,16 +859,16 @@ function CraftTabs({
         ))
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-4 text-[rgb(var(--nc-fg))]", children: panels[activeValue] })
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-4 text-[rgb(var(--nc-fg))]", children: panels[activeValue] })
   ] });
 }
 
 // src/components/craft-tooltip.tsx
 var React9 = __toESM(require("react"), 1);
-var import_jsx_runtime13 = require("react/jsx-runtime");
+var import_jsx_runtime16 = require("react/jsx-runtime");
 function CraftTooltip({ content, tone, children, side = "top" }) {
   const [open, setOpen] = React9.useState(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
     "span",
     {
       className: "relative inline-flex",
@@ -736,7 +878,7 @@ function CraftTooltip({ content, tone, children, side = "top" }) {
       onBlur: () => setOpen(false),
       children: [
         children,
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
           "span",
           {
             className: cn(
@@ -760,8 +902,8 @@ function CraftTooltip({ content, tone, children, side = "top" }) {
 
 // src/components/craft-toast.tsx
 var React10 = __toESM(require("react"), 1);
-var import_jsx_runtime14 = require("react/jsx-runtime");
-var variantClasses3 = {
+var import_jsx_runtime17 = require("react/jsx-runtime");
+var variantClasses4 = {
   info: "border-[color:rgb(var(--nc-accent-1)/0.4)]",
   success: "border-emerald-400/40",
   warning: "border-amber-400/40",
@@ -780,26 +922,26 @@ function useCraftToast() {
   return { toasts, push, remove };
 }
 function CraftToastHost({ toasts, onDismiss, tone }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
     "div",
     {
       className: "fixed right-6 top-6 z-50 flex w-full max-w-sm flex-col gap-3",
       "data-nc-theme": tone,
       children: toasts.map((toast) => {
         var _a;
-        return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           "div",
           {
             className: cn(
               "rounded-2xl border bg-[rgb(var(--nc-surface)/0.12)] p-4 text-[rgb(var(--nc-fg))] shadow-[0_15px_35px_rgba(0,0,0,0.35)] backdrop-blur-xl",
-              variantClasses3[(_a = toast.variant) != null ? _a : "info"]
+              variantClasses4[(_a = toast.variant) != null ? _a : "info"]
             ),
-            children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-start justify-between gap-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-sm font-semibold", children: toast.title }),
-                toast.description && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-xs text-[rgb(var(--nc-fg-muted))]", children: toast.description })
+            children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex items-start justify-between gap-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-sm font-semibold", children: toast.title }),
+                toast.description && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-xs text-[rgb(var(--nc-fg-muted))]", children: toast.description })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
                 "button",
                 {
                   className: "text-[rgb(var(--nc-fg-soft))] hover:text-[rgb(var(--nc-fg))]",
@@ -817,9 +959,9 @@ function CraftToastHost({ toasts, onDismiss, tone }) {
 }
 
 // src/components/craft-skeleton.tsx
-var import_jsx_runtime15 = require("react/jsx-runtime");
+var import_jsx_runtime18 = require("react/jsx-runtime");
 function CraftSkeleton({ className, tone, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
     "div",
     {
       className: cn(
@@ -835,7 +977,7 @@ function CraftSkeleton({ className, tone, ...props }) {
 }
 
 // src/components/craft-empty-state.tsx
-var import_jsx_runtime16 = require("react/jsx-runtime");
+var import_jsx_runtime19 = require("react/jsx-runtime");
 function CraftEmptyState({
   className,
   tone,
@@ -845,7 +987,7 @@ function CraftEmptyState({
   action,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
     "div",
     {
       className: cn(
@@ -856,18 +998,357 @@ function CraftEmptyState({
       "data-nc-theme": tone,
       ...props,
       children: [
-        icon && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[rgb(var(--nc-accent-1)/0.2)] text-[rgb(var(--nc-accent-1))]", children: icon }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "text-xl font-semibold", children: title }),
-        description && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "mt-2 text-sm text-[rgb(var(--nc-fg-muted))]", children: description }),
-        action && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "mt-6 flex justify-center", children: action })
+        icon && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[rgb(var(--nc-accent-1)/0.2)] text-[rgb(var(--nc-accent-1))]", children: icon }),
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h3", { className: "text-xl font-semibold", children: title }),
+        description && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "mt-2 text-sm text-[rgb(var(--nc-fg-muted))]", children: description }),
+        action && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "mt-6 flex justify-center", children: action })
+      ]
+    }
+  );
+}
+
+// src/components/craft-popover.tsx
+var React11 = __toESM(require("react"), 1);
+var import_jsx_runtime20 = require("react/jsx-runtime");
+var alignClasses = {
+  start: "left-0",
+  center: "left-1/2 -translate-x-1/2",
+  end: "right-0"
+};
+function CraftPopover({
+  open,
+  defaultOpen = false,
+  onOpenChange,
+  trigger,
+  content,
+  align = "start",
+  sideOffset = 10,
+  tone,
+  className,
+  contentClassName
+}) {
+  const [uncontrolledOpen, setUncontrolledOpen] = React11.useState(defaultOpen);
+  const isControlled = typeof open === "boolean";
+  const isOpen = isControlled ? open : uncontrolledOpen;
+  const rootRef = React11.useRef(null);
+  const setOpen = React11.useCallback(
+    (next) => {
+      if (!isControlled) setUncontrolledOpen(next);
+      onOpenChange == null ? void 0 : onOpenChange(next);
+    },
+    [isControlled, onOpenChange]
+  );
+  React11.useEffect(() => {
+    if (!isOpen) return;
+    const handleClick = (event) => {
+      if (!rootRef.current) return;
+      if (!rootRef.current.contains(event.target)) setOpen(false);
+    };
+    const handleKey = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [isOpen, setOpen]);
+  const triggerNode = React11.isValidElement(trigger) ? React11.cloneElement(trigger, {
+    onClick: (event) => {
+      const handler = trigger.props.onClick;
+      handler == null ? void 0 : handler(event);
+      if (!event.defaultPrevented) setOpen(!isOpen);
+    },
+    "aria-expanded": isOpen,
+    "aria-haspopup": "dialog"
+  }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    "button",
+    {
+      type: "button",
+      onClick: () => setOpen(!isOpen),
+      className: "inline-flex",
+      "aria-expanded": isOpen,
+      "aria-haspopup": "dialog",
+      children: trigger
+    }
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: cn("relative inline-flex", className), ref: rootRef, children: [
+    triggerNode,
+    isOpen && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+      "div",
+      {
+        className: cn(
+          "absolute z-40 w-max min-w-48 rounded-2xl border border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.08)] p-3 text-[rgb(var(--nc-fg))] shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-2xl",
+          alignClasses[align],
+          contentClassName
+        ),
+        style: { marginTop: sideOffset },
+        role: "dialog",
+        "data-nc-theme": tone,
+        children: content
+      }
+    )
+  ] });
+}
+
+// src/components/craft-dropdown-menu.tsx
+var React12 = __toESM(require("react"), 1);
+var import_jsx_runtime21 = require("react/jsx-runtime");
+function CraftDropdownMenu({
+  trigger,
+  items = [],
+  content,
+  open,
+  defaultOpen = false,
+  onOpenChange,
+  align = "end",
+  tone,
+  className,
+  menuClassName
+}) {
+  const [uncontrolledOpen, setUncontrolledOpen] = React12.useState(defaultOpen);
+  const isControlled = typeof open === "boolean";
+  const isOpen = isControlled ? open : uncontrolledOpen;
+  const setOpen = React12.useCallback(
+    (next) => {
+      if (!isControlled) setUncontrolledOpen(next);
+      onOpenChange == null ? void 0 : onOpenChange(next);
+    },
+    [isControlled, onOpenChange]
+  );
+  const menuContent = content != null ? content : items.length ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: cn("space-y-1", menuClassName), role: "menu", children: items.map((item, index) => {
+    var _a;
+    const key = (_a = item.id) != null ? _a : `${index}-${String(item.label)}`;
+    const itemClasses = cn(
+      "flex w-full items-start gap-3 rounded-xl px-3 py-2 text-left text-sm transition",
+      item.disabled ? "cursor-not-allowed text-[rgb(var(--nc-fg-soft))] opacity-60" : "text-[rgb(var(--nc-fg))] hover:bg-[rgb(var(--nc-surface)/0.12)]"
+    );
+    const contentNode = /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
+      item.icon && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "mt-0.5", children: item.icon }),
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("span", { className: "flex-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "block font-medium", children: item.label }),
+        item.description && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { className: "block text-xs text-[rgb(var(--nc-fg-muted))]", children: item.description })
+      ] })
+    ] });
+    if (item.href) {
+      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+        "a",
+        {
+          href: item.href,
+          className: itemClasses,
+          role: "menuitem",
+          onClick: () => {
+            var _a2;
+            if (item.disabled) return;
+            (_a2 = item.onSelect) == null ? void 0 : _a2.call(item);
+            setOpen(false);
+          },
+          children: contentNode
+        },
+        key
+      );
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+      "button",
+      {
+        type: "button",
+        className: itemClasses,
+        role: "menuitem",
+        onClick: () => {
+          var _a2;
+          if (item.disabled) return;
+          (_a2 = item.onSelect) == null ? void 0 : _a2.call(item);
+          setOpen(false);
+        },
+        children: contentNode
+      },
+      key
+    );
+  }) }) : null;
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+    CraftPopover,
+    {
+      trigger,
+      content: menuContent,
+      open: isOpen,
+      onOpenChange: setOpen,
+      align,
+      tone,
+      className
+    }
+  );
+}
+
+// src/components/craft-command-palette.tsx
+var React13 = __toESM(require("react"), 1);
+var import_jsx_runtime22 = require("react/jsx-runtime");
+function CraftCommandPalette({
+  items,
+  open,
+  defaultOpen = false,
+  onOpenChange,
+  trigger,
+  title = "Command Palette",
+  placeholder = "Search commands...",
+  emptyText = "No results found.",
+  tone,
+  className
+}) {
+  const [uncontrolledOpen, setUncontrolledOpen] = React13.useState(defaultOpen);
+  const isControlled = typeof open === "boolean";
+  const isOpen = isControlled ? open : uncontrolledOpen;
+  const [query, setQuery] = React13.useState("");
+  const setOpen = React13.useCallback(
+    (next) => {
+      if (!isControlled) setUncontrolledOpen(next);
+      onOpenChange == null ? void 0 : onOpenChange(next);
+    },
+    [isControlled, onOpenChange]
+  );
+  const filtered = React13.useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return items;
+    return items.filter((item) => {
+      var _a, _b;
+      const haystack = [
+        item.label,
+        (_a = item.description) != null ? _a : "",
+        ...(_b = item.keywords) != null ? _b : []
+      ].join(" ").toLowerCase();
+      return haystack.includes(q);
+    });
+  }, [items, query]);
+  React13.useEffect(() => {
+    if (!isOpen) setQuery("");
+  }, [isOpen]);
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    CraftModal,
+    {
+      open: isOpen,
+      onOpenChange: setOpen,
+      trigger,
+      title,
+      tone,
+      className: cn("max-w-xl", className),
+      children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+          CraftInput,
+          {
+            type: "search",
+            placeholder,
+            value: query,
+            onChange: (event) => setQuery(event.target.value)
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "space-y-2", children: [
+          filtered.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "rounded-2xl border border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.12)] p-4 text-sm text-[rgb(var(--nc-fg-muted))]", children: emptyText }),
+          filtered.map((item) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+            "button",
+            {
+              type: "button",
+              disabled: item.disabled,
+              onClick: () => {
+                var _a;
+                if (item.disabled) return;
+                (_a = item.onSelect) == null ? void 0 : _a.call(item);
+                setOpen(false);
+              },
+              className: cn(
+                "flex w-full items-start gap-3 rounded-2xl border border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.08)] px-4 py-3 text-left transition",
+                item.disabled ? "cursor-not-allowed opacity-60" : "hover:bg-[rgb(var(--nc-surface)/0.16)]"
+              ),
+              children: [
+                item.icon && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "mt-1", children: item.icon }),
+                /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("span", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "block text-sm font-semibold", children: item.label }),
+                  item.description && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "block text-xs text-[rgb(var(--nc-fg-muted))]", children: item.description })
+                ] })
+              ]
+            },
+            item.id
+          ))
+        ] })
+      ] })
+    }
+  );
+}
+
+// src/components/craft-link.tsx
+var import_link = __toESM(require("next/link"), 1);
+var import_jsx_runtime23 = require("react/jsx-runtime");
+var variantClasses5 = {
+  default: "text-[rgb(var(--nc-accent-1))] hover:text-[rgb(var(--nc-accent-1))]",
+  muted: "text-[rgb(var(--nc-fg-muted))] hover:text-[rgb(var(--nc-fg))]",
+  button: "inline-flex items-center rounded-xl border border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.12)] px-4 py-2 text-sm font-semibold text-[rgb(var(--nc-fg))] transition hover:bg-[rgb(var(--nc-surface)/0.2)]",
+  ghost: "inline-flex items-center rounded-xl px-4 py-2 text-sm font-semibold text-[rgb(var(--nc-fg))] transition hover:bg-[rgb(var(--nc-surface)/0.18)]"
+};
+function CraftLink({
+  variant = "default",
+  underline = false,
+  tone,
+  className,
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+    import_link.default,
+    {
+      className: cn(
+        "transition-colors",
+        variantClasses5[variant],
+        underline && "underline underline-offset-4",
+        className
+      ),
+      "data-nc-theme": tone,
+      ...props,
+      children
+    }
+  );
+}
+
+// src/components/craft-stat-card.tsx
+var import_jsx_runtime24 = require("react/jsx-runtime");
+var trendClasses = {
+  up: "text-emerald-300",
+  down: "text-rose-300",
+  neutral: "text-[rgb(var(--nc-fg-muted))]"
+};
+function CraftStatCard({
+  label,
+  value,
+  delta,
+  trend = "neutral",
+  icon,
+  footer,
+  tone,
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+    CraftCard,
+    {
+      className: cn("space-y-3", className),
+      tone,
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center justify-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: label }),
+          icon && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-[rgb(var(--nc-fg-soft))]", children: icon })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-3xl font-semibold", children: value }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center justify-between text-xs", children: [
+          delta && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: trendClasses[trend], children: delta }),
+          footer && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "text-[rgb(var(--nc-fg-muted))]", children: footer })
+        ] })
       ]
     }
   );
 }
 
 // src/components/craft-date-picker.tsx
-var React11 = __toESM(require("react"), 1);
-var import_jsx_runtime17 = require("react/jsx-runtime");
+var React14 = __toESM(require("react"), 1);
+var import_jsx_runtime25 = require("react/jsx-runtime");
 var WEEK_DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 function formatDate(date) {
   const year = date.getFullYear();
@@ -901,18 +1382,18 @@ function CraftDatePicker({
   placeholder = "Select date",
   className
 }) {
-  const [open, setOpen] = React11.useState(false);
-  const [uncontrolledValue, setUncontrolledValue] = React11.useState(defaultValue != null ? defaultValue : "");
+  const [open, setOpen] = React14.useState(false);
+  const [uncontrolledValue, setUncontrolledValue] = React14.useState(defaultValue != null ? defaultValue : "");
   const isControlled = value !== void 0;
   const selectedValue = isControlled ? value != null ? value : "" : uncontrolledValue;
   const selectedDate = parseDate(selectedValue);
   const initialMonth = selectedDate != null ? selectedDate : /* @__PURE__ */ new Date();
-  const [viewDate, setViewDate] = React11.useState(initialMonth);
-  React11.useEffect(() => {
+  const [viewDate, setViewDate] = React14.useState(initialMonth);
+  React14.useEffect(() => {
     if (selectedDate) setViewDate(selectedDate);
   }, [selectedDate]);
-  const wrapperRef = React11.useRef(null);
-  React11.useEffect(() => {
+  const wrapperRef = React14.useRef(null);
+  React14.useEffect(() => {
     if (!open) return;
     const handleClick = (event) => {
       var _a;
@@ -930,7 +1411,7 @@ function CraftDatePicker({
       document.removeEventListener("keydown", handleKey);
     };
   }, [open]);
-  const setValue = React11.useCallback(
+  const setValue = React14.useCallback(
     (next) => {
       if (!isControlled) setUncontrolledValue(next);
       onChange == null ? void 0 : onChange(next);
@@ -973,8 +1454,8 @@ function CraftDatePicker({
       }
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "relative w-full", "data-nc-theme": tone, ref: wrapperRef, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "relative w-full", "data-nc-theme": tone, ref: wrapperRef, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
       "button",
       {
         type: "button",
@@ -988,12 +1469,12 @@ function CraftDatePicker({
           className
         ),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: selectedValue ? "text-[rgb(var(--nc-fg))]" : "text-[rgb(var(--nc-fg-soft))]", children: selectedValue || placeholder }),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("svg", { className: "h-4 w-4 text-[rgb(var(--nc-fg-soft))]", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("path", { d: "M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h1a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zm10 6H4v8h12V8z" }) })
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: selectedValue ? "text-[rgb(var(--nc-fg))]" : "text-[rgb(var(--nc-fg-soft))]", children: selectedValue || placeholder }),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("svg", { className: "h-4 w-4 text-[rgb(var(--nc-fg-soft))]", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("path", { d: "M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h1a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zm10 6H4v8h12V8z" }) })
         ]
       }
     ),
-    open && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+    open && /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
       "div",
       {
         className: cn(
@@ -1002,8 +1483,8 @@ function CraftDatePicker({
         onKeyDown: handleKeyDown,
         tabIndex: -1,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex items-center justify-between", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
               "button",
               {
                 type: "button",
@@ -1014,8 +1495,8 @@ function CraftDatePicker({
                 children: "Prev"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "text-sm font-semibold", children: viewDate.toLocaleString(void 0, { month: "long", year: "numeric" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "text-sm font-semibold", children: viewDate.toLocaleString(void 0, { month: "long", year: "numeric" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
               "button",
               {
                 type: "button",
@@ -1027,12 +1508,12 @@ function CraftDatePicker({
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "mt-4 grid grid-cols-7 gap-2 text-xs text-[rgb(var(--nc-fg-muted))]", children: WEEK_DAYS.map((day) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "text-center", children: day }, day)) }),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "mt-2 grid grid-cols-7 gap-2", children: cells.map((date, index) => {
-            if (!date) return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", {}, `empty-${index}`);
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "mt-4 grid grid-cols-7 gap-2 text-xs text-[rgb(var(--nc-fg-muted))]", children: WEEK_DAYS.map((day) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "text-center", children: day }, day)) }),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "mt-2 grid grid-cols-7 gap-2", children: cells.map((date, index) => {
+            if (!date) return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", {}, `empty-${index}`);
             const disabled = isOutsideRange(date, min, max);
             const selected = selectedDate && isSameDay(date, selectedDate);
-            return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
               "button",
               {
                 type: "button",
@@ -1054,11 +1535,51 @@ function CraftDatePicker({
   ] });
 }
 
+// src/components/craft-icon.tsx
+var React15 = __toESM(require("react"), 1);
+var import_dynamic = require("lucide-react/dynamic");
+var import_jsx_runtime26 = require("react/jsx-runtime");
+var CraftIconContext = React15.createContext(null);
+function CraftIconProvider({ icons, children }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CraftIconContext.Provider, { value: icons, children });
+}
+function CraftIcon({
+  name,
+  className,
+  "aria-label": ariaLabel,
+  icons,
+  useLucide = true
+}) {
+  var _a;
+  const registry = icons != null ? icons : React15.useContext(CraftIconContext);
+  const icon = registry == null ? void 0 : registry[name];
+  if (!icon) {
+    if (!useLucide) return null;
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+      import_dynamic.DynamicIcon,
+      {
+        name,
+        className,
+        "aria-hidden": ariaLabel ? void 0 : true,
+        "aria-label": ariaLabel
+      }
+    );
+  }
+  if (React15.isValidElement(icon)) {
+    return React15.cloneElement(icon, {
+      className: cn((_a = icon.props) == null ? void 0 : _a.className, className),
+      "aria-hidden": ariaLabel ? void 0 : true,
+      "aria-label": ariaLabel
+    });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { className, "aria-label": ariaLabel, children: icon });
+}
+
 // src/components/craft-number-input.tsx
-var React12 = __toESM(require("react"), 1);
-var import_jsx_runtime18 = require("react/jsx-runtime");
-var CraftNumberInput = React12.forwardRef(({ className, tone, ...props }, ref) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "relative w-full", "data-nc-theme": tone, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+var React16 = __toESM(require("react"), 1);
+var import_jsx_runtime27 = require("react/jsx-runtime");
+var CraftNumberInput = React16.forwardRef(({ className, tone, ...props }, ref) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "relative w-full", "data-nc-theme": tone, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
     "input",
     {
       ref,
@@ -1081,12 +1602,12 @@ var CraftNumberInput = React12.forwardRef(({ className, tone, ...props }, ref) =
 CraftNumberInput.displayName = "CraftNumberInput";
 
 // src/components/craft-currency-input.tsx
-var React13 = __toESM(require("react"), 1);
-var import_jsx_runtime19 = require("react/jsx-runtime");
-var CraftCurrencyInput = React13.forwardRef(({ className, tone, currencySymbol = "$", ...props }, ref) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "relative w-full", "data-nc-theme": tone, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { className: "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[rgb(var(--nc-fg-soft))]", children: currencySymbol }),
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+var React17 = __toESM(require("react"), 1);
+var import_jsx_runtime28 = require("react/jsx-runtime");
+var CraftCurrencyInput = React17.forwardRef(({ className, tone, currencySymbol = "$", ...props }, ref) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "relative w-full", "data-nc-theme": tone, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[rgb(var(--nc-fg-soft))]", children: currencySymbol }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
       "input",
       {
         ref,
@@ -1112,12 +1633,12 @@ var CraftCurrencyInput = React13.forwardRef(({ className, tone, currencySymbol =
 CraftCurrencyInput.displayName = "CraftCurrencyInput";
 
 // src/components/craft-form.tsx
-var React14 = __toESM(require("react"), 1);
+var React18 = __toESM(require("react"), 1);
 var import_react_hook_form2 = require("react-hook-form");
 
 // src/components/craft-submit-button.tsx
 var import_react_hook_form = require("react-hook-form");
-var import_jsx_runtime20 = require("react/jsx-runtime");
+var import_jsx_runtime29 = require("react/jsx-runtime");
 function CraftSubmitButton({
   className,
   tone,
@@ -1133,7 +1654,7 @@ function CraftSubmitButton({
   const isSubmitting = (_b = loading != null ? loading : (_a = form == null ? void 0 : form.formState) == null ? void 0 : _a.isSubmitting) != null ? _b : false;
   const isValid = (_d = (_c = form == null ? void 0 : form.formState) == null ? void 0 : _c.isValid) != null ? _d : true;
   const isDisabled = disabled || isSubmitting || disableWhenInvalid && !isValid;
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
     "button",
     {
       type: "submit",
@@ -1151,15 +1672,15 @@ function CraftSubmitButton({
       disabled: isDisabled,
       ...props,
       children: [
-        isSubmitting && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { className: "inline-flex h-4 w-4 animate-spin rounded-full border-2 border-white/60 border-t-white" }),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { children: isSubmitting ? loadingLabel : children })
+        isSubmitting && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { className: "inline-flex h-4 w-4 animate-spin rounded-full border-2 border-white/60 border-t-white" }),
+        /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { children: isSubmitting ? loadingLabel : children })
       ]
     }
   );
 }
 
 // src/components/craft-form.tsx
-var import_jsx_runtime21 = require("react/jsx-runtime");
+var import_jsx_runtime30 = require("react/jsx-runtime");
 function CraftForm({
   form,
   onSubmit,
@@ -1179,24 +1700,24 @@ function CraftForm({
   closeOnSubmit = true,
   formClassName
 }) {
-  const [uncontrolledOpen, setUncontrolledOpen] = React14.useState(defaultOpen);
+  const [uncontrolledOpen, setUncontrolledOpen] = React18.useState(defaultOpen);
   const isControlled = typeof open === "boolean";
   const isOpen = isControlled ? open : uncontrolledOpen;
-  const setOpen = React14.useCallback(
+  const setOpen = React18.useCallback(
     (next) => {
       if (!isControlled) setUncontrolledOpen(next);
       onOpenChange == null ? void 0 : onOpenChange(next);
     },
     [isControlled, onOpenChange]
   );
-  const formId = React14.useId();
+  const formId = React18.useId();
   const handleSubmit = form.handleSubmit(async (values) => {
     await onSubmit(values);
     if (closeOnSubmit) setOpen(false);
   });
-  const footerContent = footer != null ? footer : /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex flex-wrap items-center justify-end gap-3", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(CraftButton, { type: "button", variant: "ghost", onClick: () => setOpen(false), children: cancelLabel }),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+  const footerContent = footer != null ? footer : /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { className: "flex flex-wrap items-center justify-end gap-3", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(CraftButton, { type: "button", variant: "ghost", onClick: () => setOpen(false), children: cancelLabel }),
+    /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
       CraftSubmitButton,
       {
         form: formId,
@@ -1205,7 +1726,7 @@ function CraftForm({
       }
     )
   ] });
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_react_hook_form2.FormProvider, { ...form, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_react_hook_form2.FormProvider, { ...form, children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
     CraftModal,
     {
       open: isOpen,
@@ -1216,7 +1737,7 @@ function CraftForm({
       tone,
       className,
       footer: footerContent,
-      children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
         "form",
         {
           id: formId,
@@ -1230,12 +1751,12 @@ function CraftForm({
 }
 
 // src/components/craft-form-builder.tsx
-var React15 = __toESM(require("react"), 1);
+var React19 = __toESM(require("react"), 1);
 var import_react_hook_form4 = require("react-hook-form");
 
 // src/components/craft-form-field.tsx
 var import_react_hook_form3 = require("react-hook-form");
-var import_jsx_runtime22 = require("react/jsx-runtime");
+var import_jsx_runtime31 = require("react/jsx-runtime");
 function getFieldError(errors, name) {
   if (!errors || typeof errors !== "object") return void 0;
   const segments = name.split(".");
@@ -1267,9 +1788,9 @@ function CraftFormField({
   const error = getFieldError(formState.errors, name);
   const errorMessage = typeof (error == null ? void 0 : error.message) === "string" ? error.message : void 0;
   if (type === "hidden") {
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("input", { type: "hidden", ...register(name, rules) });
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("input", { type: "hidden", ...register(name, rules) });
   }
-  const labelNode = label ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+  const labelNode = label ? /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
     "label",
     {
       htmlFor: name,
@@ -1280,7 +1801,7 @@ function CraftFormField({
       children: label
     }
   ) : null;
-  const descriptionNode = description ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+  const descriptionNode = description ? /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
     "p",
     {
       className: cn(
@@ -1290,10 +1811,10 @@ function CraftFormField({
       children: description
     }
   ) : null;
-  const errorNode = errorMessage ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("p", { className: "text-xs text-[rgb(var(--nc-accent-3))]", children: errorMessage }) : null;
+  const errorNode = errorMessage ? /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("p", { className: "text-xs text-[rgb(var(--nc-accent-3))]", children: errorMessage }) : null;
   const renderInput = () => {
     if (type === "textarea") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         CraftTextarea,
         {
           id: name,
@@ -1307,7 +1828,7 @@ function CraftFormField({
       );
     }
     if (type === "select" || type === "multiselect") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
         CraftSelect,
         {
           id: name,
@@ -1318,8 +1839,8 @@ function CraftFormField({
           ...fieldProps,
           ...register(name, rules),
           children: [
-            placeholder && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("option", { value: "", disabled: true, children: placeholder }),
-            options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+            placeholder && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("option", { value: "", disabled: true, children: placeholder }),
+            options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
               "option",
               {
                 value: option.value,
@@ -1333,7 +1854,7 @@ function CraftFormField({
       );
     }
     if (type === "checkbox") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         CraftCheckbox,
         {
           tone,
@@ -1346,7 +1867,7 @@ function CraftFormField({
       );
     }
     if (type === "switch") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         CraftSwitch,
         {
           tone,
@@ -1358,7 +1879,7 @@ function CraftFormField({
       );
     }
     if (type === "date") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         import_react_hook_form3.Controller,
         {
           control,
@@ -1366,7 +1887,7 @@ function CraftFormField({
           rules,
           render: ({ field }) => {
             var _a;
-            return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
               CraftDatePicker,
               {
                 value: (_a = field.value) != null ? _a : "",
@@ -1381,7 +1902,7 @@ function CraftFormField({
       );
     }
     if (type === "number") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         CraftNumberInput,
         {
           id: name,
@@ -1395,7 +1916,7 @@ function CraftFormField({
       );
     }
     if (type === "currency") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         CraftCurrencyInput,
         {
           id: name,
@@ -1409,7 +1930,7 @@ function CraftFormField({
       );
     }
     if (type === "radio") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "grid gap-3", children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "grid gap-3", children: options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
         "label",
         {
           className: cn(
@@ -1420,7 +1941,7 @@ function CraftFormField({
           ),
           "data-nc-theme": tone,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
               "input",
               {
                 type: "radio",
@@ -1431,14 +1952,14 @@ function CraftFormField({
                 ...register(name, rules)
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { children: option.label })
+            /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("span", { children: option.label })
           ]
         },
         option.value
       )) });
     }
     if (type === "range" || type === "slider") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         "input",
         {
           id: name,
@@ -1454,7 +1975,7 @@ function CraftFormField({
       );
     }
     if (type === "file" || type === "multifile") {
-      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
         "input",
         {
           id: name,
@@ -1472,7 +1993,7 @@ function CraftFormField({
       );
     }
     const inputType = type === "search" || type === "password" || type === "email" || type === "tel" || type === "url" || type === "time" || type === "datetime-local" || type === "month" || type === "week" || type === "color" ? type : "text";
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
       CraftInput,
       {
         id: name,
@@ -1489,7 +2010,7 @@ function CraftFormField({
   const showLabel = type !== "checkbox" && type !== "switch";
   const showDescriptionAbove = type !== "checkbox" && type !== "switch";
   const showDescriptionBelow = type === "switch";
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: cn("space-y-2", className), "data-nc-theme": tone, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: cn("space-y-2", className), "data-nc-theme": tone, children: [
     showLabel ? labelNode : null,
     showDescriptionAbove ? descriptionNode : null,
     renderInput(),
@@ -1499,7 +2020,7 @@ function CraftFormField({
 }
 
 // src/components/craft-form-builder.tsx
-var import_jsx_runtime23 = require("react/jsx-runtime");
+var import_jsx_runtime32 = require("react/jsx-runtime");
 function defaultValueForField(field) {
   var _a, _b, _c, _d;
   if (field.defaultValue !== void 0) return field.defaultValue;
@@ -1657,17 +2178,17 @@ function CraftFormBuilder({
   onCancel,
   customValidation
 }) {
-  const [uncontrolledOpen, setUncontrolledOpen] = React15.useState(defaultOpen);
+  const [uncontrolledOpen, setUncontrolledOpen] = React19.useState(defaultOpen);
   const isControlled = typeof open === "boolean";
   const isOpen = isControlled ? open : uncontrolledOpen;
-  const setOpen = React15.useCallback(
+  const setOpen = React19.useCallback(
     (next) => {
       if (!isControlled) setUncontrolledOpen(next);
       onOpenChange == null ? void 0 : onOpenChange(next);
     },
     [isControlled, onOpenChange]
   );
-  const defaultValues = React15.useMemo(
+  const defaultValues = React19.useMemo(
     () => buildDefaultValues(fields, initialData),
     [fields, initialData]
   );
@@ -1675,8 +2196,8 @@ function CraftFormBuilder({
     mode: "onChange",
     defaultValues
   });
-  const formId = React15.useId();
-  React15.useEffect(() => {
+  const formId = React19.useId();
+  React19.useEffect(() => {
     form.reset(defaultValues);
   }, [defaultValues, form]);
   const handleSubmit = form.handleSubmit(async (values) => {
@@ -1705,7 +2226,7 @@ function CraftFormBuilder({
     onCancel == null ? void 0 : onCancel();
     if (closeOnCancel) setOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_react_hook_form4.FormProvider, { ...form, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_react_hook_form4.FormProvider, { ...form, children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
     CraftModal,
     {
       open: isOpen,
@@ -1715,8 +2236,8 @@ function CraftFormBuilder({
       description,
       tone,
       className,
-      footer: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex flex-wrap items-center justify-end gap-3", children: [
-        showReset && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+      footer: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "flex flex-wrap items-center justify-end gap-3", children: [
+        showReset && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
           CraftButton,
           {
             type: "button",
@@ -1726,7 +2247,7 @@ function CraftFormBuilder({
             children: resetLabel
           }
         ),
-        showCancel && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+        showCancel && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
           CraftButton,
           {
             type: "button",
@@ -1736,7 +2257,7 @@ function CraftFormBuilder({
             children: cancelLabel
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
           CraftSubmitButton,
           {
             loading,
@@ -1746,15 +2267,15 @@ function CraftFormBuilder({
           }
         )
       ] }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
         "form",
         {
           id: formId,
           onSubmit: handleSubmit,
           className: cn("space-y-5", formClassName),
-          children: fields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "space-y-2", children: [
-            field.helpText && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-xs text-[rgb(var(--nc-fg-muted))]", children: field.helpText }),
-            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+          children: fields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "space-y-2", children: [
+            field.helpText && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "text-xs text-[rgb(var(--nc-fg-muted))]", children: field.helpText }),
+            /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
               CraftFormField,
               {
                 name: field.name,
@@ -1785,8 +2306,8 @@ function CraftFormBuilder({
 }
 
 // src/components/craft-confirm-dialog.tsx
-var React16 = __toESM(require("react"), 1);
-var import_jsx_runtime24 = require("react/jsx-runtime");
+var React20 = __toESM(require("react"), 1);
+var import_jsx_runtime33 = require("react/jsx-runtime");
 function CraftConfirmDialog({
   open,
   defaultOpen = false,
@@ -1801,17 +2322,17 @@ function CraftConfirmDialog({
   className,
   confirmVariant = "solid"
 }) {
-  const [uncontrolledOpen, setUncontrolledOpen] = React16.useState(defaultOpen);
+  const [uncontrolledOpen, setUncontrolledOpen] = React20.useState(defaultOpen);
   const isControlled = typeof open === "boolean";
   const isOpen = isControlled ? open : uncontrolledOpen;
-  const setOpen = React16.useCallback(
+  const setOpen = React20.useCallback(
     (next) => {
       if (!isControlled) setUncontrolledOpen(next);
       onOpenChange == null ? void 0 : onOpenChange(next);
     },
     [isControlled, onOpenChange]
   );
-  const [isLoading, setIsLoading] = React16.useState(false);
+  const [isLoading, setIsLoading] = React20.useState(false);
   const handleConfirm = async () => {
     if (!onConfirm) {
       setOpen(false);
@@ -1822,7 +2343,7 @@ function CraftConfirmDialog({
     setIsLoading(false);
     setOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
     CraftModal,
     {
       open: isOpen,
@@ -1832,8 +2353,8 @@ function CraftConfirmDialog({
       description,
       tone,
       className: cn("max-w-md", className),
-      footer: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex flex-wrap items-center justify-end gap-3", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+      footer: /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { className: "flex flex-wrap items-center justify-end gap-3", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
           CraftButton,
           {
             type: "button",
@@ -1842,7 +2363,7 @@ function CraftConfirmDialog({
             children: cancelLabel
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(
           CraftButton,
           {
             type: "button",
@@ -1853,15 +2374,15 @@ function CraftConfirmDialog({
           }
         )
       ] }),
-      children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description })
+      children: /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description })
     }
   );
 }
 
 // src/components/craft-create-edit-drawer.tsx
-var React17 = __toESM(require("react"), 1);
+var React21 = __toESM(require("react"), 1);
 var import_react_hook_form5 = require("react-hook-form");
-var import_jsx_runtime25 = require("react/jsx-runtime");
+var import_jsx_runtime34 = require("react/jsx-runtime");
 function CraftCreateEditDrawer({
   mode = "create",
   form,
@@ -1882,26 +2403,26 @@ function CraftCreateEditDrawer({
   closeOnSubmit = true,
   side = "right"
 }) {
-  const [uncontrolledOpen, setUncontrolledOpen] = React17.useState(defaultOpen);
+  const [uncontrolledOpen, setUncontrolledOpen] = React21.useState(defaultOpen);
   const isControlled = typeof open === "boolean";
   const isOpen = isControlled ? open : uncontrolledOpen;
-  const setOpen = React17.useCallback(
+  const setOpen = React21.useCallback(
     (next) => {
       if (!isControlled) setUncontrolledOpen(next);
       onOpenChange == null ? void 0 : onOpenChange(next);
     },
     [isControlled, onOpenChange]
   );
-  const formId = React17.useId();
+  const formId = React21.useId();
   const handleSubmit = form.handleSubmit(async (values) => {
     await onSubmit(values);
     if (closeOnSubmit) setOpen(false);
   });
   const resolvedTitle = title != null ? title : mode === "create" ? "Create item" : "Edit item";
   const resolvedSubmitLabel = submitLabel != null ? submitLabel : mode === "create" ? "Create" : "Save changes";
-  const footerContent = footer != null ? footer : /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex flex-wrap items-center justify-end gap-3", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(CraftButton, { type: "button", variant: "ghost", onClick: () => setOpen(false), children: cancelLabel }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+  const footerContent = footer != null ? footer : /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "flex flex-wrap items-center justify-end gap-3", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(CraftButton, { type: "button", variant: "ghost", onClick: () => setOpen(false), children: cancelLabel }),
+    /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
       CraftSubmitButton,
       {
         form: formId,
@@ -1910,7 +2431,7 @@ function CraftCreateEditDrawer({
       }
     )
   ] });
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_react_hook_form5.FormProvider, { ...form, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(import_react_hook_form5.FormProvider, { ...form, children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
     CraftDrawer,
     {
       open: isOpen,
@@ -1921,8 +2442,8 @@ function CraftCreateEditDrawer({
       side,
       className: cn("flex flex-col", className),
       footer: footerContent,
-      children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("form", { id: formId, onSubmit: handleSubmit, className: "space-y-5", children: [
-        description && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("p", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description }),
+      children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("form", { id: formId, onSubmit: handleSubmit, className: "space-y-5", children: [
+        description && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("p", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description }),
         children
       ] })
     }
@@ -1930,7 +2451,7 @@ function CraftCreateEditDrawer({
 }
 
 // src/components/craft-filter-bar.tsx
-var import_jsx_runtime26 = require("react/jsx-runtime");
+var import_jsx_runtime35 = require("react/jsx-runtime");
 function CraftFilterBar({
   title,
   description,
@@ -1942,7 +2463,7 @@ function CraftFilterBar({
   tone,
   className
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
     "div",
     {
       className: cn(
@@ -1951,15 +2472,15 @@ function CraftFilterBar({
       ),
       "data-nc-theme": tone,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex flex-wrap items-center justify-between gap-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h3", { className: "text-lg font-semibold", children: title }),
-            description && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description })
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "flex flex-wrap items-center justify-between gap-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h3", { className: "text-lg font-semibold", children: title }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("p", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description })
           ] }),
-          actions && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "flex items-center gap-3", children: actions })
+          actions && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "flex items-center gap-3", children: actions })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto]", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { className: "mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto]", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
             CraftInput,
             {
               type: "search",
@@ -1969,7 +2490,58 @@ function CraftFilterBar({
               tone
             }
           ),
-          filters && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "flex flex-wrap items-center gap-3", children: filters })
+          filters && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { className: "flex flex-wrap items-center gap-3", children: filters })
+        ] })
+      ]
+    }
+  );
+}
+
+// src/components/craft-table-toolbar.tsx
+var import_jsx_runtime36 = require("react/jsx-runtime");
+function CraftTableToolbar({
+  title,
+  description,
+  searchValue,
+  onSearchChange,
+  searchPlaceholder = "Search table...",
+  actions,
+  filters,
+  bulkActions,
+  tone,
+  className
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+    "div",
+    {
+      className: cn(
+        "rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-4 text-[rgb(var(--nc-fg))] shadow-[0_12px_36px_rgba(0,0,0,0.2)] backdrop-blur-2xl",
+        className
+      ),
+      "data-nc-theme": tone,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex flex-wrap items-center justify-between gap-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h3", { className: "text-lg font-semibold", children: title }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("p", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: description })
+          ] }),
+          actions && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: "flex items-center gap-3", children: actions })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto]", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+            CraftInput,
+            {
+              type: "search",
+              placeholder: searchPlaceholder,
+              value: searchValue != null ? searchValue : "",
+              onChange: (event) => onSearchChange == null ? void 0 : onSearchChange(event.target.value),
+              tone
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { className: "flex flex-wrap items-center gap-3", children: [
+            filters,
+            bulkActions
+          ] })
         ] })
       ]
     }
@@ -1977,10 +2549,10 @@ function CraftFilterBar({
 }
 
 // src/components/craft-data-table.tsx
-var React18 = __toESM(require("react"), 1);
+var React22 = __toESM(require("react"), 1);
 
 // src/components/craft-pagination.tsx
-var import_jsx_runtime27 = require("react/jsx-runtime");
+var import_jsx_runtime37 = require("react/jsx-runtime");
 function getPageNumbers(pageIndex, pageCount, maxButtons = 5) {
   if (pageCount <= maxButtons) {
     return Array.from({ length: pageCount }, (_, i) => i);
@@ -2010,7 +2582,7 @@ function CraftPagination({
   className
 }) {
   const pages = getPageNumbers(pageIndex, pageCount);
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(
     "div",
     {
       className: cn(
@@ -2019,8 +2591,8 @@ function CraftPagination({
       ),
       "data-nc-theme": tone,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
             "button",
             {
               type: "button",
@@ -2035,7 +2607,7 @@ function CraftPagination({
             }
           ),
           pages.map(
-            (page, index) => page === "ellipsis" ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "px-2 text-[rgb(var(--nc-fg-muted))]", children: "..." }, `ellipsis-${index}`) : /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+            (page, index) => page === "ellipsis" ? /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { className: "px-2 text-[rgb(var(--nc-fg-muted))]", children: "..." }, `ellipsis-${index}`) : /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
               "button",
               {
                 type: "button",
@@ -2049,7 +2621,7 @@ function CraftPagination({
               page
             )
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
             "button",
             {
               type: "button",
@@ -2064,15 +2636,15 @@ function CraftPagination({
             }
           )
         ] }),
-        onPageSizeChange && /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center gap-2 text-xs text-[rgb(var(--nc-fg-muted))]", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: "Rows" }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        onPageSizeChange && /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { className: "flex items-center gap-2 text-xs text-[rgb(var(--nc-fg-muted))]", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { children: "Rows" }),
+          /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
             "select",
             {
               className: "rounded-xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-2 py-1 text-xs text-[rgb(var(--nc-fg))]",
               value: pageSize,
               onChange: (event) => onPageSizeChange(Number(event.target.value)),
-              children: pageSizeOptions.map((size) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("option", { value: size, children: size }, size))
+              children: pageSizeOptions.map((size) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("option", { value: size, children: size }, size))
             }
           )
         ] })
@@ -2082,7 +2654,7 @@ function CraftPagination({
 }
 
 // src/components/craft-data-table.tsx
-var import_jsx_runtime28 = require("react/jsx-runtime");
+var import_jsx_runtime38 = require("react/jsx-runtime");
 function getColumnValue(column, row) {
   if (typeof column.accessor === "function") return column.accessor(row);
   const record = row;
@@ -2130,18 +2702,18 @@ function CraftDataTable({
   onPageChange,
   onPageSizeChange
 }) {
-  const [internalSort, setInternalSort] = React18.useState(null);
-  const [internalFilters, setInternalFilters] = React18.useState({});
-  const [internalGlobalFilter, setInternalGlobalFilter] = React18.useState("");
-  const [internalVisibility, setInternalVisibility] = React18.useState(
+  const [internalSort, setInternalSort] = React22.useState(null);
+  const [internalFilters, setInternalFilters] = React22.useState({});
+  const [internalGlobalFilter, setInternalGlobalFilter] = React22.useState("");
+  const [internalVisibility, setInternalVisibility] = React22.useState(
     () => columns.reduce((acc, column) => {
       acc[column.id] = !column.hidden;
       return acc;
     }, {})
   );
-  const [internalSelection, setInternalSelection] = React18.useState({});
-  const [internalPageIndex, setInternalPageIndex] = React18.useState(0);
-  const [showColumns, setShowColumns] = React18.useState(false);
+  const [internalSelection, setInternalSelection] = React22.useState({});
+  const [internalPageIndex, setInternalPageIndex] = React22.useState(0);
+  const [showColumns, setShowColumns] = React22.useState(false);
   const resolvedSort = sortBy != null ? sortBy : internalSort;
   const resolvedFilters = filters != null ? filters : internalFilters;
   const resolvedGlobalFilter = globalFilter != null ? globalFilter : internalGlobalFilter;
@@ -2164,7 +2736,7 @@ function CraftDataTable({
     if (selectedRowIds === void 0) setInternalSelection(next);
     onRowSelectionChange == null ? void 0 : onRowSelectionChange(next);
   };
-  const setPageIndex = React18.useCallback(
+  const setPageIndex = React22.useCallback(
     (next) => {
       if (pageIndex === void 0) setInternalPageIndex(next);
       onPageChange == null ? void 0 : onPageChange(next);
@@ -2174,7 +2746,7 @@ function CraftDataTable({
   const visibleColumns = columns.filter(
     (column) => resolvedVisibility[column.id] !== false
   );
-  const filteredData = React18.useMemo(() => {
+  const filteredData = React22.useMemo(() => {
     if (manualFiltering) return data;
     const globalValue = resolvedGlobalFilter.trim();
     return data.filter((row) => {
@@ -2194,7 +2766,7 @@ function CraftDataTable({
       });
     });
   }, [columns, data, manualFiltering, resolvedFilters, resolvedGlobalFilter]);
-  const sortedData = React18.useMemo(() => {
+  const sortedData = React22.useMemo(() => {
     if (manualSorting || !resolvedSort) return filteredData;
     const column = columns.find((col) => col.id === resolvedSort.id);
     if (!column) return filteredData;
@@ -2209,17 +2781,17 @@ function CraftDataTable({
     return resolvedSort.desc ? sorted.reverse() : sorted;
   }, [columns, filteredData, manualSorting, resolvedSort]);
   const resolvedPageCount = manualPagination ? Math.max(pageCount != null ? pageCount : 1, 1) : Math.max(Math.ceil(sortedData.length / pageSize), 1);
-  React18.useEffect(() => {
+  React22.useEffect(() => {
     if (resolvedPageIndex > resolvedPageCount - 1) {
       setPageIndex(Math.max(resolvedPageCount - 1, 0));
     }
   }, [resolvedPageCount, resolvedPageIndex, setPageIndex]);
-  const pagedData = React18.useMemo(() => {
+  const pagedData = React22.useMemo(() => {
     if (!enablePagination || manualPagination) return sortedData;
     const start = resolvedPageIndex * pageSize;
     return sortedData.slice(start, start + pageSize);
   }, [enablePagination, manualPagination, pageSize, resolvedPageIndex, sortedData]);
-  const rowIdFor = React18.useCallback(
+  const rowIdFor = React22.useCallback(
     (row, index) => {
       var _a;
       return (_a = getRowId == null ? void 0 : getRowId(row, index)) != null ? _a : String(index);
@@ -2232,8 +2804,8 @@ function CraftDataTable({
   );
   const allSelected = pageRowIds.length > 0 && pageRowIds.every((id) => resolvedSelection[id]);
   const someSelected = pageRowIds.some((id) => resolvedSelection[id]);
-  const headerCheckboxRef = React18.useRef(null);
-  React18.useEffect(() => {
+  const headerCheckboxRef = React22.useRef(null);
+  React22.useEffect(() => {
     if (headerCheckboxRef.current) {
       headerCheckboxRef.current.indeterminate = someSelected && !allSelected;
     }
@@ -2251,17 +2823,17 @@ function CraftDataTable({
     }
     setSort(null);
   };
-  const emptyContent = emptyState != null ? emptyState : /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "text-center text-sm text-[rgb(var(--nc-fg-muted))]", children: "No results found." });
+  const emptyContent = emptyState != null ? emptyState : /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "text-center text-sm text-[rgb(var(--nc-fg-muted))]", children: "No results found." });
   const resolvedShowGlobalFilter = showGlobalFilter != null ? showGlobalFilter : enableFiltering && !toolbar;
   const setGlobalFilter = (next) => {
     if (globalFilter === void 0) setInternalGlobalFilter(next);
     onGlobalFilterChange == null ? void 0 : onGlobalFilterChange(next);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: cn("space-y-4", className), "data-nc-theme": tone, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: cn("space-y-4", className), "data-nc-theme": tone, children: [
     toolbar,
-    resolvedShowGlobalFilter && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "flex items-center justify-between gap-3 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-2 text-sm text-[rgb(var(--nc-fg))]", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "text-xs text-[rgb(var(--nc-fg-muted))]", children: "Global filter" }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    resolvedShowGlobalFilter && /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "flex items-center justify-between gap-3 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-2 text-sm text-[rgb(var(--nc-fg))]", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { className: "text-xs text-[rgb(var(--nc-fg-muted))]", children: "Global filter" }),
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
         "input",
         {
           type: "search",
@@ -2272,8 +2844,8 @@ function CraftDataTable({
         }
       )
     ] }),
-    enableColumnVisibility && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "relative flex justify-end", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    enableColumnVisibility && /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { className: "relative flex justify-end", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
         "button",
         {
           type: "button",
@@ -2282,12 +2854,12 @@ function CraftDataTable({
           children: "Columns"
         }
       ),
-      showColumns && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "absolute right-0 top-10 z-20 w-48 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.2)] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-2xl", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "grid gap-2", children: columns.map((column) => /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
+      showColumns && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "absolute right-0 top-10 z-20 w-48 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.2)] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-2xl", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "grid gap-2", children: columns.map((column) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
         "label",
         {
           className: "flex items-center gap-2 text-xs text-[rgb(var(--nc-fg))]",
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
               "input",
               {
                 type: "checkbox",
@@ -2305,9 +2877,9 @@ function CraftDataTable({
         column.id
       )) }) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "overflow-hidden rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("table", { className: "w-full border-collapse text-left text-sm", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("thead", { className: "bg-[rgb(var(--nc-surface)/0.12)] text-[rgb(var(--nc-fg-muted))]", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("tr", { children: [
-        enableRowSelection && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("th", { className: "w-12 px-4 py-3", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { className: "overflow-hidden rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("table", { className: "w-full border-collapse text-left text-sm", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("thead", { className: "bg-[rgb(var(--nc-surface)/0.12)] text-[rgb(var(--nc-fg-muted))]", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { children: [
+        enableRowSelection && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { className: "w-12 px-4 py-3", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
           "input",
           {
             ref: headerCheckboxRef,
@@ -2325,7 +2897,7 @@ function CraftDataTable({
         ) }),
         visibleColumns.map((column) => {
           var _a;
-          return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
             "th",
             {
               className: cn(
@@ -2334,7 +2906,7 @@ function CraftDataTable({
               ),
               style: { width: column.width },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
                   "button",
                   {
                     type: "button",
@@ -2344,12 +2916,12 @@ function CraftDataTable({
                     ),
                     onClick: () => toggleSort(column),
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { children: column.header }),
-                      (resolvedSort == null ? void 0 : resolvedSort.id) === column.id && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "text-[rgb(var(--nc-accent-1))]", children: resolvedSort.desc ? "\u2193" : "\u2191" })
+                      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { children: column.header }),
+                      (resolvedSort == null ? void 0 : resolvedSort.id) === column.id && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { className: "text-[rgb(var(--nc-accent-1))]", children: resolvedSort.desc ? "\u2193" : "\u2191" })
                     ]
                   }
                 ),
-                enableFiltering && column.filterable !== false && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+                enableFiltering && column.filterable !== false && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
                   "input",
                   {
                     type: "text",
@@ -2368,19 +2940,19 @@ function CraftDataTable({
           );
         })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("tbody", { className: "text-[rgb(var(--nc-fg))]", children: [
-        loading && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tbody", { className: "text-[rgb(var(--nc-fg))]", children: [
+        loading && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
           "td",
           {
             colSpan: visibleColumns.length + (enableRowSelection ? 1 : 0),
             className: "px-4 py-10 text-center text-sm text-[rgb(var(--nc-fg-muted))]",
-            children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("span", { className: "inline-flex items-center gap-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "h-4 w-4 animate-spin rounded-full border-2 border-[rgb(var(--nc-fg-muted))] border-t-transparent" }),
+            children: /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("span", { className: "inline-flex items-center gap-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { className: "h-4 w-4 animate-spin rounded-full border-2 border-[rgb(var(--nc-fg-muted))] border-t-transparent" }),
               "Loading data..."
             ] })
           }
         ) }),
-        !loading && pagedData.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+        !loading && pagedData.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
           "td",
           {
             colSpan: visibleColumns.length + (enableRowSelection ? 1 : 0),
@@ -2391,7 +2963,7 @@ function CraftDataTable({
         !loading && pagedData.map((row, rowIndex) => {
           const rowId = rowIdFor(row, pageStartIndex + rowIndex);
           const isSelected = resolvedSelection[rowId];
-          return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
             "tr",
             {
               className: cn(
@@ -2399,7 +2971,7 @@ function CraftDataTable({
                 isSelected && "bg-[rgb(var(--nc-accent-1)/0.08)]"
               ),
               children: [
-                enableRowSelection && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { className: "px-4 py-4", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+                enableRowSelection && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { className: "px-4 py-4", children: /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
                   "input",
                   {
                     type: "checkbox",
@@ -2413,7 +2985,7 @@ function CraftDataTable({
                 ) }),
                 visibleColumns.map((column) => {
                   var _a;
-                  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+                  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
                     "td",
                     {
                       className: cn(
@@ -2434,7 +3006,7 @@ function CraftDataTable({
         })
       ] })
     ] }) }),
-    enablePagination && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    enablePagination && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
       CraftPagination,
       {
         pageIndex: resolvedPageIndex,
@@ -2449,9 +3021,9 @@ function CraftDataTable({
 }
 
 // src/components/layout/app-shell.tsx
-var import_jsx_runtime29 = require("react/jsx-runtime");
+var import_jsx_runtime39 = require("react/jsx-runtime");
 function AppShell({ className, sidebar, topNav, children, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(
     "div",
     {
       className: cn(
@@ -2460,20 +3032,35 @@ function AppShell({ className, sidebar, topNav, children, ...props }) {
       ),
       ...props,
       children: [
-        sidebar && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "h-full lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto", children: sidebar }),
-        /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { className: "flex flex-col gap-6", children: [
-          topNav && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { className: "lg:sticky lg:top-6 lg:z-20", children: topNav }),
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("main", { className: "flex-1", children })
+        sidebar && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "h-full lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto", children: sidebar }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { className: "flex flex-col gap-6", children: [
+          topNav && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { className: "lg:sticky lg:top-6 lg:z-20", children: topNav }),
+          /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("main", { className: "flex-1", children })
         ] })
       ]
     }
   );
 }
 
+// src/components/layout/app-template.tsx
+var React23 = __toESM(require("react"), 1);
+
+// src/components/layout/breadcrumbs.tsx
+var import_jsx_runtime40 = require("react/jsx-runtime");
+function Breadcrumbs({ className, items, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("nav", { className: cn("flex items-center text-sm text-[rgb(var(--nc-fg-muted))]", className), ...props, children: items.map((item, index) => {
+    const content = item.href ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("a", { href: item.href, className: "transition hover:text-[rgb(var(--nc-fg))]", children: item.label }) : /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "text-[rgb(var(--nc-fg))]", children: item.label });
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("span", { className: "flex items-center", children: [
+      content,
+      index < items.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: "mx-2 text-[rgb(var(--nc-fg-soft))]", children: "/" })
+    ] }, `${item.label}-${index}`);
+  }) });
+}
+
 // src/components/layout/sidebar.tsx
-var import_jsx_runtime30 = require("react/jsx-runtime");
+var import_jsx_runtime41 = require("react/jsx-runtime");
 function Sidebar({ className, title, items, footer, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
     "aside",
     {
       className: cn(
@@ -2482,10 +3069,10 @@ function Sidebar({ className, title, items, footer, ...props }) {
       ),
       ...props,
       children: [
-        title && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "text-lg font-semibold", children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("nav", { className: "flex flex-col gap-2", children: items.map((item, index) => {
+        title && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "text-lg font-semibold", children: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("nav", { className: "flex flex-col gap-2", children: items.map((item, index) => {
           var _a;
-          return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
             "a",
             {
               href: (_a = item.href) != null ? _a : "#",
@@ -2495,22 +3082,22 @@ function Sidebar({ className, title, items, footer, ...props }) {
               ),
               children: [
                 item.icon,
-                /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: item.label })
+                /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { children: item.label })
               ]
             },
             `${item.label}-${index}`
           );
         }) }),
-        footer && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { className: "mt-auto pt-4", children: footer })
+        footer && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { className: "mt-auto pt-4", children: footer })
       ]
     }
   );
 }
 
 // src/components/layout/top-nav.tsx
-var import_jsx_runtime31 = require("react/jsx-runtime");
+var import_jsx_runtime42 = require("react/jsx-runtime");
 function TopNav({ className, title, actions, breadcrumb, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
     "header",
     {
       className: cn(
@@ -2519,18 +3106,131 @@ function TopNav({ className, title, actions, breadcrumb, ...props }) {
       ),
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { className: "space-y-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: "space-y-1", children: [
           breadcrumb,
-          title && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "text-xl font-semibold", children: title })
+          title && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "text-xl font-semibold", children: title })
         ] }),
-        actions && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { className: "flex flex-wrap gap-3", children: actions })
+        actions && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "flex flex-wrap gap-3", children: actions })
       ]
     }
   );
 }
 
+// src/components/layout/app-template.tsx
+var import_jsx_runtime43 = require("react/jsx-runtime");
+function AppTemplate({
+  config,
+  headerActions,
+  headerBreadcrumb,
+  sidebarFooter,
+  resolveIcon,
+  icons,
+  activePath,
+  getActivePath,
+  lucideFallback = true,
+  children
+}) {
+  const sidebarConfig = config.sidebar;
+  const headerConfig = config.header;
+  const resolvedActivePath = activePath != null ? activePath : getActivePath == null ? void 0 : getActivePath();
+  const buildIcon = React23.useCallback(
+    (name) => {
+      if (!name) return void 0;
+      if (resolveIcon) return resolveIcon(name);
+      if (icons == null ? void 0 : icons[name]) return icons[name];
+      return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(CraftIcon, { name, useLucide: lucideFallback });
+    },
+    [icons, lucideFallback, resolveIcon]
+  );
+  const sidebarItems = sidebarConfig ? sidebarConfig.items.map((item) => {
+    var _a;
+    return {
+      label: item.label,
+      href: item.href,
+      active: (_a = item.active) != null ? _a : resolvedActivePath && item.href ? item.href === resolvedActivePath : false,
+      icon: buildIcon(item.icon)
+    };
+  }) : null;
+  const breadcrumbNode = headerBreadcrumb != null ? headerBreadcrumb : (headerConfig == null ? void 0 : headerConfig.breadcrumb) ? /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Breadcrumbs, { items: headerConfig.breadcrumb }) : null;
+  const sidebarFooterNode = sidebarFooter != null ? sidebarFooter : (sidebarConfig == null ? void 0 : sidebarConfig.footerText) ? /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "text-xs text-[rgb(var(--nc-fg-muted))]", children: sidebarConfig.footerText }) : null;
+  return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+    AppShell,
+    {
+      sidebar: sidebarConfig && sidebarItems ? /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        Sidebar,
+        {
+          title: sidebarConfig.title,
+          items: sidebarItems,
+          footer: sidebarFooterNode
+        }
+      ) : void 0,
+      topNav: headerConfig ? /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        TopNav,
+        {
+          title: headerConfig.title,
+          breadcrumb: breadcrumbNode,
+          actions: headerActions
+        }
+      ) : void 0,
+      children
+    }
+  );
+}
+
+// src/components/layout/layout-config.ts
+var layoutConfigSchema = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  title: "Nextcraft UI Layout Config",
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    sidebar: {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        title: { type: "string" },
+        footerText: { type: "string" },
+        items: {
+          type: "array",
+          items: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              label: { type: "string" },
+              href: { type: "string" },
+              icon: { type: "string" },
+              active: { type: "boolean" }
+            },
+            required: ["label"]
+          }
+        }
+      },
+      required: ["items"]
+    },
+    header: {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        title: { type: "string" },
+        breadcrumb: {
+          type: "array",
+          items: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              label: { type: "string" },
+              href: { type: "string" }
+            },
+            required: ["label"]
+          }
+        }
+      }
+    }
+  }
+};
+
 // src/components/layout/page-header.tsx
-var import_jsx_runtime32 = require("react/jsx-runtime");
+var import_jsx_runtime44 = require("react/jsx-runtime");
 function PageHeader({
   className,
   title,
@@ -2538,36 +3238,24 @@ function PageHeader({
   actions,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(
     "div",
     {
       className: cn("flex flex-wrap items-start justify-between gap-6", className),
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h1", { className: "text-3xl font-bold text-[rgb(var(--nc-fg))]", children: title }),
-          description && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("p", { className: "text-[rgb(var(--nc-fg-muted))]", children: description })
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h1", { className: "text-3xl font-bold text-[rgb(var(--nc-fg))]", children: title }),
+          description && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "text-[rgb(var(--nc-fg-muted))]", children: description })
         ] }),
-        actions && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", { className: "flex flex-wrap gap-3", children: actions })
+        actions && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "flex flex-wrap gap-3", children: actions })
       ]
     }
   );
 }
 
-// src/components/layout/breadcrumbs.tsx
-var import_jsx_runtime33 = require("react/jsx-runtime");
-function Breadcrumbs({ className, items, ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("nav", { className: cn("flex items-center text-sm text-[rgb(var(--nc-fg-muted))]", className), ...props, children: items.map((item, index) => {
-    const content = item.href ? /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("a", { href: item.href, className: "transition hover:text-[rgb(var(--nc-fg))]", children: item.label }) : /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("span", { className: "text-[rgb(var(--nc-fg))]", children: item.label });
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("span", { className: "flex items-center", children: [
-      content,
-      index < items.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("span", { className: "mx-2 text-[rgb(var(--nc-fg-soft))]", children: "/" })
-    ] }, `${item.label}-${index}`);
-  }) });
-}
-
 // src/components/layout/auth-layout.tsx
-var import_jsx_runtime34 = require("react/jsx-runtime");
+var import_jsx_runtime45 = require("react/jsx-runtime");
 function AuthLayout({
   className,
   title,
@@ -2577,7 +3265,7 @@ function AuthLayout({
   children,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(
     "div",
     {
       className: cn(
@@ -2587,17 +3275,17 @@ function AuthLayout({
       ),
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "flex flex-col justify-center px-6 py-16 sm:px-12", children: /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "mx-auto w-full max-w-md space-y-6", children: [
-          (title || description) && /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "space-y-2", children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("h1", { className: "text-3xl font-bold text-[rgb(var(--nc-fg))]", children: title }),
-            description && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("p", { className: "text-[rgb(var(--nc-fg-muted))]", children: description })
+        /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "flex flex-col justify-center px-6 py-16 sm:px-12", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("div", { className: "mx-auto w-full max-w-md space-y-6", children: [
+          (title || description) && /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("div", { className: "space-y-2", children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("h1", { className: "text-3xl font-bold text-[rgb(var(--nc-fg))]", children: title }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("p", { className: "text-[rgb(var(--nc-fg-muted))]", children: description })
           ] }),
           children,
-          footer && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: footer })
+          footer && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "text-sm text-[rgb(var(--nc-fg-muted))]", children: footer })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { className: "hidden items-center justify-center border-l border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-12 text-[rgb(var(--nc-fg))] lg:flex", children: graphic != null ? graphic : /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { className: "max-w-sm space-y-4 text-center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("h2", { className: "text-2xl font-semibold", children: "Crafted experiences" }),
-          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("p", { className: "text-[rgb(var(--nc-fg-muted))]", children: "Build authentication flows that feel premium and cohesive." })
+        /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "hidden items-center justify-center border-l border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] p-12 text-[rgb(var(--nc-fg))] lg:flex", children: graphic != null ? graphic : /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("div", { className: "max-w-sm space-y-4 text-center", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("h2", { className: "text-2xl font-semibold", children: "Crafted experiences" }),
+          /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("p", { className: "text-[rgb(var(--nc-fg-muted))]", children: "Build authentication flows that feel premium and cohesive." })
         ] }) })
       ]
     }
@@ -2605,25 +3293,25 @@ function AuthLayout({
 }
 
 // src/components/layout/container.tsx
-var import_jsx_runtime35 = require("react/jsx-runtime");
-var sizeClasses2 = {
+var import_jsx_runtime46 = require("react/jsx-runtime");
+var sizeClasses3 = {
   sm: "max-w-3xl",
   md: "max-w-5xl",
   lg: "max-w-6xl",
   xl: "max-w-7xl"
 };
 function Container({ className, size = "lg", ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
     "div",
     {
-      className: cn("mx-auto w-full px-4 sm:px-6 lg:px-8", sizeClasses2[size], className),
+      className: cn("mx-auto w-full px-4 sm:px-6 lg:px-8", sizeClasses3[size], className),
       ...props
     }
   );
 }
 
 // src/components/layout/grid.tsx
-var import_jsx_runtime36 = require("react/jsx-runtime");
+var import_jsx_runtime47 = require("react/jsx-runtime");
 var colClasses = {
   1: "grid-cols-1",
   2: "grid-cols-1 md:grid-cols-2",
@@ -2639,12 +3327,12 @@ var gapClasses = {
   xl: "gap-10"
 };
 function Grid({ className, columns = 3, gap = "md", ...props }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { className: cn("grid", colClasses[columns], gapClasses[gap], className), ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: cn("grid", colClasses[columns], gapClasses[gap], className), ...props });
 }
 
 // src/theme/theme-context.tsx
-var React19 = __toESM(require("react"), 1);
-var import_jsx_runtime37 = require("react/jsx-runtime");
+var React24 = __toESM(require("react"), 1);
+var import_jsx_runtime48 = require("react/jsx-runtime");
 var THEME_NAMES = [
   "aurora",
   "ember",
@@ -2652,7 +3340,7 @@ var THEME_NAMES = [
   "midnight",
   "cosmic"
 ];
-var ThemeContext = React19.createContext(null);
+var ThemeContext = React24.createContext(null);
 var DEFAULT_THEME_KEY = "nextcraft-theme";
 var DEFAULT_MODE_KEY = "nextcraft-mode";
 function ThemeProvider({
@@ -2662,9 +3350,9 @@ function ThemeProvider({
   storageKeyTheme = DEFAULT_THEME_KEY,
   storageKeyMode = DEFAULT_MODE_KEY
 }) {
-  const [theme, setTheme] = React19.useState(defaultTheme);
-  const [mode, setMode] = React19.useState(defaultMode);
-  React19.useEffect(() => {
+  const [theme, setTheme] = React24.useState(defaultTheme);
+  const [mode, setMode] = React24.useState(defaultMode);
+  React24.useEffect(() => {
     if (typeof window === "undefined") return;
     try {
       const storedTheme = window.localStorage.getItem(storageKeyTheme);
@@ -2674,7 +3362,7 @@ function ThemeProvider({
     } catch {
     }
   }, [storageKeyTheme, storageKeyMode]);
-  React19.useEffect(() => {
+  React24.useEffect(() => {
     if (typeof window === "undefined") return;
     try {
       window.localStorage.setItem(storageKeyTheme, theme);
@@ -2682,7 +3370,7 @@ function ThemeProvider({
     } catch {
     }
   }, [theme, mode, storageKeyTheme, storageKeyMode]);
-  React19.useEffect(() => {
+  React24.useEffect(() => {
     if (typeof document === "undefined") return;
     const root = document.documentElement;
     root.dataset.ncTheme = theme;
@@ -2702,14 +3390,14 @@ function ThemeProvider({
     mediaQuery.addListener(applySystem);
     return () => mediaQuery.removeListener(applySystem);
   }, [theme, mode]);
-  const value = React19.useMemo(
+  const value = React24.useMemo(
     () => ({ theme, mode, setTheme, setMode }),
     [theme, mode]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(ThemeContext.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(ThemeContext.Provider, { value, children });
 }
 function useTheme() {
-  const context = React19.useContext(ThemeContext);
+  const context = React24.useContext(ThemeContext);
   if (!context) {
     throw new Error("useTheme must be used within ThemeProvider");
   }
@@ -2717,11 +3405,11 @@ function useTheme() {
 }
 
 // src/components/theme-switcher.tsx
-var import_jsx_runtime38 = require("react/jsx-runtime");
+var import_jsx_runtime49 = require("react/jsx-runtime");
 var MODE_OPTIONS = ["system", "light", "dark"];
 function ThemeSwitcher({ className, showLabels = true, ...props }) {
   const { theme, mode, setTheme, setMode } = useTheme();
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
     "div",
     {
       className: cn(
@@ -2730,27 +3418,27 @@ function ThemeSwitcher({ className, showLabels = true, ...props }) {
       ),
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("label", { className: "flex items-center gap-2", children: [
-          showLabels && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { className: "text-[rgb(var(--nc-fg-muted))]", children: "Theme" }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)("label", { className: "flex items-center gap-2", children: [
+          showLabels && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("span", { className: "text-[rgb(var(--nc-fg-muted))]", children: "Theme" }),
+          /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
             "select",
             {
               className: "rounded-lg border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-1 text-[rgb(var(--nc-fg))] outline-none focus:ring-2 focus:ring-[rgb(var(--nc-accent-1)/0.5)]",
               value: theme,
               onChange: (event) => setTheme(event.target.value),
-              children: THEME_NAMES.map((name) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("option", { value: name, className: "text-slate-900", children: name }, name))
+              children: THEME_NAMES.map((name) => /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("option", { value: name, className: "text-slate-900", children: name }, name))
             }
           )
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("label", { className: "flex items-center gap-2", children: [
-          showLabels && /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("span", { className: "text-[rgb(var(--nc-fg-muted))]", children: "Mode" }),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)("label", { className: "flex items-center gap-2", children: [
+          showLabels && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("span", { className: "text-[rgb(var(--nc-fg-muted))]", children: "Mode" }),
+          /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
             "select",
             {
               className: "rounded-lg border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-1 text-[rgb(var(--nc-fg))] outline-none focus:ring-2 focus:ring-[rgb(var(--nc-accent-1)/0.5)]",
               value: mode,
               onChange: (event) => setMode(event.target.value),
-              children: MODE_OPTIONS.map((value) => /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("option", { value, className: "text-slate-900", children: value }, value))
+              children: MODE_OPTIONS.map((value) => /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("option", { value, className: "text-slate-900", children: value }, value))
             }
           )
         ] })
@@ -2761,32 +3449,44 @@ function ThemeSwitcher({ className, showLabels = true, ...props }) {
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AppShell,
+  AppTemplate,
   AuthLayout,
   Breadcrumbs,
   Container,
+  CraftAlert,
   CraftBadge,
   CraftButton,
   CraftCard,
   CraftCheckbox,
+  CraftCommandPalette,
   CraftConfirmDialog,
   CraftCreateEditDrawer,
   CraftCurrencyInput,
   CraftDataTable,
   CraftDatePicker,
   CraftDrawer,
+  CraftDropdownMenu,
   CraftEmptyState,
+  CraftErrorState,
   CraftFilterBar,
   CraftForm,
   CraftFormBuilder,
   CraftFormField,
+  CraftIcon,
+  CraftIconProvider,
   CraftInput,
+  CraftLink,
+  CraftLoadingState,
   CraftModal,
   CraftNumberInput,
   CraftPagination,
+  CraftPopover,
   CraftSelect,
   CraftSkeleton,
+  CraftStatCard,
   CraftSubmitButton,
   CraftSwitch,
+  CraftTableToolbar,
   CraftTabs,
   CraftTextarea,
   CraftToastHost,
@@ -2798,6 +3498,7 @@ function ThemeSwitcher({ className, showLabels = true, ...props }) {
   ThemeProvider,
   ThemeSwitcher,
   TopNav,
+  layoutConfigSchema,
   useCraftToast,
   useTheme
 });
