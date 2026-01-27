@@ -1,7 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { Controller, type RegisterOptions, useFormContext } from "react-hook-form";
+import {
+  Controller,
+  type FieldValues,
+  type Path,
+  type RegisterOptions,
+  useFormContext,
+} from "react-hook-form";
 
 import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
@@ -47,8 +53,8 @@ export type CraftFormFieldType =
   | "multiselect"
   | "currency";
 
-export type CraftFormFieldProps = {
-  name: string;
+export type CraftFormFieldProps<TValues extends FieldValues = FieldValues> = {
+  name: Path<TValues>;
   label?: React.ReactNode;
   description?: React.ReactNode;
   type?: CraftFormFieldType;
@@ -59,7 +65,7 @@ export type CraftFormFieldProps = {
   inputClassName?: string;
   labelClassName?: string;
   descriptionClassName?: string;
-  rules?: RegisterOptions;
+  rules?: RegisterOptions<TValues>;
   disabled?: boolean;
   fieldProps?: Record<string, unknown>;
 };
@@ -78,7 +84,7 @@ function getFieldError(errors: unknown, name: string) {
 const baseInputClass =
   "w-full rounded-2xl border-2 bg-[rgb(var(--nc-surface)/0.08)] text-[rgb(var(--nc-fg))] backdrop-blur-xl shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)] focus:outline-none focus:ring-4 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border-[rgb(var(--nc-border)/0.35)] focus:border-[rgb(var(--nc-accent-1)/0.8)] focus:ring-[rgb(var(--nc-accent-1)/0.3)] px-5 py-3 text-base placeholder:text-[rgb(var(--nc-fg-soft))]";
 
-export function CraftFormField({
+export function CraftFormField<TValues extends FieldValues = FieldValues>({
   name,
   label,
   description,
@@ -93,8 +99,8 @@ export function CraftFormField({
   rules,
   disabled,
   fieldProps,
-}: CraftFormFieldProps) {
-  const { register, control, formState } = useFormContext();
+}: CraftFormFieldProps<TValues>) {
+  const { register, control, formState } = useFormContext<TValues>();
   const error = getFieldError(formState.errors, name);
   const errorMessage =
     typeof (error as { message?: unknown })?.message === "string"
