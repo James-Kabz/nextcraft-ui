@@ -27,31 +27,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./components": {
-      "types": "./dist/craft/components.d.ts",
-      "import": "./dist/craft/components.js",
-      "require": "./dist/craft/components.cjs"
-    },
-    "./layout": {
-      "types": "./dist/craft/layout.d.ts",
-      "import": "./dist/craft/layout.js",
-      "require": "./dist/craft/layout.cjs"
-    },
-    "./forms": {
-      "types": "./dist/craft/forms.d.ts",
-      "import": "./dist/craft/forms.js",
-      "require": "./dist/craft/forms.cjs"
-    },
-    "./theme": {
-      "types": "./dist/craft/theme.d.ts",
-      "import": "./dist/craft/theme.js",
-      "require": "./dist/craft/theme.cjs"
-    },
-    "./table": {
-      "types": "./dist/craft/table.d.ts",
-      "import": "./dist/craft/table.js",
-      "require": "./dist/craft/table.cjs"
-    },
     "./styles.css": "./dist/styles.css"
   },
   "sideEffects": [
@@ -62,7 +37,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "tsup && tsc-alias -p tsconfig.lib.json -o dist && npm run build:css",
+    "build": "tsup && npm run build:css",
     "build:css": "tailwindcss -i ./src/app/globals.css -o ./dist/styles.css",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.lib.json --noEmit",
@@ -97,7 +72,6 @@
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
     "tailwindcss": "^4",
-    "tsc-alias": "^1.8.8",
     "tsup": "^8.5.0",
     "typescript": "^5"
   }
