@@ -10,7 +10,7 @@ import { Grid } from "@/components/layout/grid";
 import { CraftCard } from "@/components/craft-card";
 import { CraftBadge } from "@/components/craft-badge";
 import { CraftButton } from "@/components/craft-button";
-import { CraftForm } from "@/components/craft-form";
+import { CraftFormBuilder, type CraftFormBuilderField } from "@/components/craft-form-builder";
 import { CraftFormField } from "@/components/craft-form-field";
 import { CraftConfirmDialog } from "@/components/craft-confirm-dialog";
 import { CraftCreateEditDrawer } from "@/components/craft-create-edit-drawer";
@@ -66,34 +66,61 @@ const demoRows: DemoRow[] = [
 ];
 
 export default function LayoutDemoPage() {
-  const form = useForm<DemoFormValues>({
-    mode: "onChange",
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      description: "",
-      plan: "",
-      status: "active",
-      tags: [],
-      notify: false,
-      realtime: true,
-      startDate: "",
-      budget: "",
-      seats: 5,
-      color: "#38bdf8",
-      time: "",
-      datetime: "",
-      month: "",
-      week: "",
-      website: "",
-      phone: "",
-      search: "",
-      range: 40,
-      attachment: null,
-      assets: null,
-    },
-  });
+  const formFields = React.useMemo<CraftFormBuilderField<DemoFormValues>[]>(
+    () => [
+      { name: "name", label: "Project name", type: "text", placeholder: "Nextcraft UI", required: true },
+      { name: "email", label: "Owner email", type: "email", placeholder: "team@nextcraft.io", required: true },
+      { name: "password", label: "Admin password", type: "password", placeholder: "••••••••" },
+      { name: "seats", label: "Seats", type: "number", min: 1, max: 200 },
+      { name: "budget", label: "Budget", type: "currency", placeholder: "$42,000" },
+      { name: "startDate", label: "Start date", type: "date" },
+      { name: "color", label: "Brand color", type: "color" },
+      { name: "time", label: "Daily sync time", type: "time" },
+      { name: "datetime", label: "Launch datetime", type: "datetime-local" },
+      { name: "month", label: "Billing month", type: "month" },
+      { name: "week", label: "Sprint week", type: "week" },
+      { name: "website", label: "Website", type: "url", placeholder: "https://nextcraft.io" },
+      { name: "phone", label: "Phone", type: "tel", placeholder: "+1 555 013 774" },
+      { name: "description", label: "Description", type: "textarea", placeholder: "Tell us about the project..." },
+      {
+        name: "plan",
+        label: "Plan",
+        type: "select",
+        placeholder: "Select a plan",
+        options: [
+          { label: "Starter", value: "starter" },
+          { label: "Growth", value: "growth" },
+          { label: "Enterprise", value: "enterprise" },
+        ],
+      },
+      {
+        name: "tags",
+        label: "Tags",
+        type: "multiselect",
+        options: [
+          { label: "Design", value: "design" },
+          { label: "Product", value: "product" },
+          { label: "Infra", value: "infra" },
+        ],
+      },
+      {
+        name: "status",
+        label: "Status",
+        type: "radio",
+        options: [
+          { label: "Active", value: "active" },
+          { label: "Paused", value: "paused" },
+          { label: "Draft", value: "draft" },
+        ],
+      },
+      { name: "range", label: "Confidence", type: "range", min: 0, max: 100 },
+      { name: "attachment", label: "Project brief", type: "file" },
+      { name: "assets", label: "Assets", type: "multifile" },
+      { name: "notify", label: "Email updates", type: "checkbox", description: "Get progress updates." },
+      { name: "realtime", label: "Realtime mode", type: "switch", description: "Stream live events." },
+    ],
+    []
+  );
 
   const drawerForm = useForm<DemoFormValues>({
     mode: "onChange",
@@ -224,75 +251,22 @@ export default function LayoutDemoPage() {
               <h3 className="text-xl font-semibold">Form Modal</h3>
               <p className="text-sm text-white/60">CraftForm + CraftFormField + CraftSubmitButton.</p>
             </div>
-            <CraftForm
-              form={form}
+            <CraftFormBuilder
               title="Create project"
               description="All input types are supported, styled, and validated via React Hook Form."
               submitLabel="Create project"
               trigger={<CraftButton size="sm">Open Form</CraftButton>}
+              fields={formFields}
+              initialData={{
+                status: "active",
+                realtime: true,
+                color: "#38bdf8",
+                range: 40,
+              }}
               onSubmit={(values) => {
                 console.log("Form submit", values);
               }}
-            >
-              <div className="grid gap-4 md:grid-cols-2">
-                <CraftFormField name="name" label="Project name" placeholder="Nextcraft UI" />
-                <CraftFormField name="email" type="email" label="Owner email" placeholder="team@nextcraft.io" />
-                <CraftFormField name="password" type="password" label="Admin password" placeholder="••••••••" />
-                <CraftFormField name="seats" type="number" label="Seats" placeholder="12" />
-                <CraftFormField name="budget" type="currency" label="Budget" placeholder="$42,000" />
-                <CraftFormField name="startDate" type="date" label="Start date" />
-                <CraftFormField name="color" type="color" label="Brand color" />
-                <CraftFormField name="time" type="time" label="Daily sync time" />
-                <CraftFormField name="datetime" type="datetime-local" label="Launch datetime" />
-                <CraftFormField name="month" type="month" label="Billing month" />
-                <CraftFormField name="week" type="week" label="Sprint week" />
-                <CraftFormField name="website" type="url" label="Website" placeholder="https://nextcraft.io" />
-                <CraftFormField name="phone" type="tel" label="Phone" placeholder="+1 555 013 774" />
-              </div>
-              <CraftFormField name="description" type="textarea" label="Description" placeholder="Tell us about the project..." />
-              <div className="grid gap-4 md:grid-cols-2">
-                <CraftFormField
-                  name="plan"
-                  type="select"
-                  label="Plan"
-                  placeholder="Select a plan"
-                  options={[
-                    { label: "Starter", value: "starter" },
-                    { label: "Growth", value: "growth" },
-                    { label: "Enterprise", value: "enterprise" },
-                  ]}
-                />
-                <CraftFormField
-                  name="tags"
-                  type="multiselect"
-                  label="Tags"
-                  options={[
-                    { label: "Design", value: "design" },
-                    { label: "Product", value: "product" },
-                    { label: "Infra", value: "infra" },
-                  ]}
-                />
-                <CraftFormField
-                  name="status"
-                  type="radio"
-                  label="Status"
-                  options={[
-                    { label: "Active", value: "active" },
-                    { label: "Paused", value: "paused" },
-                    { label: "Draft", value: "draft" },
-                  ]}
-                />
-                <CraftFormField name="range" type="range" label="Confidence" />
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <CraftFormField name="attachment" type="file" label="Project brief" />
-                <CraftFormField name="assets" type="multifile" label="Assets" />
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <CraftFormField name="notify" type="checkbox" label="Email updates" description="Get progress updates." />
-                <CraftFormField name="realtime" type="switch" label="Realtime mode" description="Stream live events." />
-              </div>
-            </CraftForm>
+            />
           </div>
         </CraftCard>
 

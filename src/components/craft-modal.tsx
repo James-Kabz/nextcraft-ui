@@ -115,7 +115,8 @@ export function CraftModal({
         ref={ref}
         tabIndex={-1}
         className={cn(
-          "relative z-10 w-full max-w-lg rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] p-6 text-[rgb(var(--nc-fg))] shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl",
+          "relative z-10 w-full max-w-7xl rounded-3xl border border-[rgb(var(--nc-border)/0.45)] p-6 text-[rgb(var(--nc-fg))] shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl",
+          "max-h-[calc(100vh-1rem)] overflow-y-auto",
           className
         )}
         data-nc-theme={tone}
