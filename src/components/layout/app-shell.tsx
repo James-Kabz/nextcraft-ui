@@ -16,9 +16,13 @@ export function AppShell({ className, sidebar, topNav, children, ...props }: App
       )}
       {...props}
     >
-      {sidebar && <div className="h-full">{sidebar}</div>}
+      {sidebar && (
+        <div className="h-full lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto">
+          {sidebar}
+        </div>
+      )}
       <div className="flex flex-col gap-6">
-        {topNav}
+        {topNav && <div className="lg:sticky lg:top-6 lg:z-20">{topNav}</div>}
         <main className="flex-1">{children}</main>
       </div>
     </div>
