@@ -49,6 +49,13 @@ export type { CraftEmptyStateProps } from "./components/craft-empty-state";
 export { CraftDatePicker } from "./components/craft-date-picker";
 export type { CraftDatePickerProps } from "./components/craft-date-picker";
 
+export { CraftIcon, CraftIconProvider } from "./components/craft-icon";
+export type {
+  CraftIconProps,
+  CraftIconProviderProps,
+  CraftIconRegistry,
+} from "./components/craft-icon";
+
 export { CraftNumberInput } from "./components/craft-number-input";
 export type { CraftNumberInputProps } from "./components/craft-number-input";
 
@@ -84,6 +91,17 @@ export type { CraftPaginationProps } from "./components/craft-pagination";
 
 export { AppShell } from "./components/layout/app-shell";
 export type { AppShellProps } from "./components/layout/app-shell";
+
+export { AppTemplate } from "./components/layout/app-template";
+export type { AppTemplateProps } from "./components/layout/app-template";
+
+export type {
+  LayoutConfig,
+  LayoutSidebarItem,
+  LayoutBreadcrumbItem,
+  LayoutIconName,
+} from "./components/layout/layout-config";
+export { layoutConfigSchema } from "./components/layout/layout-config";
 
 export { Sidebar } from "./components/layout/sidebar";
 export type { SidebarProps, SidebarItem } from "./components/layout/sidebar";

@@ -69,6 +69,100 @@ Per-component theme override:
 <GlassCard tone="ember">...</GlassCard>
 ```
 
+## Layout templates (config-driven)
+
+You can drive the layout from JSON and reuse it across apps.
+
+Example config:
+
+```json
+{
+  "sidebar": {
+    "title": "Nextcraft",
+    "items": [
+      { "label": "Dashboard", "href": "/dashboard", "icon": "home" },
+      { "label": "Projects", "href": "/projects", "icon": "folder" }
+    ],
+    "footerText": "Version 0.1.3"
+  },
+  "header": {
+    "title": "Dashboard",
+    "breadcrumb": [
+      { "label": "Home", "href": "/" },
+      { "label": "Dashboard" }
+    ]
+  }
+}
+```
+
+Use it:
+
+```tsx
+import {
+  AppTemplate,
+  CraftIconProvider,
+  type LayoutConfig,
+} from "@jameskabz/nextcraft-ui";
+import { Home, Folder } from "lucide-react";
+
+const layoutConfig: LayoutConfig = {
+  sidebar: {
+    title: "Nextcraft",
+    items: [
+      { label: "Dashboard", href: "/dashboard", icon: "home" },
+      { label: "Projects", href: "/projects", icon: "folder" },
+    ],
+  },
+  header: {
+    title: "Dashboard",
+    breadcrumb: [
+      { label: "Home", href: "/" },
+      { label: "Dashboard" },
+    ],
+  },
+};
+
+const icons = {
+  home: <Home size={16} />,
+  folder: <Folder size={16} />,
+};
+
+export default function Page() {
+  return (
+    <CraftIconProvider icons={icons}>
+      <AppTemplate config={layoutConfig} getActivePath={() => "/dashboard"}>
+        {/* content */}
+      </AppTemplate>
+    </CraftIconProvider>
+  );
+}
+```
+
+Notes:
+- `getActivePath` can be replaced with `activePath` if you already know the path.
+- Config schema is exported as `layoutConfigSchema`.
+- An example file is in `examples/layout-config.json`.
+- Demo page: `src/app/layout-template-demo/page.tsx`.
+
+## CraftIcon
+
+CraftIcon supports lucide icons by name (via `lucide-react/dynamic`), or you can register your own icons once and use them by name anywhere:
+
+```tsx
+import { CraftIcon, CraftIconProvider } from "@jameskabz/nextcraft-ui";
+import { Home } from "lucide-react";
+
+const icons = { home: <Home size={16} /> };
+
+export function App() {
+  return (
+    <CraftIconProvider icons={icons}>
+      <CraftIcon name="home" className="text-white" />
+    </CraftIconProvider>
+  );
+}
+```
+
 ## Troubleshooting: Module not found
 
 If your app (for example, a folder named `spendwise`) shows:

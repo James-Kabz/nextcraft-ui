@@ -46,6 +46,12 @@ export default function Home() {
               >
                 View Layout Demo
               </a>
+              <a
+                href="/layout-template-demo"
+                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm transition hover: hover:bg-white/10 light:border-black/10 light:bg-black/5 light:text-black light:hover:text-black light:hover:bg-black/10"
+              >
+                View Template Demo
+              </a>
             </div>
           </div>
 
@@ -306,6 +312,12 @@ export default function Home() {
                 className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm  transition hover: hover:bg-white/10"
               >
                 Open Full Demo
+              </a>
+              <a
+                href="/layout-template-demo"
+                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm  transition hover: hover:bg-white/10"
+              >
+                Open Template Demo
               </a>
             </div>
 

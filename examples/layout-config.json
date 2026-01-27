@@ -1,0 +1,19 @@
+{
+  "sidebar": {
+    "title": "Nextcraft",
+    "items": [
+      { "label": "Dashboard", "href": "/dashboard", "icon": "home", "active": true },
+      { "label": "Projects", "href": "/projects", "icon": "folder" },
+      { "label": "Billing", "href": "/billing", "icon": "credit-card" },
+      { "label": "Team", "href": "/team", "icon": "users" }
+    ],
+    "footerText": "Version 0.1.3"
+  },
+  "header": {
+    "title": "Dashboard",
+    "breadcrumb": [
+      { "label": "Home", "href": "/" },
+      { "label": "Dashboard" }
+    ]
+  }
+}
