@@ -27,6 +27,31 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./components": {
+      "types": "./dist/craft/components.d.ts",
+      "import": "./dist/craft/components.js",
+      "require": "./dist/craft/components.cjs"
+    },
+    "./layout": {
+      "types": "./dist/craft/layout.d.ts",
+      "import": "./dist/craft/layout.js",
+      "require": "./dist/craft/layout.cjs"
+    },
+    "./forms": {
+      "types": "./dist/craft/forms.d.ts",
+      "import": "./dist/craft/forms.js",
+      "require": "./dist/craft/forms.cjs"
+    },
+    "./theme": {
+      "types": "./dist/craft/theme.d.ts",
+      "import": "./dist/craft/theme.js",
+      "require": "./dist/craft/theme.cjs"
+    },
+    "./table": {
+      "types": "./dist/craft/table.d.ts",
+      "import": "./dist/craft/table.js",
+      "require": "./dist/craft/table.cjs"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "sideEffects": [
