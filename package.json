@@ -37,7 +37,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "tsup && npm run build:css",
+    "build": "tsup && tsc-alias -p tsconfig.lib.json --outDir dist && npm run build:css",
     "build:css": "tailwindcss -i ./src/app/globals.css -o ./dist/styles.css",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.lib.json --noEmit",
@@ -72,6 +72,7 @@
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
     "tailwindcss": "^4",
+    "tsc-alias": "^1.8.8",
     "tsup": "^8.5.0",
     "typescript": "^5"
   }
