@@ -3,7 +3,9 @@
 import * as React from "react";
 import {
   FormProvider,
+  type DefaultValues,
   type FieldValues,
+  type Path,
   type RegisterOptions,
   useForm,
 } from "react-hook-form";
@@ -20,7 +22,7 @@ import {
 } from "@/components/craft-form-field";
 
 export type CraftFormBuilderField<TValues extends FieldValues> = {
-  name: keyof TValues & string;
+  name: Path<TValues>;
   label?: React.ReactNode;
   description?: React.ReactNode;
   type: CraftFormFieldType;
@@ -28,7 +30,7 @@ export type CraftFormBuilderField<TValues extends FieldValues> = {
   options?: CraftFormFieldOption[];
   required?: boolean;
   disabled?: boolean;
-  rules?: RegisterOptions;
+  rules?: RegisterOptions<TValues>;
   defaultValue?: unknown;
   min?: number;
   max?: number;
@@ -66,10 +68,12 @@ export type CraftFormBuilderProps<TValues extends FieldValues> = {
   onSubmit: (values: TValues) => void | Promise<void>;
   onReset?: () => void;
   onCancel?: () => void;
-  customValidation?: (values: TValues) => Partial<Record<keyof TValues & string, string>>;
+  customValidation?: (values: TValues) => Partial<Record<Path<TValues>, string>>;
 };
 
-function defaultValueForField(field: CraftFormBuilderField<FieldValues>) {
+function defaultValueForField<TValues extends FieldValues>(
+  field: CraftFormBuilderField<TValues>
+) {
   if (field.defaultValue !== undefined) return field.defaultValue;
   switch (field.type) {
     case "checkbox":
@@ -95,7 +99,7 @@ function defaultValueForField(field: CraftFormBuilderField<FieldValues>) {
 function buildDefaultValues<TValues extends FieldValues>(
   fields: Array<CraftFormBuilderField<TValues>>,
   initialData?: Partial<TValues> | null
-) {
+): DefaultValues<TValues> {
   const values = {} as Record<string, unknown>;
   fields.forEach((field) => {
     const initialValue = initialData?.[field.name as keyof TValues];
@@ -105,32 +109,38 @@ function buildDefaultValues<TValues extends FieldValues>(
       values[field.name] = defaultValueForField(field);
     }
   });
-  return values as TValues;
+  return values as DefaultValues<TValues>;
 }
 
 function buildRules<TValues extends FieldValues>(
   field: CraftFormBuilderField<TValues>,
   getValues: () => TValues
-): RegisterOptions {
-  const rules: RegisterOptions = { ...field.rules };
+): RegisterOptions<TValues> {
+  const rules: RegisterOptions<TValues> = { ...field.rules };
   const mergeValidate = (
-    current: RegisterOptions["validate"],
+    current: RegisterOptions<TValues>["validate"],
     next: (value: unknown) => string | boolean | undefined
   ) => {
     if (!current) return next;
     if (typeof current === "function") {
-      return (value: unknown) => {
-        const result = current(value);
-        if (result !== true) return result;
+      return (value: unknown): string | boolean | undefined => {
+        const result = (current as (value: unknown, values: TValues) => string | boolean | undefined)(
+          value,
+          getValues()
+        );
+        if (result !== true) return result as string | undefined;
         return next(value);
       };
     }
     if (typeof current === "object") {
-      return (value: unknown) => {
+      return (value: unknown): string | boolean | undefined => {
         const entries = Object.entries(current);
         for (const [, validator] of entries) {
-          const result = validator(value);
-          if (result !== true) return result;
+          const result = (validator as (value: unknown, values: TValues) => string | boolean | undefined)(
+            value,
+            getValues()
+          );
+          if (result !== true) return result as string | undefined;
         }
         return next(value);
       };
@@ -142,13 +152,13 @@ function buildRules<TValues extends FieldValues>(
     if (field.type === "checkbox" || field.type === "switch") {
       rules.validate = mergeValidate(
         rules.validate,
-        (value: unknown) =>
+        (value: unknown): string | boolean | undefined =>
           value ? true : `${String(field.label ?? field.name)} is required`
       );
     } else if (field.type === "multiselect") {
       rules.validate = mergeValidate(
         rules.validate,
-        (value: unknown) =>
+        (value: unknown): string | boolean | undefined =>
           Array.isArray(value) && value.length > 0
             ? true
             : `${String(field.label ?? field.name)} is required`
@@ -156,7 +166,7 @@ function buildRules<TValues extends FieldValues>(
     } else if (field.type === "file") {
       rules.validate = mergeValidate(
         rules.validate,
-        (value: unknown) =>
+        (value: unknown): string | boolean | undefined =>
           value instanceof FileList && value.length > 0
             ? true
             : `${String(field.label ?? field.name)} is required`
@@ -164,7 +174,7 @@ function buildRules<TValues extends FieldValues>(
     } else if (field.type === "multifile") {
       rules.validate = mergeValidate(
         rules.validate,
-        (value: unknown) =>
+        (value: unknown): string | boolean | undefined =>
           Array.isArray(value) && value.length > 0
             ? true
             : `${String(field.label ?? field.name)} is required`
@@ -196,8 +206,10 @@ function buildRules<TValues extends FieldValues>(
   }
 
   if (field.validate) {
-    rules.validate = mergeValidate(rules.validate, (value: unknown) =>
-      field.validate?.(value, getValues())
+    rules.validate = mergeValidate(
+      rules.validate,
+      (value: unknown): string | boolean | undefined =>
+        field.validate?.(value, getValues())
     );
   }
 
@@ -264,9 +276,9 @@ export function CraftFormBuilder<TValues extends FieldValues>({
       if (customErrors && Object.keys(customErrors).length > 0) {
         Object.entries(customErrors).forEach(([key, message]) => {
           if (message) {
-            form.setError(key as keyof TValues & string, {
+            form.setError(key as Path<TValues>, {
               type: "custom",
-              message,
+              message: String(message),
             });
           }
         });
