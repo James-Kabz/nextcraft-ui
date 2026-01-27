@@ -16,5 +16,5 @@ export default defineConfig({
   target: "es2019",
   outDir: "dist",
   tsconfig: "tsconfig.lib.json",
-  external: ["react", "react-dom", "next"],
+  external: ["react", "react-dom", "next", "lucide-react"],
 });
