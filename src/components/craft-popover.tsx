@@ -68,10 +68,11 @@ export function CraftPopover({
     };
   }, [isOpen, setOpen]);
 
+  type TriggerProps = { onClick?: (event: React.MouseEvent) => void; "aria-expanded"?: boolean; "aria-haspopup"?: string };
   const triggerNode = React.isValidElement(trigger)
-    ? React.cloneElement(trigger as React.ReactElement<any>, {
+    ? React.cloneElement(trigger as React.ReactElement<TriggerProps>, {
         onClick: (event: React.MouseEvent) => {
-          const handler = (trigger.props as any).onClick;
+          const handler = (trigger.props as TriggerProps).onClick;
           handler?.(event);
           if (!event.defaultPrevented) setOpen(!isOpen);
         },

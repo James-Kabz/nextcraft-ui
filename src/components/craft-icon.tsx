@@ -33,14 +33,15 @@ export function CraftIcon({
   icons,
   useLucide = true,
 }: CraftIconProps) {
-  const registry = icons ?? React.useContext(CraftIconContext);
+  const contextRegistry = React.useContext(CraftIconContext);
+  const registry = icons ?? contextRegistry;
   const icon = registry?.[name];
 
   if (!icon) {
     if (!useLucide) return null;
     return (
       <DynamicIcon
-        name={name as any}
+        name={name as unknown as React.ComponentProps<typeof DynamicIcon>["name"]}
         className={className}
         aria-hidden={ariaLabel ? undefined : true}
         aria-label={ariaLabel}
@@ -49,11 +50,12 @@ export function CraftIcon({
   }
 
   if (React.isValidElement(icon)) {
+    const iconProps = icon.props as { className?: string };
     return React.cloneElement(icon, {
-      className: cn((icon.props as any)?.className, className),
+      className: cn(iconProps.className, className),
       "aria-hidden": ariaLabel ? undefined : true,
       "aria-label": ariaLabel,
-    } as any);
+    });
   }
 
   return (
