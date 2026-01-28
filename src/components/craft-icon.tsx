@@ -51,14 +51,17 @@ export function CraftIcon({
     let mounted = true;
     (async () => {
       try {
-        const mod = await (Function)(
-          "return import('lucide-react/dynamic')"
-        )();
+        const mod = await import("lucide-react/dynamic");
         if (mounted) {
           setLucideIcon(() => mod.DynamicIcon as DynamicIconComponent);
         }
       } catch {
         if (mounted) setLucideIcon(null);
+        if (process.env.NODE_ENV !== "production") {
+          console.warn(
+            "[CraftIcon] Failed to load lucide-react/dynamic. Ensure lucide-react is installed."
+          );
+        }
       }
     })();
     return () => {

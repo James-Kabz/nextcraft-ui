@@ -44,6 +44,7 @@ export default function LayoutTemplateDemoPage() {
     <AppTemplate
       config={layoutConfig}
       getActivePath={() => "/layout-template-demo"}
+      lucideFallback
       headerActions={
         <div className="flex items-center gap-3">
           <CraftButton size="sm" variant="ghost">

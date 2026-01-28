@@ -4,7 +4,7 @@ import * as React from 'react';
 type SidebarItem = {
     label: React.ReactNode;
     href?: string;
-    icon?: React.ReactNode;
+    icon?: React.ReactNode | string;
     active?: boolean;
 };
 type SidebarProps = React.HTMLAttributes<HTMLElement> & {

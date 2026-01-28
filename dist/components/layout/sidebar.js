@@ -1,4 +1,5 @@
 import { jsx, jsxs } from "react/jsx-runtime";
+import { CraftIcon } from "../../components/craft-icon";
 import { cn } from "../../utils/cn";
 function Sidebar({ className, title, items, footer, ...props }) {
   return /* @__PURE__ */ jsxs(
@@ -22,7 +23,7 @@ function Sidebar({ className, title, items, footer, ...props }) {
                 item.active ? "bg-[rgb(var(--nc-accent-1)/0.25)] text-[rgb(var(--nc-fg))]" : "text-[rgb(var(--nc-fg-muted))] hover:bg-[rgb(var(--nc-surface)/0.12)] hover:text-[rgb(var(--nc-fg))]"
               ),
               children: [
-                item.icon,
+                typeof item.icon === "string" ? /* @__PURE__ */ jsx(CraftIcon, { name: item.icon, className: "h-4 w-4" }) : item.icon,
                 /* @__PURE__ */ jsx("span", { children: item.label })
               ]
             },

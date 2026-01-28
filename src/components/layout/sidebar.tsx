@@ -1,11 +1,12 @@
 import * as React from "react";
 
+import { CraftIcon } from "@/components/craft-icon";
 import { cn } from "@/utils/cn";
 
 export type SidebarItem = {
   label: React.ReactNode;
   href?: string;
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | string;
   active?: boolean;
 };
 
@@ -37,7 +38,11 @@ export function Sidebar({ className, title, items, footer, ...props }: SidebarPr
                 : "text-[rgb(var(--nc-fg-muted))] hover:bg-[rgb(var(--nc-surface)/0.12)] hover:text-[rgb(var(--nc-fg))]"
             )}
           >
-            {item.icon}
+            {typeof item.icon === "string" ? (
+              <CraftIcon name={item.icon} className="h-4 w-4" />
+            ) : (
+              item.icon
+            )}
             <span>{item.label}</span>
           </a>
         ))}

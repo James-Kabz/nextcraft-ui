@@ -10,6 +10,7 @@ import { Grid } from "@/components/layout/grid";
 import { CraftCard } from "@/components/craft-card";
 import { CraftBadge } from "@/components/craft-badge";
 import { CraftButton } from "@/components/craft-button";
+import { CraftIcon } from "@/components/craft-icon";
 import { CraftFormBuilder, type CraftFormBuilderField } from "@/components/craft-form-builder";
 import { CraftFormField } from "@/components/craft-form-field";
 import { CraftConfirmDialog } from "@/components/craft-confirm-dialog";
@@ -174,10 +175,10 @@ export default function LayoutDemoPage() {
         <Sidebar
           title="Nextcraft"
           items={[
-            { label: "Dashboard", active: true },
-            { label: "Projects" },
-            { label: "Billing" },
-            { label: "Team" },
+            { label: "Dashboard", icon: "layout-dashboard", active: true },
+            { label: "Projects", icon: "folder" },
+            { label: "Billing", icon: "credit-card" },
+            { label: "Team", icon: "users" },
           ]}
           footer={
             <div className="space-y-3">
