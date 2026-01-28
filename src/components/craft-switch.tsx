@@ -26,18 +26,14 @@ export const CraftSwitch = React.forwardRef<HTMLInputElement, CraftSwitchProps>(
         <span
           className={cn(
             "relative h-6 w-11 rounded-full border-2 border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.08)]",
+            "before:absolute before:left-0.5 before:top-0.5 before:h-4 before:w-4 before:rounded-full before:bg-[rgb(var(--nc-surface-muted)/0.9)]",
+            "before:transition-all before:duration-200 before:content-['']",
             "transition-all duration-200",
             "peer-focus-visible:ring-2 peer-focus-visible:ring-[rgb(var(--nc-accent-1)/0.5)]",
-            "peer-checked:border-[rgb(var(--nc-accent-1)/0.6)] peer-checked:bg-[rgb(var(--nc-accent-1)/0.25)]"
+            "peer-checked:border-[rgb(var(--nc-accent-1)/0.6)] peer-checked:bg-[rgb(var(--nc-accent-1)/0.25)]",
+            "peer-checked:before:translate-x-5 peer-checked:before:bg-[rgb(var(--nc-surface-muted))]"
           )}
         >
-          <span
-            className={cn(
-              "absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-[rgb(var(--nc-surface-muted)/0.9)]",
-              "transition-all duration-200",
-              "peer-checked:translate-x-5 peer-checked:bg-[rgb(var(--nc-surface-muted))]"
-            )}
-          />
         </span>
         {label && <span>{label}</span>}
       </label>
