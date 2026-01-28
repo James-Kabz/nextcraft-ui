@@ -42,9 +42,7 @@
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.lib.json --noEmit",
     "test:unit:run": "echo \"No unit tests specified\"",
-    "test:coverage": "echo \"No coverage configured\"",
-    "chore:version": "npm version patch --no-git-tag-version",
-    "postpublish": "npm run chore:version"
+    "test:coverage": "echo \"No coverage configured\""
   },
   "peerDependencies": {
     "lucide-react": "^0.563.0",
