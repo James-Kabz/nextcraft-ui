@@ -51,9 +51,7 @@ export function CraftIcon({
     let mounted = true;
     (async () => {
       try {
-        const mod = await import("lucide-react/dynamic").catch(() =>
-          import("lucide-react/dynamic.mjs")
-        );
+        const mod = await import("lucide-react/dynamic.mjs");
         if (mounted) {
           setLucideIcon(() => mod.DynamicIcon as DynamicIconComponent);
         }
