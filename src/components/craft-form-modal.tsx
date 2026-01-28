@@ -21,7 +21,7 @@ import {
   type CraftFormFieldType,
 } from "@/components/craft-form-field";
 
-export type CraftFormBuilderField<TValues extends FieldValues> = {
+export type CraftFormModalField<TValues extends FieldValues> = {
   name: Path<TValues>;
   label?: React.ReactNode;
   description?: React.ReactNode;
@@ -44,10 +44,10 @@ export type CraftFormBuilderField<TValues extends FieldValues> = {
   validate?: (value: unknown, values: TValues) => string | boolean | undefined;
 };
 
-export type CraftFormBuilderProps<TValues extends FieldValues> = {
+export type CraftFormModalProps<TValues extends FieldValues> = {
   title?: React.ReactNode;
   description?: React.ReactNode;
-  fields: Array<CraftFormBuilderField<TValues>>;
+  fields: Array<CraftFormModalField<TValues>>;
   initialData?: Partial<TValues> | null;
   open?: boolean;
   defaultOpen?: boolean;
@@ -72,7 +72,7 @@ export type CraftFormBuilderProps<TValues extends FieldValues> = {
 };
 
 function defaultValueForField<TValues extends FieldValues>(
-  field: CraftFormBuilderField<TValues>
+  field: CraftFormModalField<TValues>
 ) {
   if (field.defaultValue !== undefined) return field.defaultValue;
   switch (field.type) {
@@ -97,7 +97,7 @@ function defaultValueForField<TValues extends FieldValues>(
 }
 
 function buildDefaultValues<TValues extends FieldValues>(
-  fields: Array<CraftFormBuilderField<TValues>>,
+  fields: Array<CraftFormModalField<TValues>>,
   initialData?: Partial<TValues> | null
 ): DefaultValues<TValues> {
   const values = {} as Record<string, unknown>;
@@ -113,7 +113,7 @@ function buildDefaultValues<TValues extends FieldValues>(
 }
 
 function buildRules<TValues extends FieldValues>(
-  field: CraftFormBuilderField<TValues>,
+  field: CraftFormModalField<TValues>,
   getValues: () => TValues
 ): RegisterOptions<TValues> {
   const rules: RegisterOptions<TValues> = { ...field.rules };
@@ -216,7 +216,7 @@ function buildRules<TValues extends FieldValues>(
   return rules;
 }
 
-export function CraftFormBuilder<TValues extends FieldValues>({
+export function CraftFormModal<TValues extends FieldValues>({
   title = "Form",
   description,
   fields,
@@ -241,7 +241,7 @@ export function CraftFormBuilder<TValues extends FieldValues>({
   onReset,
   onCancel,
   customValidation,
-}: CraftFormBuilderProps<TValues>) {
+}: CraftFormModalProps<TValues>) {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
   const isControlled = typeof open === "boolean";
   const isOpen = isControlled ? open : uncontrolledOpen;

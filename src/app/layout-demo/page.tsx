@@ -11,7 +11,7 @@ import { CraftCard } from "@/components/craft-card";
 import { CraftBadge } from "@/components/craft-badge";
 import { CraftButton } from "@/components/craft-button";
 import { CraftIcon } from "@/components/craft-icon";
-import { CraftFormBuilder, type CraftFormBuilderField } from "@/components/craft-form-builder";
+import { CraftFormModal, type CraftFormModalField } from "@/components/craft-form-modal";
 import { CraftFormField } from "@/components/craft-form-field";
 import { CraftConfirmDialog } from "@/components/craft-confirm-dialog";
 import { CraftCreateEditDrawer } from "@/components/craft-create-edit-drawer";
@@ -67,7 +67,7 @@ const demoRows: DemoRow[] = [
 ];
 
 export default function LayoutDemoPage() {
-  const formFields = React.useMemo<CraftFormBuilderField<DemoFormValues>[]>(
+  const formFields = React.useMemo<CraftFormModalField<DemoFormValues>[]>(
     () => [
       { name: "name", label: "Project name", type: "text", placeholder: "Nextcraft UI", required: true },
       { name: "email", label: "Owner email", type: "email", placeholder: "team@nextcraft.io", required: true },
@@ -252,7 +252,7 @@ export default function LayoutDemoPage() {
               <h3 className="text-xl font-semibold">Form Modal</h3>
               <p className="text-sm text-white/60">CraftForm + CraftFormField + CraftSubmitButton.</p>
             </div>
-            <CraftFormBuilder
+            <CraftFormModal
               title="Create project"
               description="All input types are supported, styled, and validated via React Hook Form."
               submitLabel="Create project"
