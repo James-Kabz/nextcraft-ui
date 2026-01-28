@@ -62,9 +62,6 @@ jobs:
 
     permissions:
       contents: write
-      issues: write
-      pull-requests: write
-      id-token: write
 
     steps:
       - name: Checkout code (full history + tags)
@@ -85,9 +82,7 @@ jobs:
       - name: Build library
         run: npm run build
 
-      - name: Release (semantic-release)
+      - name: Publish to npm
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Map your existing secret to what npm/semantic-release expects
-          NPM_TOKEN: ${{ secrets.NEXTCRAFT_UI }}
-        run: npx semantic-release
+          NODE_AUTH_TOKEN: ${{ secrets.NEXTCRAFT_UI }}
+        run: npm publish --access public

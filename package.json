@@ -1,6 +1,6 @@
 {
   "name": "@jameskabz/nextcraft-ui",
-  "version": "0.6.9",
+  "version": "0.6.10",
   "description": "Next.js + Tailwind UI components with a bold, crafted aesthetic.",
   "private": false,
   "license": "MIT",
@@ -42,7 +42,9 @@
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.lib.json --noEmit",
     "test:unit:run": "echo \"No unit tests specified\"",
-    "test:coverage": "echo \"No coverage configured\""
+    "test:coverage": "echo \"No coverage configured\"",
+    "chore:version": "npm version patch --no-git-tag-version",
+    "postpublish": "npm run chore:version"
   },
   "peerDependencies": {
     "lucide-react": "^0.563.0",
