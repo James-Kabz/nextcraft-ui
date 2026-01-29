@@ -11,19 +11,19 @@ export function AppShell({ className, sidebar, topNav, children, ...props }: App
   return (
     <div
       className={cn(
-        "grid min-h-screen grid-cols-1 gap-6 bg-background p-6 lg:grid-cols-[260px_1fr]",
+        "grid min-h-screen grid-cols-1 gap-4 bg-background p-4 lg:grid-cols-[72px_1fr] lg:gap-5 lg:p-5",
         className
       )}
       {...props}
     >
       {sidebar && (
-        <div className="h-full lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto">
+        <div className="relative z-30 h-full overflow-visible lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
           {sidebar}
         </div>
       )}
-      <div className="flex flex-col gap-6">
-        {topNav && <div className="lg:sticky lg:top-6 lg:z-20">{topNav}</div>}
-        <main className="flex-1">{children}</main>
+      <div className="flex min-w-0 flex-col gap-4 lg:gap-5">
+        {topNav && <div className="lg:sticky lg:top-4 lg:z-20">{topNav}</div>}
+        <main className="min-w-0 flex-1">{children}</main>
       </div>
     </div>
   );

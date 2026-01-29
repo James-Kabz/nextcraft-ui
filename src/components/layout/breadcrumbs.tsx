@@ -13,7 +13,13 @@ export type BreadcrumbsProps = React.HTMLAttributes<HTMLElement> & {
 
 export function Breadcrumbs({ className, items, ...props }: BreadcrumbsProps) {
   return (
-    <nav className={cn("flex items-center text-sm text-[rgb(var(--nc-fg-muted))]", className)} {...props}>
+    <nav
+      className={cn(
+        "flex items-center text-xs text-[rgb(var(--nc-fg-muted))]",
+        className
+      )}
+      {...props}
+    >
       {items.map((item, index) => {
         const content = item.href ? (
           <a href={item.href} className="transition hover:text-[rgb(var(--nc-fg))]">
