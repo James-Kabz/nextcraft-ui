@@ -29,7 +29,7 @@ export function Sidebar({
   return (
     <aside
       className={cn(
-        "group flex h-full flex-col gap-4 rounded-2xl border border-[rgb(var(--nc-border)/0.2)] bg-[rgb(var(--nc-surface)/0.04)] p-3 text-[rgb(var(--nc-fg))] backdrop-blur-xl transition-all duration-200",
+        "group flex h-full flex-col gap-4 rounded-2xl border border-[rgb(var(--nc-border)/0.2)] bg-[rgb(var(--nc-surface)/0.04)] p-3 text-[rgb(var(--nc-fg))] backdrop-blur-xl transition-all duration-300 ease-in-out",
         hoverExpand ? "w-16 hover:w-56" : "w-full",
         hoverExpand
           ? "fixed left-0 top-0 z-50 shadow-[0_16px_40px_rgba(0,0,0,0.18)]"
@@ -45,7 +45,7 @@ export function Sidebar({
           </div>
           <span
             className={cn(
-              "truncate text-sm font-semibold transition-all",
+              "truncate text-sm font-semibold transition-all duration-300 ease-in-out",
               hoverExpand
                 ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
                 : "max-w-none opacity-100"
@@ -62,13 +62,16 @@ export function Sidebar({
             key={`${item.label}-${index}`}
             href={item.href ?? "#"}
             className={cn(
-              "flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition",
+              "flex items-center rounded-xl text-sm transition-all duration-300 ease-in-out",
+              hoverExpand
+                ? "justify-center px-2 py-2 group-hover:justify-start group-hover:gap-3 group-hover:px-3"
+                : "gap-3 px-3 py-2",
               item.active
                 ? "bg-[rgb(var(--nc-accent-1)/0.18)] text-[rgb(var(--nc-fg))]"
                 : "text-[rgb(var(--nc-fg-muted))] hover:bg-[rgb(var(--nc-surface)/0.1)] hover:text-[rgb(var(--nc-fg))]"
             )}
           >
-            <div className="shrink-0">
+            <div className="flex shrink-0 items-center justify-center transition-all duration-300 ease-in-out">
               {typeof item.icon === "string" ? (
                 <CraftIcon name={item.icon} size="lg" />
               ) : (
@@ -77,7 +80,7 @@ export function Sidebar({
             </div>
             <span
               className={cn(
-                "truncate transition-all",
+                "truncate whitespace-nowrap transition-all duration-300 ease-in-out",
                 hoverExpand
                   ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
                   : "max-w-none opacity-100"
@@ -92,7 +95,7 @@ export function Sidebar({
       {footer && (
         <div
           className={cn(
-            "mt-auto px-2 pt-3 text-xs text-[rgb(var(--nc-fg-muted))] transition-all",
+            "mt-auto px-2 pt-3 text-xs text-[rgb(var(--nc-fg-muted))] transition-all duration-300 ease-in-out",
             hoverExpand
               ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
               : "max-w-none opacity-100"

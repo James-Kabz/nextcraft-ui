@@ -27,6 +27,7 @@ export type CraftCreateEditDrawerProps<TValues extends FieldValues> = {
   disableSubmitWhenInvalid?: boolean;
   closeOnSubmit?: boolean;
   side?: "left" | "right";
+  loading?: boolean;
 };
 
 export function CraftCreateEditDrawer<TValues extends FieldValues>({
@@ -48,6 +49,7 @@ export function CraftCreateEditDrawer<TValues extends FieldValues>({
   disableSubmitWhenInvalid = true,
   closeOnSubmit = true,
   side = "right",
+  loading,
 }: CraftCreateEditDrawerProps<TValues>) {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
   const isControlled = typeof open === "boolean";
@@ -62,8 +64,9 @@ export function CraftCreateEditDrawer<TValues extends FieldValues>({
   );
 
   const formId = React.useId();
+  const isSubmitting = loading ?? form.formState.isSubmitting;
   const isSubmitDisabled =
-    disableSubmitWhenInvalid && !form.formState.isValid;
+    isSubmitting || (disableSubmitWhenInvalid && !form.formState.isValid);
 
   const handleSubmit = form.handleSubmit(async (values) => {
     await onSubmit(values);
@@ -84,6 +87,7 @@ export function CraftCreateEditDrawer<TValues extends FieldValues>({
         variant="solid"
         form={formId}
         disabled={isSubmitDisabled}
+        loading={isSubmitting}
       >
         {resolvedSubmitLabel}
       </CraftButton>
