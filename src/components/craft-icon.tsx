@@ -25,7 +25,7 @@ export function CraftIconProvider({ icons, children }: CraftIconProviderProps) {
 export type CraftIconProps = {
   name: IconName | string;
   prefix?: IconPrefix;
-  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
   color?: string;
   className?: string;
   "aria-label"?: string;
@@ -48,20 +48,26 @@ export function CraftIcon({
   const icon = registry?.[name];
 
   if (!icon) {
-    const faSizeMap = {
-      xs: "xs",
-      sm: "sm",
-      md: "lg",
-      lg: "xl",
-      xl: "2x",
-      xxl: "3x",
+    const sizeClassMap = {
+      xs: "text-xs",
+      sm: "text-sm",
+      md: "text-base",
+      lg: "text-lg",
+      xl: "text-xl",
+      "2xl": "text-2xl",
+      "3xl": "text-3xl",
+      "4xl": "text-4xl",
     } as const;
 
     return (
       <FontAwesomeIcon
         icon={[prefix, name as IconName]}
-        size={faSizeMap[size]}
-        className={cn(color ? `text-${color}` : "text-current", "inline-block", className)}
+        className={cn(
+          color ? `text-${color}` : "text-current",
+          "inline-block",
+          size ? sizeClassMap[size] : null,
+          className
+        )}
         aria-hidden={ariaLabel ? undefined : true}
         aria-label={ariaLabel}
         role={ariaLabel ? "img" : undefined}
