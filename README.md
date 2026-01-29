@@ -146,13 +146,47 @@ Notes:
 
 ## CraftIcon
 
-CraftIcon supports lucide icons by name (via `lucide-react/dynamic`), or you can register your own icons once and use them by name anywhere:
+CraftIcon uses Font Awesome (solid icons) by default. You can also register your own icons once and use them by name anywhere.
+
+### 1) Install Font Awesome (required in your app)
+
+```bash
+npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+```
+
+### 2) Use built-in icon names
+
+These names are supported out of the box:
+
+- `layout-dashboard`, `dashboard`
+- `folder`, `folder-open`
+- `users`
+- `credit-card`
+- `pen`, `edit`
+- `trash`, `delete`
+- `archive`
+- `search`
+
+```tsx
+import { CraftIcon } from "@jameskabz/nextcraft-ui";
+
+export function App() {
+  return <CraftIcon name="pen" className="text-white" />;
+}
+```
+
+### 3) Register your own icons (optional)
 
 ```tsx
 import { CraftIcon, CraftIconProvider } from "@jameskabz/nextcraft-ui";
-import { Home } from "lucide-react";
 
-const icons = { home: <Home size={16} /> };
+const icons = {
+  home: (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor">
+      <path d="M3 12l9-9 9 9v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" />
+    </svg>
+  ),
+};
 
 export function App() {
   return (
