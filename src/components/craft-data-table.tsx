@@ -40,7 +40,25 @@ export type CraftDataTableAction<T> = {
   key: string;
   label?: React.ReactNode;
   icon?: string | React.ReactNode;
-  variant?: "solid" | "outline" | "ghost" | "gradient";
+  variant?:
+    | "solid"
+    | "outline"
+    | "ghost"
+    | "gradient"
+    | "default"
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "success"
+    | "warning"
+    | "info"
+    | "subtle"
+    | "dark"
+    | "light"
+    | "primaryOutline"
+    | "dangerOutline"
+    | "successOutline"
+    | "link";
   permission?: boolean | ((item: T) => boolean);
   visible?: boolean | ((item: T) => boolean);
   disabled?: boolean | ((item: T) => boolean);
@@ -136,6 +154,36 @@ function truncateText(text: string, maxWords: number) {
   const words = text.split(" ");
   if (words.length <= maxWords) return text;
   return `${words.slice(0, maxWords).join(" ")}...`;
+}
+
+function resolveActionVariant(
+  variant: CraftDataTableAction<unknown>["variant"]
+): "solid" | "outline" | "ghost" | "gradient" {
+  switch (variant) {
+    case "solid":
+    case "default":
+    case "primary":
+      return "solid";
+    case "gradient":
+      return "gradient";
+    case "outline":
+    case "primaryOutline":
+    case "dangerOutline":
+    case "successOutline":
+      return "outline";
+    case "ghost":
+    case "link":
+    case "secondary":
+    case "danger":
+    case "success":
+    case "warning":
+    case "info":
+    case "subtle":
+    case "dark":
+    case "light":
+    default:
+      return "ghost";
+  }
 }
 
 export function CraftDataTable<T>({
@@ -324,7 +372,7 @@ export function CraftDataTable<T>({
 
   const pageStartIndex =
     enablePagination && !manualPagination ? resolvedPageIndex * pageSize : 0;
-  const pageRowIds = pagedData.map((row, index) =>
+  const pageRowIds = pagedData.map((row: T, index: number) =>
     rowIdFor(row, pageStartIndex + index)
   );
   const allSelected =
@@ -641,7 +689,7 @@ export function CraftDataTable<T>({
                     </td>
                   </tr>
                 ) : (
-                  pagedData.map((row, rowIndex) => {
+                  pagedData.map((row: T, rowIndex: number) => {
                     const rowId = rowIdFor(row, pageStartIndex + rowIndex);
                     const isSelected = Boolean(resolvedSelection[rowId]);
                     return (
@@ -734,7 +782,7 @@ export function CraftDataTable<T>({
                                   <CraftButton
                                     type="button"
                                     size="sm"
-                                    variant={action.variant ?? "solid"}
+                                    variant={resolveActionVariant(action.variant)}
                                     disabled={isActionDisabled(action, row)}
                                     className={cn("h-8 w-8 p-0", className)}
                                     onClick={(event) => {
