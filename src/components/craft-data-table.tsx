@@ -4,13 +4,22 @@ import * as React from "react";
 
 import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
-import { CraftPagination } from "@/components/craft-pagination";
+import { CraftButton } from "@/components/craft-button";
+import { CraftCheckbox } from "@/components/craft-checkbox";
+import { CraftIcon } from "@/components/craft-icon";
+import { CraftModal } from "@/components/craft-modal";
+import { CraftTooltip } from "@/components/craft-tooltip";
+import { CraftLoader } from "@/components/craft-loader";
+import { CraftDataTableHeader } from "@/components/craft-data-table-header";
+import { CraftDataTablePagination } from "@/components/craft-data-table-pagination";
 
 export type CraftDataTableColumn<T> = {
   id: string;
-  header: React.ReactNode;
+  header?: React.ReactNode;
+  label?: React.ReactNode;
   accessor?: keyof T | ((row: T) => unknown);
   cell?: (row: T) => React.ReactNode;
+  formatter?: (value: unknown, row: T) => React.ReactNode;
   sortable?: boolean;
   filterable?: boolean;
   width?: string | number;
@@ -18,6 +27,8 @@ export type CraftDataTableColumn<T> = {
   hidden?: boolean;
   headerClassName?: string;
   cellClassName?: string;
+  truncate?: boolean;
+  maxWords?: number;
 };
 
 export type CraftDataTableSort = {
@@ -25,18 +36,39 @@ export type CraftDataTableSort = {
   desc?: boolean;
 };
 
+export type CraftDataTableAction<T> = {
+  key: string;
+  label?: React.ReactNode;
+  icon?: string | React.ReactNode;
+  variant?: "solid" | "outline" | "ghost" | "gradient";
+  permission?: boolean | ((item: T) => boolean);
+  visible?: boolean | ((item: T) => boolean);
+  disabled?: boolean | ((item: T) => boolean);
+  tooltip?: React.ReactNode | ((item: T) => React.ReactNode);
+  onClick?: (item: T) => void;
+  className?: string | ((item: T) => string);
+};
+
 export type CraftDataTableProps<T> = {
   data: T[];
   columns: CraftDataTableColumn<T>[];
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   tone?: ThemeName;
   className?: string;
-  loading?: boolean;
-  emptyState?: React.ReactNode;
   toolbar?: React.ReactNode;
+  emptyState?: React.ReactNode;
+  actions?: CraftDataTableAction<T>[];
+  showActionsColumn?: boolean;
+  selectable?: boolean;
+  enableRowSelection?: boolean;
+  selectedRowIds?: Record<string, boolean>;
+  onRowSelectionChange?: (selection: Record<string, boolean>) => void;
+  getRowId?: (row: T, index: number) => string;
+  rowKey?: keyof T | string;
   enableSorting?: boolean;
   enableFiltering?: boolean;
   enableColumnVisibility?: boolean;
-  enableRowSelection?: boolean;
   enablePagination?: boolean;
   showGlobalFilter?: boolean;
   manualSorting?: boolean;
@@ -50,14 +82,39 @@ export type CraftDataTableProps<T> = {
   onGlobalFilterChange?: (value: string) => void;
   columnVisibility?: Record<string, boolean>;
   onColumnVisibilityChange?: (visibility: Record<string, boolean>) => void;
-  selectedRowIds?: Record<string, boolean>;
-  onRowSelectionChange?: (selection: Record<string, boolean>) => void;
-  getRowId?: (row: T, index: number) => string;
   pageIndex?: number;
   pageSize?: number;
   pageCount?: number;
   onPageChange?: (pageIndex: number) => void;
   onPageSizeChange?: (size: number) => void;
+  striped?: boolean;
+  hoverable?: boolean;
+  clickableRows?: boolean;
+  emptyText?: string;
+  emptySubtitle?: string;
+  variant?: "default" | "bordered" | "minimal";
+  density?: "compact" | "normal" | "comfortable";
+  headerVariant?: "default" | "minimal";
+  headerPadding?: "compact" | "normal" | "comfortable";
+  paginationVariant?: "default" | "minimal";
+  paginationPadding?: "compact" | "normal" | "comfortable";
+  loading?: boolean;
+  dataLoading?: boolean;
+  sortLoading?: boolean;
+  paginationLoading?: boolean;
+  bulkLoading?: boolean;
+  rowLoading?: Record<string, boolean>;
+  loadingType?: "spin" | "pulse" | "bounce" | "ripple" | "bars" | "dots" | "ring";
+  loadingSize?: "small" | "medium" | "large" | "xl";
+  loadingColor?: string;
+  loadingText?: string;
+  loadingTextPosition?: "top" | "bottom";
+  loadingBackground?: string;
+  showSkeleton?: boolean;
+  skeletonRows?: number;
+  truncateWords?: number;
+  enableTextModal?: boolean;
+  onRowClick?: (payload: { item: T; index: number }) => void;
 };
 
 function getColumnValue<T>(column: CraftDataTableColumn<T>, row: T) {
@@ -75,18 +132,32 @@ function normalizeValue(value: unknown) {
   return String(value).toLowerCase();
 }
 
+function truncateText(text: string, maxWords: number) {
+  const words = text.split(" ");
+  if (words.length <= maxWords) return text;
+  return `${words.slice(0, maxWords).join(" ")}...`;
+}
+
 export function CraftDataTable<T>({
   data,
   columns,
+  title,
+  description,
   tone,
   className,
-  loading = false,
-  emptyState,
   toolbar,
+  emptyState,
+  actions = [],
+  showActionsColumn = true,
+  selectable,
+  enableRowSelection = true,
+  selectedRowIds,
+  onRowSelectionChange,
+  getRowId,
+  rowKey,
   enableSorting = true,
   enableFiltering = true,
   enableColumnVisibility = true,
-  enableRowSelection = true,
   enablePagination = true,
   showGlobalFilter,
   manualSorting = false,
@@ -100,14 +171,39 @@ export function CraftDataTable<T>({
   onGlobalFilterChange,
   columnVisibility,
   onColumnVisibilityChange,
-  selectedRowIds,
-  onRowSelectionChange,
-  getRowId,
   pageIndex,
   pageSize = 10,
   pageCount,
   onPageChange,
   onPageSizeChange,
+  striped = false,
+  hoverable = true,
+  clickableRows = false,
+  emptyText = "No data available",
+  emptySubtitle = "Try adjusting your search or filter criteria",
+  variant = "default",
+  density = "normal",
+  headerVariant = "default",
+  headerPadding = "normal",
+  paginationVariant = "default",
+  paginationPadding = "normal",
+  loading = false,
+  dataLoading = false,
+  sortLoading = false,
+  paginationLoading = false,
+  bulkLoading = false,
+  rowLoading = {},
+  loadingType = "dots",
+  loadingSize = "medium",
+  loadingColor = "rgb(var(--nc-accent-1))",
+  loadingText = "Loading...",
+  loadingTextPosition = "bottom",
+  loadingBackground = "rgba(0, 0, 0, 0.35)",
+  showSkeleton = true,
+  skeletonRows = 5,
+  truncateWords = 10,
+  enableTextModal = true,
+  onRowClick,
 }: CraftDataTableProps<T>) {
   const [internalSort, setInternalSort] = React.useState<CraftDataTableSort | null>(null);
   const [internalFilters, setInternalFilters] = React.useState<Record<string, string>>({});
@@ -121,6 +217,8 @@ export function CraftDataTable<T>({
   const [internalSelection, setInternalSelection] = React.useState<Record<string, boolean>>({});
   const [internalPageIndex, setInternalPageIndex] = React.useState(0);
   const [showColumns, setShowColumns] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
+  const [modalContent, setModalContent] = React.useState<string>("");
 
   const resolvedSort = sortBy ?? internalSort;
   const resolvedFilters = filters ?? internalFilters;
@@ -128,6 +226,7 @@ export function CraftDataTable<T>({
   const resolvedVisibility = columnVisibility ?? internalVisibility;
   const resolvedSelection = selectedRowIds ?? internalSelection;
   const resolvedPageIndex = pageIndex ?? internalPageIndex;
+  const resolvedSelectable = selectable ?? enableRowSelection;
 
   const setSort = (next: CraftDataTableSort | null) => {
     if (sortBy === undefined) setInternalSort(next);
@@ -215,8 +314,12 @@ export function CraftDataTable<T>({
   }, [enablePagination, manualPagination, pageSize, resolvedPageIndex, sortedData]);
 
   const rowIdFor = React.useCallback(
-    (row: T, index: number) => getRowId?.(row, index) ?? String(index),
-    [getRowId]
+    (row: T, index: number) => {
+      if (getRowId) return getRowId(row, index);
+      if (rowKey) return String((row as Record<string, unknown>)[rowKey as string] ?? index);
+      return String(index);
+    },
+    [getRowId, rowKey]
   );
 
   const pageStartIndex =
@@ -249,12 +352,6 @@ export function CraftDataTable<T>({
     setSort(null);
   };
 
-  const emptyContent = emptyState ?? (
-    <div className="text-center text-sm text-[rgb(var(--nc-fg-muted))]">
-      No results found.
-    </div>
-  );
-
   const resolvedShowGlobalFilter =
     showGlobalFilter ?? (enableFiltering && !toolbar);
 
@@ -263,208 +360,453 @@ export function CraftDataTable<T>({
     onGlobalFilterChange?.(next);
   };
 
+  const shouldShowActionsColumn = React.useMemo(() => {
+    if (!showActionsColumn) return false;
+    if (!actions || actions.length === 0) return false;
+    return actions.some((action) => {
+      if (action.permission === undefined) return true;
+      if (typeof action.permission === "boolean") return action.permission;
+      return true;
+    });
+  }, [actions, showActionsColumn]);
+
+  const getVisibleActions = (item: T) =>
+    actions.filter((action) => {
+      if (action.permission !== undefined) {
+        if (typeof action.permission === "boolean" && !action.permission) return false;
+        if (typeof action.permission === "function" && !action.permission(item)) return false;
+      }
+      if (action.visible && typeof action.visible === "function") {
+        return action.visible(item);
+      }
+      if (typeof action.visible === "boolean") return action.visible;
+      return true;
+    });
+
+  const isActionDisabled = (action: CraftDataTableAction<T>, item: T) => {
+    if (action.disabled && typeof action.disabled === "function") return action.disabled(item);
+    if (typeof action.disabled === "boolean") return action.disabled;
+    return false;
+  };
+
+  const handleActionClick = (action: CraftDataTableAction<T>, item: T) => {
+    if (isActionDisabled(action, item)) return;
+    action.onClick?.(item);
+  };
+
+  const totalColumns =
+    visibleColumns.length +
+    (resolvedSelectable ? 1 : 0) +
+    (shouldShowActionsColumn ? 1 : 0);
+
+  const densityPadding = {
+    compact: "px-4 py-2",
+    normal: "px-6 py-4",
+    comfortable: "px-8 py-6",
+  } as const;
+
+  const headerPaddingClasses = {
+    compact: "px-4 py-2",
+    normal: "px-6 py-3",
+    comfortable: "px-8 py-4",
+  } as const;
+
+  const rowClassNames = (isSelected: boolean, rowId: string, index: number) =>
+    cn(
+      "transition-colors",
+      variant === "bordered" && "border-b border-[rgb(var(--nc-border)/0.2)]",
+      variant === "minimal" && "border-b border-[rgb(var(--nc-border)/0.15)]",
+      striped && index % 2 === 1 && "bg-[rgb(var(--nc-surface)/0.04)]",
+      hoverable && !clickableRows && "hover:bg-[rgb(var(--nc-surface)/0.12)]",
+      clickableRows && "cursor-pointer hover:bg-[rgb(var(--nc-surface)/0.16)]",
+      isSelected && "bg-[rgb(var(--nc-accent-1)/0.12)]",
+      rowLoading[rowId] && "opacity-60"
+    );
+
+  const containerClasses = cn(
+    "overflow-hidden rounded-3xl border border-[rgb(var(--nc-border)/0.3)]",
+    "bg-[rgb(var(--nc-surface)/0.08)] shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl",
+    variant === "minimal" && "border-transparent bg-transparent shadow-none"
+  );
+
+  const openModal = (content: string) => {
+    if (!enableTextModal) return;
+    setModalContent(content);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setModalContent("");
+  };
+
   return (
     <div className={cn("space-y-4", className)} data-nc-theme={tone}>
       {toolbar}
 
-      {resolvedShowGlobalFilter && (
-        <div className="flex items-center justify-between gap-3 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-2 text-sm text-[rgb(var(--nc-fg))]">
-          <span className="text-xs text-[rgb(var(--nc-fg-muted))]">Global filter</span>
-          <input
-            type="search"
-            value={resolvedGlobalFilter}
-            onChange={(event) => setGlobalFilter(event.target.value)}
-            placeholder="Search all columns..."
-            className="w-full max-w-xs rounded-xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.18)] px-3 py-2 text-xs text-[rgb(var(--nc-fg))]"
-          />
-        </div>
-      )}
-
-      {enableColumnVisibility && (
-        <div className="relative flex justify-end">
-          <button
-            type="button"
-            className="rounded-xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-2 text-xs text-[rgb(var(--nc-fg))] transition hover:bg-[rgb(var(--nc-surface)/0.2)]"
-            onClick={() => setShowColumns((prev) => !prev)}
-          >
-            Columns
-          </button>
-          {showColumns && (
-            <div className="absolute right-0 top-10 z-20 w-48 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.2)] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
-              <div className="grid gap-2">
-                {columns.map((column) => (
-                  <label
-                    key={column.id}
-                    className="flex items-center gap-2 text-xs text-[rgb(var(--nc-fg))]"
-                  >
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 accent-[rgb(var(--nc-accent-1))]"
-                      checked={resolvedVisibility[column.id] !== false}
-                      onChange={(event) =>
-                        setVisibility({
-                          ...resolvedVisibility,
-                          [column.id]: event.target.checked,
-                        })
-                      }
-                    />
-                    {column.header}
-                  </label>
-                ))}
-              </div>
+      <CraftDataTableHeader
+        title={title}
+        description={description}
+        variant={headerVariant}
+        padding={headerPadding}
+        tone={tone}
+        filters={
+          resolvedShowGlobalFilter ? (
+            <div className="flex items-center gap-2 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-2 text-xs text-[rgb(var(--nc-fg))]">
+              <CraftIcon name="search" className="h-4 w-4 text-[rgb(var(--nc-fg-muted))]" />
+              <input
+                type="search"
+                value={resolvedGlobalFilter}
+                onChange={(event) => setGlobalFilter(event.target.value)}
+                placeholder="Search all columns..."
+                className="w-full max-w-xs bg-transparent text-xs text-[rgb(var(--nc-fg))] placeholder:text-[rgb(var(--nc-fg-muted))] focus:outline-none"
+              />
             </div>
-          )}
-        </div>
-      )}
-
-      <div className="overflow-hidden rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.08)] shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
-        <table className="w-full border-collapse text-left text-sm">
-          <thead className="bg-[rgb(var(--nc-surface)/0.12)] text-[rgb(var(--nc-fg-muted))]">
-            <tr>
-              {enableRowSelection && (
-                <th className="w-12 px-4 py-3">
-                  <input
-                    ref={headerCheckboxRef}
-                    type="checkbox"
-                    className="h-4 w-4 accent-[rgb(var(--nc-accent-1))]"
-                    checked={allSelected}
-                    onChange={(event) => {
-                      const next = { ...resolvedSelection };
-                      pageRowIds.forEach((id) => {
-                        next[id] = event.target.checked;
-                      });
-                      setSelection(next);
-                    }}
-                  />
-                </th>
-              )}
-              {visibleColumns.map((column) => (
-                <th
-                  key={column.id}
-                  className={cn(
-                    "px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em]",
-                    column.headerClassName
-                  )}
-                  style={{ width: column.width }}
-                >
-                  <button
-                    type="button"
-                    className={cn(
-                      "flex items-center gap-2",
-                      enableSorting && column.sortable !== false
-                        ? "cursor-pointer"
-                        : "cursor-default"
-                    )}
-                    onClick={() => toggleSort(column)}
-                  >
-                    <span>{column.header}</span>
-                    {resolvedSort?.id === column.id && (
-                      <span className="text-[rgb(var(--nc-accent-1))]">
-                        {resolvedSort.desc ? "↓" : "↑"}
-                      </span>
-                    )}
-                  </button>
-                  {enableFiltering && column.filterable !== false && (
-                    <input
-                      type="text"
-                      value={resolvedFilters[column.id] ?? ""}
-                      onChange={(event) =>
-                        setFilters({
-                          ...resolvedFilters,
-                          [column.id]: event.target.value,
-                        })
-                      }
-                      placeholder="Filter"
-                      className="mt-2 w-full rounded-xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.18)] px-2 py-1 text-xs text-[rgb(var(--nc-fg))]"
-                    />
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="text-[rgb(var(--nc-fg))]">
-            {loading && (
-              <tr>
-                <td
-                  colSpan={visibleColumns.length + (enableRowSelection ? 1 : 0)}
-                  className="px-4 py-10 text-center text-sm text-[rgb(var(--nc-fg-muted))]"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-[rgb(var(--nc-fg-muted))] border-t-transparent" />
-                    Loading data...
-                  </span>
-                </td>
-              </tr>
-            )}
-            {!loading && pagedData.length === 0 && (
-              <tr>
-                <td
-                  colSpan={visibleColumns.length + (enableRowSelection ? 1 : 0)}
-                  className="px-4 py-10"
-                >
-                  {emptyContent}
-                </td>
-              </tr>
-            )}
-            {!loading &&
-              pagedData.map((row, rowIndex) => {
-                const rowId = rowIdFor(row, pageStartIndex + rowIndex);
-                const isSelected = resolvedSelection[rowId];
-                return (
-                  <tr
-                    key={rowId}
-                    className={cn(
-                      "border-t border-[rgb(var(--nc-border)/0.15)]",
-                      isSelected && "bg-[rgb(var(--nc-accent-1)/0.08)]"
-                    )}
-                  >
-                    {enableRowSelection && (
-                      <td className="px-4 py-4">
+          ) : null
+        }
+        actions={
+          enableColumnVisibility ? (
+            <div className="relative">
+              <CraftButton
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowColumns((prev) => !prev)}
+              >
+                Columns
+              </CraftButton>
+              {showColumns && (
+                <div className="absolute right-0 top-12 z-20 w-56 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.2)] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+                  <div className="grid gap-2">
+                    {columns.map((column) => (
+                      <label
+                        key={column.id}
+                        className="flex items-center gap-2 text-xs text-[rgb(var(--nc-fg))]"
+                      >
                         <input
                           type="checkbox"
                           className="h-4 w-4 accent-[rgb(var(--nc-accent-1))]"
-                          checked={isSelected}
+                          checked={resolvedVisibility[column.id] !== false}
                           onChange={(event) =>
-                            setSelection({
-                              ...resolvedSelection,
-                              [rowId]: event.target.checked,
+                            setVisibility({
+                              ...resolvedVisibility,
+                              [column.id]: event.target.checked,
                             })
                           }
                         />
-                      </td>
-                    )}
-                    {visibleColumns.map((column) => (
-                      <td
+                        {column.header ?? column.label ?? column.id}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : null
+        }
+      />
+
+      <div className={containerClasses}>
+        <div className="relative">
+          <CraftLoader
+            loading={loading || dataLoading}
+            type={loadingType}
+            size={loadingSize}
+            color={loadingColor}
+            overlay
+            text={loadingText}
+            textPosition={loadingTextPosition}
+            backgroundColor={loadingBackground}
+          />
+
+          <div className={cn("overflow-x-auto", (loading || dataLoading) && "opacity-60")}>
+            <table className="min-w-full border-collapse text-left text-sm">
+              <thead className="bg-[rgb(var(--nc-surface)/0.12)] text-[rgb(var(--nc-fg-muted))]">
+                <tr>
+                  {resolvedSelectable && (
+                    <th className={cn("w-12", headerPaddingClasses[density])}>
+                      <div className="flex items-center justify-center">
+                        {bulkLoading ? (
+                          <CraftLoader loading type="spin" size="small" color={loadingColor} />
+                        ) : (
+                          <CraftCheckbox
+                            ref={headerCheckboxRef}
+                            checked={allSelected}
+                            onChange={(event) => {
+                              const next = { ...resolvedSelection };
+                              pageRowIds.forEach((id) => {
+                                next[id] = event.target.checked;
+                              });
+                              setSelection(next);
+                            }}
+                          />
+                        )}
+                      </div>
+                    </th>
+                  )}
+                  {visibleColumns.map((column) => {
+                    const headerLabel = column.header ?? column.label ?? column.id;
+                    return (
+                      <th
                         key={column.id}
                         className={cn(
-                          "px-4 py-4",
-                          column.align === "center" && "text-center",
-                          column.align === "right" && "text-right",
-                          column.cellClassName
+                          headerPaddingClasses[density],
+                          "text-xs font-semibold uppercase tracking-[0.2em]",
+                          column.headerClassName
                         )}
+                        style={{ width: column.width }}
                       >
-                        {column.cell
-                          ? column.cell(row)
-                          : String(getColumnValue(column, row) ?? "")}
-                      </td>
-                    ))}
+                        <button
+                          type="button"
+                          className={cn(
+                            "flex w-full items-center gap-2",
+                            enableSorting && column.sortable !== false
+                              ? "cursor-pointer"
+                              : "cursor-default"
+                          )}
+                          onClick={() => toggleSort(column)}
+                        >
+                          <span>{headerLabel}</span>
+                          {sortLoading && resolvedSort?.id === column.id ? (
+                            <CraftLoader loading type="spin" size="small" color={loadingColor} />
+                          ) : null}
+                          {resolvedSort?.id === column.id && !sortLoading ? (
+                            <span className="text-[rgb(var(--nc-accent-1))]">
+                              {resolvedSort.desc ? "↓" : "↑"}
+                            </span>
+                          ) : null}
+                        </button>
+                        {enableFiltering && column.filterable !== false && (
+                          <input
+                            type="text"
+                            value={resolvedFilters[column.id] ?? ""}
+                            onChange={(event) =>
+                              setFilters({
+                                ...resolvedFilters,
+                                [column.id]: event.target.value,
+                              })
+                            }
+                            placeholder="Filter"
+                            className="mt-2 w-full rounded-xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.18)] px-2 py-1 text-xs text-[rgb(var(--nc-fg))]"
+                          />
+                        )}
+                      </th>
+                    );
+                  })}
+                  {shouldShowActionsColumn && (
+                    <th className={cn(headerPaddingClasses[density], "text-xs uppercase")}>Actions</th>
+                  )}
+                </tr>
+              </thead>
+              <tbody className="text-[rgb(var(--nc-fg))]">
+                {showSkeleton && (loading || dataLoading) ? (
+                  Array.from({ length: skeletonRows }).map((_, rowIndex) => (
+                    <tr key={`skeleton-${rowIndex}`} className="animate-pulse">
+                      {resolvedSelectable && (
+                        <td className={cn(headerPaddingClasses[density], "w-12")}> 
+                          <div className="h-4 w-4 rounded bg-[rgb(var(--nc-border)/0.3)]" />
+                        </td>
+                      )}
+                      {visibleColumns.map((column) => (
+                        <td key={column.id} className={cn(densityPadding[density])}>
+                          <div className="h-4 w-3/4 rounded bg-[rgb(var(--nc-border)/0.3)]" />
+                        </td>
+                      ))}
+                      {shouldShowActionsColumn && (
+                        <td className={cn(densityPadding[density])}>
+                          <div className="flex items-center justify-center gap-2">
+                            <div className="h-6 w-6 rounded bg-[rgb(var(--nc-border)/0.3)]" />
+                            <div className="h-6 w-6 rounded bg-[rgb(var(--nc-border)/0.3)]" />
+                          </div>
+                        </td>
+                      )}
+                    </tr>
+                  ))
+                ) : pagedData.length === 0 ? (
+                  <tr>
+                    <td colSpan={totalColumns} className={cn(densityPadding[density], "py-12")}> 
+                      {emptyState ?? (
+                        <div className="flex flex-col items-center justify-center text-center">
+                          <CraftIcon
+                            name="search"
+                            className="mb-4 h-12 w-12 text-[rgb(var(--nc-fg-muted))]"
+                          />
+                          <p className="text-base font-semibold text-[rgb(var(--nc-fg))]">
+                            {emptyText}
+                          </p>
+                          <p className="text-sm text-[rgb(var(--nc-fg-muted))]">
+                            {emptySubtitle}
+                          </p>
+                        </div>
+                      )}
+                    </td>
                   </tr>
-                );
-              })}
-          </tbody>
-        </table>
-      </div>
+                ) : (
+                  pagedData.map((row, rowIndex) => {
+                    const rowId = rowIdFor(row, pageStartIndex + rowIndex);
+                    const isSelected = Boolean(resolvedSelection[rowId]);
+                    return (
+                      <tr
+                        key={rowId}
+                        className={rowClassNames(isSelected, rowId, rowIndex)}
+                        onClick={() => {
+                          if (!clickableRows) return;
+                          onRowClick?.({ item: row, index: rowIndex });
+                        }}
+                      >
+                        {resolvedSelectable && (
+                          <td className={cn(densityPadding[density], "w-12")}> 
+                            <CraftCheckbox
+                              checked={isSelected}
+                              onChange={(event) =>
+                                setSelection({
+                                  ...resolvedSelection,
+                                  [rowId]: event.target.checked,
+                                })
+                              }
+                            />
+                          </td>
+                        )}
+                        {visibleColumns.map((column) => {
+                          const rawValue = getColumnValue(column, row);
+                          const formatted = column.formatter
+                            ? column.formatter(rawValue, row)
+                            : rawValue;
+                          const content = column.cell
+                            ? column.cell(row)
+                            : formatted ?? "";
 
-      {enablePagination && (
-        <CraftPagination
-          pageIndex={resolvedPageIndex}
-          pageCount={resolvedPageCount}
-          onPageChange={setPageIndex}
+                          if (
+                            enableTextModal &&
+                            !column.cell &&
+                            typeof formatted === "string" &&
+                            (column.truncate ?? true) &&
+                            formatted.split(" ").length > (column.maxWords ?? truncateWords)
+                          ) {
+                            const maxWords = column.maxWords ?? truncateWords;
+                            return (
+                              <td
+                                key={column.id}
+                                className={cn(
+                                  densityPadding[density],
+                                  column.align === "center" && "text-center",
+                                  column.align === "right" && "text-right",
+                                  column.cellClassName
+                                )}
+                              >
+                                <button
+                                  type="button"
+                                  className="text-[rgb(var(--nc-accent-1))] hover:text-[rgb(var(--nc-accent-2))]"
+                                  onClick={() => openModal(formatted)}
+                                >
+                                  {truncateText(formatted, maxWords)}
+                                </button>
+                              </td>
+                            );
+                          }
+
+                          return (
+                            <td
+                              key={column.id}
+                              className={cn(
+                                densityPadding[density],
+                                column.align === "center" && "text-center",
+                                column.align === "right" && "text-right",
+                                column.cellClassName
+                              )}
+                            >
+                              {content as React.ReactNode}
+                            </td>
+                          );
+                        })}
+                        {shouldShowActionsColumn && (
+                          <td className={cn(densityPadding[density])}>
+                            <div className="flex items-center justify-center gap-2">
+                              {getVisibleActions(row).map((action) => {
+                                const tooltip =
+                                  typeof action.tooltip === "function"
+                                    ? action.tooltip(row)
+                                    : action.tooltip;
+                                const className =
+                                  typeof action.className === "function"
+                                    ? action.className(row)
+                                    : action.className;
+                                const button = (
+                                  <CraftButton
+                                    type="button"
+                                    size="sm"
+                                    variant={action.variant ?? "solid"}
+                                    disabled={isActionDisabled(action, row)}
+                                    className={cn("h-8 w-8 p-0", className)}
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      handleActionClick(action, row);
+                                    }}
+                                  >
+                                    {action.icon ? (
+                                      typeof action.icon === "string" ? (
+                                        <CraftIcon name={action.icon} className="h-4 w-4" />
+                                      ) : (
+                                        action.icon
+                                      )
+                                    ) : action.label ? (
+                                      <span className="text-[11px]">{action.label}</span>
+                                    ) : null}
+                                  </CraftButton>
+                                );
+
+                                if (tooltip) {
+                                  return (
+                                    <CraftTooltip key={action.key} content={tooltip}>
+                                      {button}
+                                    </CraftTooltip>
+                                  );
+                                }
+
+                                return <React.Fragment key={action.key}>{button}</React.Fragment>;
+                              })}
+                            </div>
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <CraftDataTablePagination
+          currentPage={resolvedPageIndex}
+          totalPages={resolvedPageCount}
+          total={filteredData.length}
           pageSize={pageSize}
+          selectable={Boolean(resolvedSelectable)}
+          selectedCount={Object.values(resolvedSelection).filter(Boolean).length}
+          showPagination={enablePagination}
+          loading={paginationLoading}
+          disabled={loading || dataLoading}
+          onPageChange={setPageIndex}
           onPageSizeChange={onPageSizeChange}
+          variant={paginationVariant}
+          padding={paginationPadding}
           tone={tone}
         />
-      )}
+      </div>
+
+      <CraftModal open={showModal} onOpenChange={setShowModal} title="Full Text">
+        <div className="space-y-3">
+          <p className="text-sm text-[rgb(var(--nc-fg-muted))]">Full content</p>
+          <div className="text-sm text-[rgb(var(--nc-fg))] whitespace-pre-wrap wrap-break-words">
+            {modalContent}
+          </div>
+          <div className="flex justify-end">
+            <CraftButton type="button" variant="ghost" onClick={closeModal}>
+              Close
+            </CraftButton>
+          </div>
+        </div>
+      </CraftModal>
     </div>
   );
 }

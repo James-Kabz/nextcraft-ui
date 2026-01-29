@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
 
@@ -35,12 +34,12 @@ export const CraftCheckbox = React.forwardRef<HTMLInputElement, CraftCheckboxPro
               "flex h-5 w-5 items-center justify-center rounded-md border-2",
               "border-[rgb(var(--nc-border)/0.45)] bg-[rgb(var(--nc-surface)/0.08)]",
               "transition-all duration-200",
-              "peer-checked:border-[rgb(var(--nc-accent-1))] peer-checked:bg-[rgb(var(--nc-accent-1)/0.25)]",
+              "peer-checked:border-[rgb(var(--nc-accent-1))]",
               "peer-focus-visible:ring-2 peer-focus-visible:ring-[rgb(var(--nc-accent-1)/0.5)]"
             )}
           >
             <svg
-              className="h-3 w-3 text-[rgb(var(--nc-fg))] opacity-0 transition-opacity peer-checked:opacity-100"
+              className="h-3 w-3 text-[rgb(var(--nc-accent-1))] opacity-0 transition-opacity peer-checked:opacity-100"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"

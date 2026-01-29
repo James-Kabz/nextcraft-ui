@@ -8,6 +8,10 @@ import {
   CraftButton,
   CraftCard,
   CraftCheckbox,
+  CraftDataTable,
+  type CraftDataTableAction,
+  type CraftDataTableColumn,
+  type CraftDataTableSort,
   CraftEmptyState,
   CraftIcon,
   CraftInput,
@@ -18,6 +22,21 @@ import {
   CraftTextarea,
   LayoutConfig,
 } from "@/index";
+
+type TemplateRow = {
+  id: string;
+  project: string;
+  owner: string;
+  status: string;
+  updated: string;
+};
+
+const templateRows: TemplateRow[] = [
+  { id: "row-1", project: "Aurora OS", owner: "Jade", status: "Active", updated: "Jan 12" },
+  { id: "row-2", project: "Ember Cloud", owner: "Miles", status: "Paused", updated: "Jan 09" },
+  { id: "row-3", project: "Ocean Pulse", owner: "Iris", status: "Active", updated: "Jan 05" },
+  { id: "row-4", project: "Cosmic Relay", owner: "Avery", status: "Draft", updated: "Dec 28" },
+];
 
 const layoutConfig: LayoutConfig = {
   sidebar: {
@@ -40,6 +59,46 @@ const layoutConfig: LayoutConfig = {
 };
 
 export default function LayoutTemplateDemoPage() {
+  const [tableSort, setTableSort] = React.useState<CraftDataTableSort | null>(null);
+  const [tablePageIndex, setTablePageIndex] = React.useState(0);
+  const [tablePageSize, setTablePageSize] = React.useState(3);
+
+  const tableColumns = React.useMemo<CraftDataTableColumn<TemplateRow>[]>(
+    () => [
+      { id: "project", header: "Project", accessor: "project", sortable: true, filterable: true },
+      { id: "owner", header: "Owner", accessor: "owner", sortable: true, filterable: true },
+      { id: "status", header: "Status", accessor: "status", sortable: true, filterable: true },
+      { id: "updated", header: "Updated", accessor: "updated", sortable: true, align: "right" },
+    ],
+    []
+  );
+
+  const tableActions = React.useMemo<CraftDataTableAction<TemplateRow>[]>(
+    () => [
+      {
+        key: "open",
+        label: "Open",
+        icon: "folder-open",
+        variant: "ghost",
+        tooltip: "Open project",
+        onClick: (item) => {
+          console.log("Open", item.id);
+        },
+      },
+      {
+        key: "archive",
+        label: "Archive",
+        icon: "archive",
+        variant: "outline",
+        tooltip: "Archive project",
+        onClick: (item) => {
+          console.log("Archive", item.id);
+        },
+      },
+    ],
+    []
+  );
+
   return (
     <AppTemplate
       config={layoutConfig}
@@ -185,6 +244,37 @@ export default function LayoutTemplateDemoPage() {
             />
           </CraftCard>
         </div>
+
+        <CraftCard className="space-y-5">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 className="text-xl font-semibold">Recent projects</h3>
+              <p className="text-sm text-[rgb(var(--nc-fg-muted))]">
+                CraftDataTable with selection, filters, actions, and pagination.
+              </p>
+            </div>
+            <CraftButton size="sm" variant="ghost">
+              View all
+            </CraftButton>
+          </div>
+          <CraftDataTable
+            data={templateRows}
+            columns={tableColumns}
+            actions={tableActions}
+            selectable
+            enableColumnVisibility
+            enableSorting
+            enableFiltering
+            enablePagination
+            showGlobalFilter
+            sortBy={tableSort}
+            onSortChange={setTableSort}
+            pageIndex={tablePageIndex}
+            pageSize={tablePageSize}
+            onPageChange={setTablePageIndex}
+            onPageSizeChange={setTablePageSize}
+          />
+        </CraftCard>
 
         <CraftCard className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-4">

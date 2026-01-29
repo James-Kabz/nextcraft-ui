@@ -109,7 +109,18 @@ export { CraftTableToolbar } from "./components/craft-table-toolbar";
 export type { CraftTableToolbarProps } from "./components/craft-table-toolbar";
 
 export { CraftDataTable } from "./components/craft-data-table";
-export type { CraftDataTableProps, CraftDataTableColumn, CraftDataTableSort } from "./components/craft-data-table";
+export type {
+  CraftDataTableProps,
+  CraftDataTableColumn,
+  CraftDataTableSort,
+  CraftDataTableAction,
+} from "./components/craft-data-table";
+export { CraftDataTableHeader } from "./components/craft-data-table-header";
+export type { CraftDataTableHeaderProps } from "./components/craft-data-table-header";
+export { CraftDataTablePagination } from "./components/craft-data-table-pagination";
+export type { CraftDataTablePaginationProps } from "./components/craft-data-table-pagination";
+export { CraftLoader } from "./components/craft-loader";
+export type { CraftLoaderProps } from "./components/craft-loader";
 
 export { CraftPagination } from "./components/craft-pagination";
 export type { CraftPaginationProps } from "./components/craft-pagination";

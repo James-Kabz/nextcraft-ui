@@ -10,14 +10,11 @@ import { Grid } from "@/components/layout/grid";
 import { CraftCard } from "@/components/craft-card";
 import { CraftBadge } from "@/components/craft-badge";
 import { CraftButton } from "@/components/craft-button";
-import { CraftIcon } from "@/components/craft-icon";
 import { CraftFormModal, type CraftFormModalField } from "@/components/craft-form-modal";
 import { CraftFormField } from "@/components/craft-form-field";
 import { CraftConfirmDialog } from "@/components/craft-confirm-dialog";
 import { CraftCreateEditDrawer } from "@/components/craft-create-edit-drawer";
-import { CraftFilterBar } from "@/components/craft-filter-bar";
-import { CraftDataTable, type CraftDataTableColumn, type CraftDataTableSort } from "@/components/craft-data-table";
-import { CraftSelect } from "@/components/craft-select";
+import { CraftDataTable, type CraftDataTableAction, type CraftDataTableColumn, type CraftDataTableSort } from "@/components/craft-data-table";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -165,6 +162,32 @@ export default function LayoutDemoPage() {
       { id: "owner", header: "Owner", accessor: "owner", sortable: true, filterable: true },
       { id: "budget", header: "Budget", accessor: "budget", sortable: true },
       { id: "updated", header: "Updated", accessor: "updated", sortable: true, align: "right" },
+    ],
+    []
+  );
+
+  const actions = React.useMemo<CraftDataTableAction<DemoRow>[]>(
+    () => [
+      {
+        key: "edit",
+        label: "Edit",
+        icon: "pen",
+        variant: "ghost",
+        tooltip: "Edit project",
+        onClick: (item) => {
+          console.log("Edit", item.id);
+        },
+      },
+      {
+        key: "delete",
+        label: "Delete",
+        icon: "trash",
+        variant: "outline",
+        tooltip: "Delete project",
+        onClick: (item) => {
+          console.log("Delete", item.id);
+        },
+      },
     ],
     []
   );
@@ -322,8 +345,11 @@ export default function LayoutDemoPage() {
           <CraftDataTable
             data={demoRows}
             columns={columns}
+            title="Projects"
+            description="Search, filter, and act on the project pipeline."
+            actions={actions}
+            selectable
             enableColumnVisibility
-            enableRowSelection
             enableSorting
             enableFiltering
             enablePagination
@@ -337,33 +363,6 @@ export default function LayoutDemoPage() {
             pageSize={pageSize}
             onPageChange={setPageIndex}
             onPageSizeChange={setPageSize}
-            toolbar={
-              <CraftFilterBar
-                title="Projects"
-                description="Search and filter the project pipeline."
-                searchValue={globalFilter}
-                onSearchChange={setGlobalFilter}
-                actions={
-                  <CraftButton size="sm">Export</CraftButton>
-                }
-                filters={
-                  <div className="flex items-center gap-3">
-                    <CraftSelect
-                      value={filters.status ?? ""}
-                      onChange={(event) => setFilters({ ...filters, status: event.target.value })}
-                    >
-                      <option value="">All status</option>
-                      <option value="Active">Active</option>
-                      <option value="Paused">Paused</option>
-                      <option value="Draft">Draft</option>
-                    </CraftSelect>
-                    <CraftButton size="sm" variant="ghost" onClick={() => setFilters({})}>
-                      Reset
-                    </CraftButton>
-                  </div>
-                }
-              />
-            }
           />
         </CraftCard>
       </Container>
