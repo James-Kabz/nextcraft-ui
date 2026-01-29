@@ -39,7 +39,7 @@ export function Sidebar({ className, title, items, footer, ...props }: SidebarPr
             )}
           >
             {typeof item.icon === "string" ? (
-              <CraftIcon name={item.icon} className="h-4 w-4" />
+              <CraftIcon name={item.icon} size="lg" />
             ) : (
               item.icon
             )}

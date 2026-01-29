@@ -42,7 +42,7 @@ const layoutConfig: LayoutConfig = {
   sidebar: {
     title: "Nextcraft",
     items: [
-      { label: "Dashboard", href: "/layout-template-demo", icon: "layout-dashboard", active: true },
+      { label: "Dashboard", href: "/layout-template-demo", icon: "gauge", active: true },
       { label: "Projects", href: "/projects", icon: "folder" },
       { label: "Billing", href: "/billing", icon: "credit-card" },
       { label: "Team", href: "/team", icon: "users" },
@@ -143,7 +143,7 @@ export default function LayoutTemplateDemoPage() {
             <div className="rounded-2xl border border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.12)] p-4">
               <p className="text-sm font-semibold">CraftIcon test</p>
               <div className="mt-2 flex items-center gap-3 text-[rgb(var(--nc-fg-muted))]">
-                <CraftIcon name="layout-dashboard" className="h-4 w-4" />
+                <CraftIcon name="gauge" size="lg"/>
                 <CraftIcon name="folder" className="h-4 w-4" />
                 <CraftIcon name="users" className="h-4 w-4" />
                 <CraftIcon name="credit-card" className="h-4 w-4" />

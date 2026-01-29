@@ -42,7 +42,7 @@ export function AppTemplate({
       if (!name) return undefined;
       if (resolveIcon) return resolveIcon(name);
       if (icons?.[name]) return icons[name];
-      return <CraftIcon name={name} />;
+      return <CraftIcon name={name} size="lg"/>;
     },
     [icons, resolveIcon]
   );

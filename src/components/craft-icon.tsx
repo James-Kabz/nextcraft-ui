@@ -1,19 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { library, type IconName, type IconPrefix } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import {
-  faArchive,
-  faCreditCard,
-  faFolder,
-  faFolderOpen,
-  faGauge,
-  faPen,
-  faSearch,
-  faTrash,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
 
 import { cn } from "@/utils/cn";
 
@@ -31,29 +23,22 @@ export function CraftIconProvider({ icons, children }: CraftIconProviderProps) {
 }
 
 export type CraftIconProps = {
-  name: string;
+  name: IconName | string;
+  prefix?: IconPrefix;
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  color?: string;
   className?: string;
   "aria-label"?: string;
   icons?: CraftIconRegistry;
 };
 
-const fontAwesomeIcons: Record<string, IconDefinition> = {
-  "layout-dashboard": faGauge,
-  dashboard: faGauge,
-  folder: faFolder,
-  "folder-open": faFolderOpen,
-  users: faUsers,
-  "credit-card": faCreditCard,
-  pen: faPen,
-  edit: faPen,
-  trash: faTrash,
-  delete: faTrash,
-  archive: faArchive,
-  search: faSearch,
-};
+library.add(fas, far, fab);
 
 export function CraftIcon({
   name,
+  prefix = "fas",
+  size = "md",
+  color,
   className,
   "aria-label": ariaLabel,
   icons,
@@ -63,20 +48,23 @@ export function CraftIcon({
   const icon = registry?.[name];
 
   if (!icon) {
-    const faIcon = fontAwesomeIcons[name];
-    if (!faIcon) {
-      if (process.env.NODE_ENV !== "production") {
-        console.warn(`[CraftIcon] Unknown icon name: ${name}`);
-      }
-      return null;
-    }
+    const faSizeMap = {
+      xs: "xs",
+      sm: "sm",
+      md: "lg",
+      lg: "xl",
+      xl: "2x",
+      xxl: "3x",
+    } as const;
 
     return (
       <FontAwesomeIcon
-        icon={faIcon}
-        className={className}
+        icon={[prefix, name as IconName]}
+        size={faSizeMap[size]}
+        className={cn(color ? `text-${color}` : "text-current", "inline-block", className)}
         aria-hidden={ariaLabel ? undefined : true}
         aria-label={ariaLabel}
+        role={ariaLabel ? "img" : undefined}
       />
     );
   }

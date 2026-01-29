@@ -198,7 +198,7 @@ export default function LayoutDemoPage() {
         <Sidebar
           title="Nextcraft"
           items={[
-            { label: "Dashboard", icon: "layout-dashboard", active: true },
+            { label: "Dashboard", icon: "gauge", active: true },
             { label: "Projects", icon: "folder" },
             { label: "Billing", icon: "credit-card" },
             { label: "Team", icon: "users" },
