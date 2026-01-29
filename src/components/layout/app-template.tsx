@@ -18,7 +18,6 @@ export type AppTemplateProps = {
   icons?: Record<string, React.ReactNode>;
   activePath?: string;
   getActivePath?: () => string | undefined;
-  lucideFallback?: boolean;
   children: React.ReactNode;
 };
 
@@ -31,7 +30,6 @@ export function AppTemplate({
   icons,
   activePath,
   getActivePath,
-  lucideFallback = true,
   children,
 }: AppTemplateProps) {
   const sidebarConfig = config.sidebar;
@@ -44,9 +42,9 @@ export function AppTemplate({
       if (!name) return undefined;
       if (resolveIcon) return resolveIcon(name);
       if (icons?.[name]) return icons[name];
-      return <CraftIcon name={name} useLucide={lucideFallback} />;
+      return <CraftIcon name={name} />;
     },
-    [icons, lucideFallback, resolveIcon]
+    [icons, resolveIcon]
   );
 
   const sidebarItems: SidebarItem[] | null = sidebarConfig

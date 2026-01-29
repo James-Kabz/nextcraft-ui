@@ -100,11 +100,10 @@ export default function LayoutTemplateDemoPage() {
   );
 
   return (
-    <AppTemplate
-      config={layoutConfig}
-      getActivePath={() => "/layout-template-demo"}
-      lucideFallback
-      headerActions={
+      <AppTemplate
+        config={layoutConfig}
+        getActivePath={() => "/layout-template-demo"}
+        headerActions={
         <div className="flex items-center gap-3">
           <CraftButton size="sm" variant="ghost">
             Preview
@@ -120,7 +119,7 @@ export default function LayoutTemplateDemoPage() {
             <div>
               <h2 className="text-2xl font-semibold">Config-driven layout</h2>
               <p className="text-sm text-[rgb(var(--nc-fg-muted))]">
-                This page uses AppTemplate with JSON config and lucide icon names.
+                This page uses AppTemplate with JSON config and Font Awesome icon names.
               </p>
             </div>
             <div className="flex items-center gap-2">

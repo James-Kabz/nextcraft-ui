@@ -1,6 +1,19 @@
 "use client";
 
 import * as React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import {
+  faArchive,
+  faCreditCard,
+  faFolder,
+  faFolderOpen,
+  faGauge,
+  faPen,
+  faSearch,
+  faTrash,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { cn } from "@/utils/cn";
 
@@ -22,60 +35,45 @@ export type CraftIconProps = {
   className?: string;
   "aria-label"?: string;
   icons?: CraftIconRegistry;
-  useLucide?: boolean;
 };
 
-type DynamicIconComponent = React.ComponentType<{
-  name: string;
-  className?: string;
-  "aria-hidden"?: boolean;
-  "aria-label"?: string;
-}>;
+const fontAwesomeIcons: Record<string, IconDefinition> = {
+  "layout-dashboard": faGauge,
+  dashboard: faGauge,
+  folder: faFolder,
+  "folder-open": faFolderOpen,
+  users: faUsers,
+  "credit-card": faCreditCard,
+  pen: faPen,
+  edit: faPen,
+  trash: faTrash,
+  delete: faTrash,
+  archive: faArchive,
+  search: faSearch,
+};
 
 export function CraftIcon({
   name,
   className,
   "aria-label": ariaLabel,
   icons,
-  useLucide = true,
 }: CraftIconProps) {
   const contextRegistry = React.useContext(CraftIconContext);
   const registry = icons ?? contextRegistry;
   const icon = registry?.[name];
-  const [LucideIcon, setLucideIcon] = React.useState<DynamicIconComponent | null>(
-    null
-  );
-
-  React.useEffect(() => {
-    if (!useLucide || icon || LucideIcon) return;
-    let mounted = true;
-    (async () => {
-      try {
-        const mod = await import("lucide-react/dynamic.mjs");
-        if (mounted) {
-          setLucideIcon(() => mod.DynamicIcon as DynamicIconComponent);
-        }
-      } catch (error) {
-        if (mounted) setLucideIcon(null);
-        if (process.env.NODE_ENV !== "production") {
-          console.warn(
-            "[CraftIcon] Failed to load lucide-react/dynamic. Ensure lucide-react is installed."
-          );
-          console.warn(error);
-        }
-      }
-    })();
-    return () => {
-      mounted = false;
-    };
-  }, [LucideIcon, icon, useLucide]);
 
   if (!icon) {
-    if (!useLucide) return null;
-    if (!LucideIcon) return null;
+    const faIcon = fontAwesomeIcons[name];
+    if (!faIcon) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(`[CraftIcon] Unknown icon name: ${name}`);
+      }
+      return null;
+    }
+
     return (
-      <LucideIcon
-        name={name}
+      <FontAwesomeIcon
+        icon={faIcon}
         className={className}
         aria-hidden={ariaLabel ? undefined : true}
         aria-label={ariaLabel}
