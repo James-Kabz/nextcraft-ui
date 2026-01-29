@@ -25,7 +25,7 @@ function AppTemplate({
       if (!name) return void 0;
       if (resolveIcon) return resolveIcon(name);
       if (icons == null ? void 0 : icons[name]) return icons[name];
-      return /* @__PURE__ */ jsx(CraftIcon, { name });
+      return /* @__PURE__ */ jsx(CraftIcon, { name, size: "lg" });
     },
     [icons, resolveIcon]
   );

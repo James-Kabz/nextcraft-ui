@@ -53,4 +53,5 @@ export { ThemeMode, ThemeName, ThemeProvider, useTheme } from './theme/theme-con
 import 'react/jsx-runtime';
 import 'react';
 import 'next/link';
+import '@fortawesome/fontawesome-svg-core';
 import 'react-hook-form';

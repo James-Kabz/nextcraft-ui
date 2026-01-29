@@ -58,7 +58,7 @@ function AppTemplate({
       if (!name) return void 0;
       if (resolveIcon) return resolveIcon(name);
       if (icons == null ? void 0 : icons[name]) return icons[name];
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_craft_icon.CraftIcon, { name });
+      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_craft_icon.CraftIcon, { name, size: "lg" });
     },
     [icons, resolveIcon]
   );

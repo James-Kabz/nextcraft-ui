@@ -1,39 +1,22 @@
 "use client";
 import { jsx } from "react/jsx-runtime";
 import * as React from "react";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArchive,
-  faCreditCard,
-  faFolder,
-  faFolderOpen,
-  faGauge,
-  faPen,
-  faSearch,
-  faTrash,
-  faUsers
-} from "@fortawesome/free-solid-svg-icons";
 import { cn } from "../utils/cn";
 const CraftIconContext = React.createContext(null);
 function CraftIconProvider({ icons, children }) {
   return /* @__PURE__ */ jsx(CraftIconContext.Provider, { value: icons, children });
 }
-const fontAwesomeIcons = {
-  "layout-dashboard": faGauge,
-  dashboard: faGauge,
-  folder: faFolder,
-  "folder-open": faFolderOpen,
-  users: faUsers,
-  "credit-card": faCreditCard,
-  pen: faPen,
-  edit: faPen,
-  trash: faTrash,
-  delete: faTrash,
-  archive: faArchive,
-  search: faSearch
-};
+library.add(fas, far, fab);
 function CraftIcon({
   name,
+  prefix = "fas",
+  size = "md",
+  color,
   className,
   "aria-label": ariaLabel,
   icons
@@ -42,20 +25,23 @@ function CraftIcon({
   const registry = icons != null ? icons : contextRegistry;
   const icon = registry == null ? void 0 : registry[name];
   if (!icon) {
-    const faIcon = fontAwesomeIcons[name];
-    if (!faIcon) {
-      if (process.env.NODE_ENV !== "production") {
-        console.warn(`[CraftIcon] Unknown icon name: ${name}`);
-      }
-      return null;
-    }
+    const faSizeMap = {
+      xs: "xs",
+      sm: "sm",
+      md: "lg",
+      lg: "xl",
+      xl: "2x",
+      xxl: "3x"
+    };
     return /* @__PURE__ */ jsx(
       FontAwesomeIcon,
       {
-        icon: faIcon,
-        className,
+        icon: [prefix, name],
+        size: faSizeMap[size],
+        className: cn(color ? `text-${color}` : "text-current", "inline-block", className),
         "aria-hidden": ariaLabel ? void 0 : true,
-        "aria-label": ariaLabel
+        "aria-label": ariaLabel,
+        role: ariaLabel ? "img" : void 0
       }
     );
   }

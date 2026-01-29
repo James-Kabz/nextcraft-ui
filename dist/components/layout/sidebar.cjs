@@ -46,7 +46,7 @@ function Sidebar({ className, title, items, footer, ...props }) {
                 item.active ? "bg-[rgb(var(--nc-accent-1)/0.25)] text-[rgb(var(--nc-fg))]" : "text-[rgb(var(--nc-fg-muted))] hover:bg-[rgb(var(--nc-surface)/0.12)] hover:text-[rgb(var(--nc-fg))]"
               ),
               children: [
-                typeof item.icon === "string" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_craft_icon.CraftIcon, { name: item.icon, className: "h-4 w-4" }) : item.icon,
+                typeof item.icon === "string" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_craft_icon.CraftIcon, { name: item.icon, size: "lg" }) : item.icon,
                 /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: item.label })
               ]
             },
