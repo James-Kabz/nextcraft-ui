@@ -74,7 +74,9 @@ export function Sidebar({
           <span
             className={cn(
               "truncate text-sm font-semibold transition-all duration-300 ease-in-out",
-              hoverExpand && !isExpanded ? "max-w-0 opacity-0" : "max-w-50 opacity-100"
+              hoverExpand && !isExpanded
+                ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
+                : "max-w-40 opacity-100"
             )}
           >
             {title}
@@ -86,8 +88,10 @@ export function Sidebar({
         <button
           onClick={toggleSidebar}
           className={cn(
-            "flex items-center rounded-xl px-2 py-2 text-sm transition-all duration-300 ease-in-out",
-            "justify-start gap-3 px-3",
+            "flex items-center rounded-xl text-sm transition-all duration-300 ease-in-out",
+            !isExpanded
+              ? "justify-center px-0.5 py-2 group-hover:justify-start group-hover:gap-3 group-hover:px-0.5"
+              : "justify-start gap-3 px-0.5 py-2",
             "hover:bg-[rgb(var(--nc-surface)/0.1)]",
             isExpanded
               ? "text-[rgb(var(--nc-fg))] bg-[rgb(var(--nc-surface)/0.08)]"
@@ -97,12 +101,14 @@ export function Sidebar({
           aria-expanded={isExpanded}
         >
           <div className="flex shrink-0 items-center justify-center transition-all duration-300 ease-in-out">
-            <CraftIcon name="bars" size="2xl" />
+            <CraftIcon name="bars" size="4xl" />
           </div>
           <span
             className={cn(
               "truncate whitespace-nowrap transition-all duration-300 ease-in-out",
-              isExpanded ? "max-w-50 opacity-100" : "max-w-0 opacity-0"
+              !isExpanded
+                ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
+                : "max-w-40 opacity-100"
             )}
           >
             {isExpanded ? "Collapse" : "Expand"}
@@ -117,7 +123,7 @@ export function Sidebar({
             href={item.href ?? "#"}
             className={cn(
               "flex items-center rounded-xl text-sm transition-all duration-300 ease-in-out",
-              hoverExpand && !isExpanded
+              !isExpanded
                 ? "justify-center px-2 py-2 group-hover:justify-start group-hover:gap-3 group-hover:px-3"
                 : "justify-start gap-3 px-3 py-2",
               item.active
@@ -125,16 +131,9 @@ export function Sidebar({
                 : "text-[rgb(var(--nc-fg-muted))] hover:bg-[rgb(var(--nc-surface)/0.1)] hover:text-[rgb(var(--nc-fg))]"
             )}
           >
-            <div
-              className={cn(
-                "flex shrink-0 items-center justify-center transition-all duration-300 ease-in-out",
-                hoverExpand && !isExpanded
-                  ? "h-9 w-9 rounded-xl bg-[rgb(var(--nc-surface)/0.12)] group-hover:bg-[rgb(var(--nc-surface)/0.18)]"
-                  : ""
-              )}
-            >
+            <div className="flex shrink-0 items-center justify-center transition-all duration-300 ease-in-out">
               {typeof item.icon === "string" ? (
-                <CraftIcon name={item.icon} size="2xl" />
+                <CraftIcon name={item.icon} size="3xl" />
               ) : (
                 item.icon
               )}
@@ -142,7 +141,9 @@ export function Sidebar({
             <span
               className={cn(
                 "truncate whitespace-nowrap transition-all duration-300 ease-in-out",
-                hoverExpand && !isExpanded ? "max-w-0 opacity-0" : "max-w-50 opacity-100"
+                !isExpanded
+                  ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
+                  : "max-w-40 opacity-100"
               )}
             >
               {item.label}
@@ -155,7 +156,9 @@ export function Sidebar({
         <div
           className={cn(
             "mt-auto px-2 pt-3 text-xs text-[rgb(var(--nc-fg-muted))] transition-all duration-300 ease-in-out",
-            hoverExpand && !isExpanded ? "max-w-0 opacity-0" : "max-w-50 opacity-100"
+            !isExpanded
+              ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
+              : "max-w-40 opacity-100"
           )}
         >
           {footer}
