@@ -246,7 +246,7 @@ export function CraftDataTable<T>({
   loadingColor = "rgb(var(--nc-accent-1))",
   loadingText = "Loading...",
   loadingTextPosition = "bottom",
-  loadingBackground = "rgba(0, 0, 0, 0.35)",
+  loadingBackground = "rgb(var(--nc-accent-soft)/0.1)",
   showSkeleton = true,
   skeletonRows = 5,
   truncateWords = 10,
@@ -465,15 +465,15 @@ export function CraftDataTable<T>({
       variant === "bordered" && "border-b border-[rgb(var(--nc-border)/0.2)]",
       variant === "minimal" && "border-b border-[rgb(var(--nc-border)/0.15)]",
       striped && index % 2 === 1 && "bg-[rgb(var(--nc-surface)/0.04)]",
-      hoverable && !clickableRows && "hover:bg-[rgb(var(--nc-surface)/0.12)]",
-      clickableRows && "cursor-pointer hover:bg-[rgb(var(--nc-surface)/0.16)]",
+      hoverable && !clickableRows && "hover:bg-[rgb(var(--nc-surface)]",
+      clickableRows && "cursor-pointer hover:bg-[rgb(var(--nc-surface)/0.1)]",
       isSelected && "bg-[rgb(var(--nc-accent-1)/0.12)]",
       rowLoading[rowId] && "opacity-60"
     );
 
   const containerClasses = cn(
     "overflow-hidden rounded-3xl border border-[rgb(var(--nc-border)/0.3)]",
-    "bg-[rgb(var(--nc-surface)/0.08)] shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl",
+    " shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl",
     variant === "minimal" && "border-transparent bg-transparent shadow-none"
   );
 

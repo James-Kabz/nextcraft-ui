@@ -161,7 +161,7 @@ export function CraftLoader({
   overlay = false,
   text,
   textPosition = "bottom",
-  backgroundColor = "rgba(0, 0, 0, 0.35)",
+  backgroundColor = "rgb(var(--nc-accent-soft)/0.7)",
   tone,
   className,
 }: CraftLoaderProps) {

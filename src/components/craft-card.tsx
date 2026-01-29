@@ -31,9 +31,9 @@ export function CraftCard({
         "bg-linear-to-br from-[rgb(var(--nc-accent-1)/0.15)] via-[rgb(var(--nc-accent-2)/0.10)] to-[rgb(var(--nc-accent-3)/0.15)]",
         bordered ? "border-2 border-[rgb(var(--nc-accent-1)/0.3)]" : "border-0",
         elevated
-          ? "shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
+          ? "shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)]"
           : "shadow-none",
-        "before:absolute before:inset-0 before:bg-linear-to-br before:from-white/10 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+        "before:absolute before:inset-0 before:bg-linear-to-br before:from-white/4 before:to-transparent before:opacity-0 hover:before:opacity-40 before:transition-opacity before:duration-300",
         "transition-all duration-300",
         className
       )}
