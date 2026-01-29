@@ -1,7 +1,10 @@
+"use client";
+
 import * as React from "react";
 
 import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
+import { CraftIcon } from "@/components/craft-icon";
 
 type CraftButtonVariant = "solid" | "ghost" | "outline" | "gradient";
 type CraftButtonSize = "sm" | "md" | "lg";
@@ -9,8 +12,11 @@ type CraftButtonSize = "sm" | "md" | "lg";
 export type CraftButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: CraftButtonVariant;
   size?: CraftButtonSize;
-  glow?: boolean;
   tone?: ThemeName;
+  glow?: boolean;
+  loading?: boolean;
+  loadingText?: React.ReactNode;
+  icon?: string | React.ReactNode;
 };
 
 const sizeClasses: Record<CraftButtonSize, string> = {
@@ -30,15 +36,41 @@ const variantClasses: Record<CraftButtonVariant, string> = {
     "bg-gradient-to-r from-[rgb(var(--nc-accent-1))] via-[rgb(var(--nc-accent-2))] to-[rgb(var(--nc-accent-3))] text-white shadow-[0_12px_30px_rgb(var(--nc-accent-2)/0.45)] hover:shadow-[0_16px_36px_rgb(var(--nc-accent-2)/0.6)] hover:scale-[1.02] active:scale-[0.98]",
 };
 
+const iconSizeClasses: Record<CraftButtonSize, string> = {
+  sm: "h-4 w-4",
+  md: "h-4 w-4",
+  lg: "h-5 w-5",
+};
+
+const spinnerSizeClasses: Record<CraftButtonSize, string> = {
+  sm: "h-4 w-4",
+  md: "h-4 w-4",
+  lg: "h-5 w-5",
+};
+
 export function CraftButton({
   className,
   variant = "solid",
   size = "md",
-  glow = true,
   tone,
   disabled,
+  glow = true,
+  loading = false,
+  loadingText,
+  icon,
+  children,
   ...props
 }: CraftButtonProps) {
+  const isDisabled = disabled || loading;
+  const iconClassName = iconSizeClasses[size];
+  const spinnerClassName = spinnerSizeClasses[size];
+  const iconNode =
+    typeof icon === "string" ? (
+      <CraftIcon name={icon} className={iconClassName} />
+    ) : icon ? (
+      <span className={cn("inline-flex", iconClassName)}>{icon}</span>
+    ) : null;
+
   return (
     <button
       className={cn(
@@ -51,8 +83,39 @@ export function CraftButton({
         className
       )}
       data-nc-theme={tone}
-      disabled={disabled}
+      disabled={isDisabled}
+      aria-disabled={isDisabled}
+      aria-busy={loading}
       {...props}
-    />
+    >
+      {loading && (
+        <svg
+          className={cn("mr-2 animate-spin text-current", spinnerClassName)}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          />
+          <path
+            className="opacity-75"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth="4"
+            d="M4 12a8 8 0 018-8"
+          />
+        </svg>
+      )}
+      {!loading && iconNode}
+      {loading && loadingText ? <span>{loadingText}</span> : children}
+    </button>
   );
 }

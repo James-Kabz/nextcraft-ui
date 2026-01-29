@@ -14,7 +14,6 @@ import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
 import { CraftModal } from "@/components/craft-modal";
 import { CraftButton } from "@/components/craft-button";
-import { CraftSubmitButton } from "@/components/craft-submit-button";
 import {
   CraftFormField,
   type CraftFormFieldOption,
@@ -265,6 +264,8 @@ export function CraftFormModal<TValues extends FieldValues>({
   });
 
   const formId = React.useId();
+  const isSubmitDisabled =
+    disableSubmitWhenInvalid && !form.formState.isValid;
 
   React.useEffect(() => {
     form.reset(defaultValues);
@@ -332,13 +333,15 @@ export function CraftFormModal<TValues extends FieldValues>({
                 {cancelLabel}
               </CraftButton>
             )}
-            <CraftSubmitButton
+            <CraftButton
+              type="submit"
+              variant="solid"
               loading={loading}
-              disableWhenInvalid={disableSubmitWhenInvalid}
               form={formId}
+              disabled={loading || isSubmitDisabled}
             >
               {submitLabel}
-            </CraftSubmitButton>
+            </CraftButton>
           </div>
         }
       >
@@ -349,15 +352,12 @@ export function CraftFormModal<TValues extends FieldValues>({
         >
           {fields.map((field) => (
             <div key={field.name} className="space-y-2">
-              {field.helpText && (
-                <p className="text-xs text-[rgb(var(--nc-fg-muted))]">
-                  {field.helpText}
-                </p>
-              )}
               <CraftFormField
                 name={field.name}
                 label={field.label}
                 description={field.description}
+                helpText={field.helpText}
+                required={field.required && !field.disabled}
                 type={field.type}
                 placeholder={field.placeholder}
                 options={field.options}

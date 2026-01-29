@@ -250,7 +250,7 @@ export default function LayoutDemoPage() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h3 className="text-xl font-semibold">Form Modal</h3>
-              <p className="text-sm text-white/60">CraftForm + CraftFormField + CraftSubmitButton.</p>
+              <p className="text-sm text-white/60">CraftForm + CraftFormField + CraftButton.</p>
             </div>
             <CraftFormModal
               title="Create project"

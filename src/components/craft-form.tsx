@@ -7,7 +7,6 @@ import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
 import { CraftModal } from "@/components/craft-modal";
 import { CraftButton } from "@/components/craft-button";
-import { CraftSubmitButton } from "@/components/craft-submit-button";
 
 export type CraftFormProps<TValues extends FieldValues> = {
   form: UseFormReturn<TValues>;
@@ -61,6 +60,8 @@ export function CraftForm<TValues extends FieldValues>({
   );
 
   const formId = React.useId();
+  const isSubmitDisabled =
+    disableSubmitWhenInvalid && !form.formState.isValid;
 
   const handleSubmit = form.handleSubmit(async (values) => {
     await onSubmit(values);
@@ -72,12 +73,14 @@ export function CraftForm<TValues extends FieldValues>({
       <CraftButton type="button" variant="ghost" onClick={() => setOpen(false)}>
         {cancelLabel}
       </CraftButton>
-      <CraftSubmitButton
+      <CraftButton
+        type="submit"
+        variant="solid"
         form={formId}
-        disableWhenInvalid={disableSubmitWhenInvalid}
+        disabled={isSubmitDisabled}
       >
         {submitLabel}
-      </CraftSubmitButton>
+      </CraftButton>
     </div>
   );
 

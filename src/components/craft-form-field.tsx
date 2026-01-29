@@ -57,6 +57,9 @@ export type CraftFormFieldProps<TValues extends FieldValues = FieldValues> = {
   name: Path<TValues>;
   label?: React.ReactNode;
   description?: React.ReactNode;
+  helpText?: React.ReactNode;
+  success?: React.ReactNode;
+  required?: boolean;
   type?: CraftFormFieldType;
   options?: CraftFormFieldOption[];
   placeholder?: string;
@@ -88,6 +91,9 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
   name,
   label,
   description,
+  helpText,
+  success,
+  required,
   type = "text",
   options = [],
   placeholder,
@@ -102,9 +108,24 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
 }: CraftFormFieldProps<TValues>) {
   const { register, control, formState } = useFormContext<TValues>();
   const error = getFieldError(formState.errors, name);
+  const fieldId = React.useId();
+  const errorId = `${fieldId}-error`;
+  const helpId = `${fieldId}-help`;
   const errorMessage =
     typeof (error as { message?: unknown })?.message === "string"
       ? (error as { message: string }).message
+      : undefined;
+  const hasError = Boolean(errorMessage);
+  const resolvedInputClassName = cn(
+    inputClassName,
+    hasError
+      ? "border-[rgb(var(--nc-accent-3))] focus:border-[rgb(var(--nc-accent-3))] focus:ring-[rgb(var(--nc-accent-3)/0.35)]"
+      : null
+  );
+  const ariaDescribedBy = hasError
+    ? errorId
+    : helpText
+      ? helpId
       : undefined;
 
   if (type === "hidden") {
@@ -120,6 +141,11 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
       )}
     >
       {label}
+      {required ? (
+        <span className="ml-1 text-[rgb(var(--nc-accent-3))]" aria-label="required">
+          *
+        </span>
+      ) : null}
     </label>
   ) : null;
 
@@ -135,7 +161,32 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
   ) : null;
 
   const errorNode = errorMessage ? (
-    <p className="text-xs text-[rgb(var(--nc-accent-3))]">{errorMessage}</p>
+    <div
+      id={errorId}
+      className="flex items-start gap-2 text-xs text-[rgb(var(--nc-accent-3))]"
+      role="alert"
+      aria-live="polite"
+    >
+      <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10 2.5a.75.75 0 01.66.39l7.25 12.5a.75.75 0 01-.66 1.11H2.75a.75.75 0 01-.66-1.11l7.25-12.5A.75.75 0 0110 2.5zm0 4.25a.75.75 0 00-.75.75v4.5a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75zm0 9a1 1 0 100-2 1 1 0 000 2z" />
+      </svg>
+      <span>{errorMessage}</span>
+    </div>
+  ) : null;
+
+  const helpNode = helpText && !hasError ? (
+    <p id={helpId} className="text-xs text-[rgb(var(--nc-fg-muted))]">
+      {helpText}
+    </p>
+  ) : null;
+
+  const successNode = success && !hasError ? (
+    <div className="flex items-start gap-2 text-xs text-[rgb(var(--nc-accent-2))]">
+      <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M7.5 10.75l2 2 4-4a.75.75 0 111.06 1.06l-4.53 4.53a.75.75 0 01-1.06 0L6.44 11.81a.75.75 0 011.06-1.06z" />
+      </svg>
+      <span>{success}</span>
+    </div>
   ) : null;
 
   const renderInput = () => {
@@ -145,8 +196,9 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
           id={name}
           placeholder={placeholder}
           tone={tone}
-          className={inputClassName}
+          className={resolvedInputClassName}
           disabled={disabled}
+          aria-describedby={ariaDescribedBy}
           {...(fieldProps as Record<string, unknown>)}
           {...register(name, rules)}
         />
@@ -158,9 +210,10 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
         <CraftSelect
           id={name}
           tone={tone}
-          className={inputClassName}
+          className={resolvedInputClassName}
           multiple={type === "multiselect"}
           disabled={disabled}
+          aria-describedby={ariaDescribedBy}
           {...(fieldProps as Record<string, unknown>)}
           {...register(name, rules)}
         >
@@ -189,6 +242,7 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
           label={label}
           description={description}
           disabled={disabled}
+          aria-describedby={ariaDescribedBy}
           {...(fieldProps as Record<string, unknown>)}
           {...register(name, rules)}
         />
@@ -201,6 +255,7 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
           tone={tone}
           label={label}
           disabled={disabled}
+          aria-describedby={ariaDescribedBy}
           {...(fieldProps as Record<string, unknown>)}
           {...register(name, rules)}
         />
@@ -219,6 +274,7 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
               onChange={field.onChange}
               tone={tone}
               placeholder={placeholder}
+              aria-describedby={ariaDescribedBy}
               {...(fieldProps as Record<string, unknown>)}
             />
           )}
@@ -232,8 +288,9 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
           id={name}
           tone={tone}
           placeholder={placeholder}
-          className={inputClassName}
+          className={resolvedInputClassName}
           disabled={disabled}
+          aria-describedby={ariaDescribedBy}
           {...(fieldProps as Record<string, unknown>)}
           {...register(name, rules)}
         />
@@ -246,8 +303,9 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
           id={name}
           tone={tone}
           placeholder={placeholder}
-          className={inputClassName}
+          className={resolvedInputClassName}
           disabled={disabled}
+          aria-describedby={ariaDescribedBy}
           {...(fieldProps as Record<string, unknown>)}
           {...register(name, rules)}
         />
@@ -273,6 +331,7 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
                 value={option.value}
                 disabled={option.disabled || disabled}
                 className="h-4 w-4 accent-[rgb(var(--nc-accent-1))]"
+                aria-describedby={ariaDescribedBy}
                 {...(fieldProps as Record<string, unknown>)}
                 {...register(name, rules)}
               />
@@ -290,9 +349,10 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
           type="range"
           className={cn(
             "w-full accent-[rgb(var(--nc-accent-1))]",
-            inputClassName
+            resolvedInputClassName
           )}
           disabled={disabled}
+          aria-describedby={ariaDescribedBy}
           {...(fieldProps as Record<string, unknown>)}
           {...register(name, rules)}
         />
@@ -308,9 +368,10 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
           className={cn(
             baseInputClass,
             "file:mr-4 file:rounded-xl file:border-0 file:bg-[rgb(var(--nc-surface)/0.35)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[rgb(var(--nc-fg))]",
-            inputClassName
+            resolvedInputClassName
           )}
           disabled={disabled}
+          aria-describedby={ariaDescribedBy}
           {...(fieldProps as Record<string, unknown>)}
           {...register(name, rules)}
         />
@@ -337,8 +398,9 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
         type={inputType}
         placeholder={placeholder}
         tone={tone}
-        className={inputClassName}
+        className={resolvedInputClassName}
         disabled={disabled}
+        aria-describedby={ariaDescribedBy}
         {...(fieldProps as Record<string, unknown>)}
         {...register(name, rules)}
       />
@@ -356,6 +418,8 @@ export function CraftFormField<TValues extends FieldValues = FieldValues>({
       {renderInput()}
       {showDescriptionBelow ? descriptionNode : null}
       {errorNode}
+      {helpNode}
+      {successNode}
     </div>
   );
 }

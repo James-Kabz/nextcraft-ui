@@ -7,7 +7,6 @@ import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
 import { CraftDrawer } from "@/components/craft-drawer";
 import { CraftButton } from "@/components/craft-button";
-import { CraftSubmitButton } from "@/components/craft-submit-button";
 
 export type CraftCreateEditDrawerProps<TValues extends FieldValues> = {
   mode?: "create" | "edit";
@@ -63,6 +62,8 @@ export function CraftCreateEditDrawer<TValues extends FieldValues>({
   );
 
   const formId = React.useId();
+  const isSubmitDisabled =
+    disableSubmitWhenInvalid && !form.formState.isValid;
 
   const handleSubmit = form.handleSubmit(async (values) => {
     await onSubmit(values);
@@ -78,12 +79,14 @@ export function CraftCreateEditDrawer<TValues extends FieldValues>({
       <CraftButton type="button" variant="ghost" onClick={() => setOpen(false)}>
         {cancelLabel}
       </CraftButton>
-      <CraftSubmitButton
+      <CraftButton
+        type="submit"
+        variant="solid"
         form={formId}
-        disableWhenInvalid={disableSubmitWhenInvalid}
+        disabled={isSubmitDisabled}
       >
         {resolvedSubmitLabel}
-      </CraftSubmitButton>
+      </CraftButton>
     </div>
   );
 

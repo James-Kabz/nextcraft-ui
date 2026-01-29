@@ -95,8 +95,6 @@ export type { CraftFormModalProps, CraftFormModalField } from "./components/craf
 export { CraftFormField } from "./components/craft-form-field";
 export type { CraftFormFieldProps, CraftFormFieldOption, CraftFormFieldType } from "./components/craft-form-field";
 
-export { CraftSubmitButton } from "./components/craft-submit-button";
-export type { CraftSubmitButtonProps } from "./components/craft-submit-button";
 
 export { CraftConfirmDialog } from "./components/craft-confirm-dialog";
 export type { CraftConfirmDialogProps } from "./components/craft-confirm-dialog";
