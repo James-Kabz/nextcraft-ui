@@ -18,6 +18,12 @@ export type AppTemplateProps = {
   icons?: Record<string, React.ReactNode>;
   activePath?: string;
   getActivePath?: () => string | undefined;
+  sidebarDefaultExpanded?: boolean;
+  sidebarExpanded?: boolean;
+  onSidebarExpandedChange?: (expanded: boolean) => void;
+  sidebarCollapsedWidth?: string;
+  sidebarExpandedWidth?: string;
+  sidebarHoverExpand?: boolean;
   children: React.ReactNode;
 };
 
@@ -30,10 +36,24 @@ export function AppTemplate({
   icons,
   activePath,
   getActivePath,
+  sidebarDefaultExpanded = false,
+  sidebarExpanded,
+  onSidebarExpandedChange,
+  sidebarCollapsedWidth = "72px",
+  sidebarExpandedWidth = "224px",
+  sidebarHoverExpand = true,
   children,
 }: AppTemplateProps) {
   const sidebarConfig = config.sidebar;
   const headerConfig = config.header;
+
+  const [internalExpanded, setInternalExpanded] =
+    React.useState(sidebarDefaultExpanded);
+  const resolvedExpanded = sidebarExpanded ?? internalExpanded;
+  const setExpanded = (next: boolean) => {
+    if (sidebarExpanded === undefined) setInternalExpanded(next);
+    onSidebarExpandedChange?.(next);
+  };
 
   const resolvedActivePath = activePath ?? getActivePath?.();
 
@@ -76,12 +96,24 @@ export function AppTemplate({
 
   return (
     <AppShell
+      style={
+        {
+          "--nc-sidebar-width": resolvedExpanded
+            ? sidebarExpandedWidth
+            : sidebarCollapsedWidth,
+        } as React.CSSProperties
+      }
       sidebar={
         sidebarConfig && sidebarItems ? (
           <Sidebar
             title={sidebarConfig.title}
             items={sidebarItems}
             footer={sidebarFooterNode}
+            hoverExpand={sidebarHoverExpand}
+            expanded={resolvedExpanded}
+            onExpandedChange={setExpanded}
+            collapsedWidth={sidebarCollapsedWidth}
+            expandedWidth={sidebarExpandedWidth}
           />
         ) : undefined
       }

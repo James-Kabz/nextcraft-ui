@@ -11,7 +11,7 @@ export function AppShell({ className, sidebar, topNav, children, ...props }: App
   return (
     <div
       className={cn(
-        "grid min-h-screen grid-cols-1 gap-4 bg-background p-4 lg:grid-cols-[72px_1fr] lg:gap-5 lg:p-5",
+        "grid min-h-screen grid-cols-1 gap-4 bg-background p-4 lg:grid-cols-[var(--nc-sidebar-width,72px)_1fr] lg:gap-5 lg:p-5",
         className
       )}
       {...props}

@@ -18,6 +18,11 @@ export type SidebarProps = React.HTMLAttributes<HTMLElement> & {
   items: SidebarItem[];
   footer?: React.ReactNode;
   hoverExpand?: boolean;
+  expanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
+  defaultExpanded?: boolean;
+  collapsedWidth?: string;
+  expandedWidth?: string;
 };
 
 export function Sidebar({
@@ -26,24 +31,39 @@ export function Sidebar({
   items,
   footer,
   hoverExpand = true,
+  expanded,
+  onExpandedChange,
+  defaultExpanded = false,
+  collapsedWidth = "72px",
+  expandedWidth = "224px",
   ...props
 }: SidebarProps) {
-  const [isExpanded, setIsExpanded] = React.useState(false);
+  const [internalExpanded, setInternalExpanded] = React.useState(defaultExpanded);
+  const isExpanded = expanded ?? internalExpanded;
 
   const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
+    const next = !isExpanded;
+    if (expanded === undefined) setInternalExpanded(next);
+    onExpandedChange?.(next);
   };
 
   return (
     <aside
       className={cn(
         "group flex h-full flex-col gap-4 rounded-2xl border border-[rgb(var(--nc-border)/0.2)] bg-[rgb(var(--nc-surface)/0.04)] p-3 text-[rgb(var(--nc-fg))] backdrop-blur-xl transition-all duration-300 ease-in-out",
-        hoverExpand && !isExpanded ? "w-16 hover:w-56" : "w-56",
+        "w-(--nc-sidebar-width)",
+        hoverExpand && !isExpanded ? "hover:w-(--nc-sidebar-expanded)" : "",
         hoverExpand
           ? "fixed left-0 top-0 z-50 shadow-[0_16px_40px_rgba(0,0,0,0.18)]"
           : "relative",
         className
       )}
+      style={
+        {
+          "--nc-sidebar-width": isExpanded ? expandedWidth : collapsedWidth,
+          "--nc-sidebar-expanded": expandedWidth,
+        } as React.CSSProperties
+      }
       {...props}
     >
       {title && (
@@ -54,9 +74,7 @@ export function Sidebar({
           <span
             className={cn(
               "truncate text-sm font-semibold transition-all duration-300 ease-in-out",
-              hoverExpand && !isExpanded
-                ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
-                : "max-w-40 opacity-100"
+              hoverExpand && !isExpanded ? "max-w-0 opacity-0" : "max-w-50 opacity-100"
             )}
           >
             {title}
@@ -69,15 +87,14 @@ export function Sidebar({
           onClick={toggleSidebar}
           className={cn(
             "flex items-center rounded-xl px-2 py-2 text-sm transition-all duration-300 ease-in-out",
-            !isExpanded
-              ? "justify-center group-hover:justify-start group-hover:gap-3 group-hover:px-3"
-              : "justify-start gap-3 px-3",
+            "justify-start gap-3 px-3",
             "hover:bg-[rgb(var(--nc-surface)/0.1)]",
             isExpanded
               ? "text-[rgb(var(--nc-fg))] bg-[rgb(var(--nc-surface)/0.08)]"
               : "text-[rgb(var(--nc-fg-muted))]"
           )}
           aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
+          aria-expanded={isExpanded}
         >
           <div className="flex shrink-0 items-center justify-center transition-all duration-300 ease-in-out">
             <CraftIcon name="bars" size="2xl" />
@@ -85,9 +102,7 @@ export function Sidebar({
           <span
             className={cn(
               "truncate whitespace-nowrap transition-all duration-300 ease-in-out",
-              !isExpanded
-                ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
-                : "max-w-40 opacity-100"
+              isExpanded ? "max-w-50 opacity-100" : "max-w-0 opacity-0"
             )}
           >
             {isExpanded ? "Collapse" : "Expand"}
@@ -119,7 +134,7 @@ export function Sidebar({
               )}
             >
               {typeof item.icon === "string" ? (
-                <CraftIcon name={item.icon} size="lg" />
+                <CraftIcon name={item.icon} size="2xl" />
               ) : (
                 item.icon
               )}
@@ -127,9 +142,7 @@ export function Sidebar({
             <span
               className={cn(
                 "truncate whitespace-nowrap transition-all duration-300 ease-in-out",
-                hoverExpand && !isExpanded
-                  ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
-                  : "max-w-40 opacity-100"
+                hoverExpand && !isExpanded ? "max-w-0 opacity-0" : "max-w-50 opacity-100"
               )}
             >
               {item.label}
@@ -142,9 +155,7 @@ export function Sidebar({
         <div
           className={cn(
             "mt-auto px-2 pt-3 text-xs text-[rgb(var(--nc-fg-muted))] transition-all duration-300 ease-in-out",
-            hoverExpand && !isExpanded
-              ? "max-w-0 opacity-0 group-hover:max-w-40 group-hover:opacity-100"
-              : "max-w-40 opacity-100"
+            hoverExpand && !isExpanded ? "max-w-0 opacity-0" : "max-w-50 opacity-100"
           )}
         >
           {footer}
