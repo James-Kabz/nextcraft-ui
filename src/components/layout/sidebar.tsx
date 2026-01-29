@@ -133,7 +133,7 @@ export function Sidebar({
           >
             <div className="flex shrink-0 items-center justify-center transition-all duration-300 ease-in-out">
               {typeof item.icon === "string" ? (
-                <CraftIcon name={item.icon} size="3xl" />
+                <CraftIcon name={item.icon} size="2xl" />
               ) : (
                 item.icon
               )}
