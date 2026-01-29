@@ -1,0 +1,57 @@
+import * as react_jsx_runtime from 'react/jsx-runtime';
+import * as React from 'react';
+import { FieldValues, Path, RegisterOptions } from 'react-hook-form';
+import { ThemeName } from '../theme/theme-context.cjs';
+import { CraftFormFieldType, CraftFormFieldOption } from './craft-form-field.cjs';
+
+type CraftFormModalField<TValues extends FieldValues> = {
+    name: Path<TValues>;
+    label?: React.ReactNode;
+    description?: React.ReactNode;
+    type: CraftFormFieldType;
+    placeholder?: string;
+    options?: CraftFormFieldOption[];
+    required?: boolean;
+    disabled?: boolean;
+    rules?: RegisterOptions<TValues>;
+    defaultValue?: unknown;
+    min?: number;
+    max?: number;
+    step?: number;
+    rows?: number;
+    accept?: string;
+    minFiles?: number;
+    maxFiles?: number;
+    helpText?: React.ReactNode;
+    fieldProps?: Record<string, unknown>;
+    validate?: (value: unknown, values: TValues) => string | boolean | undefined;
+};
+type CraftFormModalProps<TValues extends FieldValues> = {
+    title?: React.ReactNode;
+    description?: React.ReactNode;
+    fields: Array<CraftFormModalField<TValues>>;
+    initialData?: Partial<TValues> | null;
+    open?: boolean;
+    defaultOpen?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    trigger?: React.ReactNode;
+    submitLabel?: React.ReactNode;
+    cancelLabel?: React.ReactNode;
+    resetLabel?: React.ReactNode;
+    showReset?: boolean;
+    showCancel?: boolean;
+    tone?: ThemeName;
+    className?: string;
+    formClassName?: string;
+    loading?: boolean;
+    disableSubmitWhenInvalid?: boolean;
+    closeOnSubmit?: boolean;
+    closeOnCancel?: boolean;
+    onSubmit: (values: TValues) => void | Promise<void>;
+    onReset?: () => void;
+    onCancel?: () => void;
+    customValidation?: (values: TValues) => Partial<Record<Path<TValues>, string>>;
+};
+declare function CraftFormModal<TValues extends FieldValues>({ title, description, fields, initialData, open, defaultOpen, onOpenChange, trigger, submitLabel, cancelLabel, resetLabel, showReset, showCancel, tone, className, formClassName, loading, disableSubmitWhenInvalid, closeOnSubmit, closeOnCancel, onSubmit, onReset, onCancel, customValidation, }: CraftFormModalProps<TValues>): react_jsx_runtime.JSX.Element;
+
+export { CraftFormModal, type CraftFormModalField, type CraftFormModalProps };
