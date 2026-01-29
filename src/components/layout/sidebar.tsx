@@ -116,7 +116,7 @@ export function Sidebar({
         </button>
       )}
 
-      <nav className="flex flex-col gap-1.5">
+      <nav className="flex flex-col gap-2.5">
         {items.map((item, index) => (
           <Link
             key={`${item.label}-${index}`}
@@ -133,7 +133,7 @@ export function Sidebar({
           >
             <div className="flex shrink-0 items-center justify-center transition-all duration-300 ease-in-out">
               {typeof item.icon === "string" ? (
-                <CraftIcon name={item.icon} size="3xl" />
+                <CraftIcon name={item.icon} size="2xl" />
               ) : (
                 item.icon
               )}
