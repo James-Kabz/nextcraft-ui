@@ -108,6 +108,14 @@ export type { CraftFilterBarProps } from "./components/craft-filter-bar";
 export { CraftTableToolbar } from "./components/craft-table-toolbar";
 export type { CraftTableToolbarProps } from "./components/craft-table-toolbar";
 
+export { CraftDataTableFilters } from "./components/craft-data-table-filters";
+export type {
+  CraftDataTableFiltersProps,
+  CraftDataTableFilterSelect,
+  CraftDataTableFilterSelectOption,
+  CraftDataTableFilterDate,
+} from "./components/craft-data-table-filters";
+
 export { CraftDataTable } from "./components/craft-data-table";
 export type {
   CraftDataTableProps,
