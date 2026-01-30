@@ -8,6 +8,7 @@ export default defineConfig({
     "src/theme/**/*.ts",
     "src/theme/**/*.tsx",
     "src/utils/**/*.ts",
+    "src/lib/**/*.ts",
   ],
   bundle: false,
   splitting: false,
