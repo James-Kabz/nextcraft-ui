@@ -30,10 +30,24 @@ export type CraftLoaderProps = {
 };
 
 const sizeMap: Record<CraftLoaderSize, number> = {
-  small: 16,
-  medium: 24,
-  large: 32,
-  xl: 40,
+  small: 24,
+  medium: 32,
+  large: 48,
+  xl: 64,
+};
+
+const textSizeMap: Record<CraftLoaderSize, string> = {
+  small: "text-sm",
+  medium: "text-base",
+  large: "text-lg",
+  xl: "text-xl",
+};
+
+const gapSizeMap: Record<CraftLoaderSize, string> = {
+  small: "gap-4",
+  medium: "gap-6",
+  large: "gap-8",
+  xl: "gap-10",
 };
 
 function Spinner({ size, color }: { size: number; color: string }) {
@@ -66,7 +80,7 @@ function Spinner({ size, color }: { size: number; color: string }) {
 }
 
 function Dots({ size, color }: { size: number; color: string }) {
-  const dotSize = Math.max(4, Math.floor(size / 6));
+  const dotSize = Math.max(6, Math.floor(size / 5));
   return (
     <div className="flex items-center gap-2">
       {[0, 1, 2].map((index) => (
@@ -87,16 +101,16 @@ function Dots({ size, color }: { size: number; color: string }) {
 
 function Bars({ size, color }: { size: number; color: string }) {
   const barHeight = size;
-  const barWidth = Math.max(3, Math.floor(size / 6));
+  const barWidth = Math.max(4, Math.floor(size / 5));
   return (
-    <div className="flex items-end gap-1">
+    <div className="flex items-end gap-1.5">
       {[0, 1, 2, 3].map((index) => (
         <span
           key={index}
           className="inline-flex animate-pulse rounded-sm"
           style={{
             width: barWidth,
-            height: barHeight - index * 4,
+            height: barHeight - index * 6,
             backgroundColor: color,
             animationDelay: `${index * 100}ms`,
           }}
@@ -118,7 +132,7 @@ function Pulse({ size, color }: { size: number; color: string }) {
 function Ripple({ size, color }: { size: number; color: string }) {
   return (
     <span
-      className="inline-flex rounded-full border-2 animate-ping"
+      className="inline-flex rounded-full border-4 animate-ping"
       style={{ width: size, height: size, borderColor: color }}
     />
   );
@@ -127,14 +141,14 @@ function Ripple({ size, color }: { size: number; color: string }) {
 function Ring({ size, color }: { size: number; color: string }) {
   return (
     <span
-      className="inline-flex animate-spin rounded-full border-2 border-t-transparent"
+      className="inline-flex animate-spin rounded-full border-4 border-t-transparent"
       style={{ width: size, height: size, borderColor: color }}
     />
   );
 }
 
 function Bounce({ size, color }: { size: number; color: string }) {
-  const dotSize = Math.max(4, Math.floor(size / 5));
+  const dotSize = Math.max(6, Math.floor(size / 4));
   return (
     <div className="flex items-center gap-2">
       {[0, 1].map((index) => (
@@ -168,11 +182,14 @@ export function CraftLoader({
   if (!loading) return null;
 
   const px = sizeMap[size];
+  const textSize = textSizeMap[size];
+  const gapSize = gapSizeMap[size];
 
   const content = (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-3",
+        "flex flex-col items-center justify-center",
+        gapSize,
         textPosition === "top" && "flex-col-reverse",
         className
       )}
@@ -185,7 +202,11 @@ export function CraftLoader({
       {type === "ripple" && <Ripple size={px} color={color} />}
       {type === "ring" && <Ring size={px} color={color} />}
       {type === "bounce" && <Bounce size={px} color={color} />}
-      {text ? <span className="text-xs text-[rgb(var(--nc-fg-muted))]">{text}</span> : null}
+      {text ? (
+        <span className={cn(textSize, "font-medium text-[rgb(var(--nc-fg-muted))]")}>
+          {text}
+        </span>
+      ) : null}
     </div>
   );
 
