@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
-import { CraftButton } from "@/components/craft-button";
+import { CraftButton, type CraftButtonProps } from "@/components/craft-button";
 import { CraftInput } from "@/components/craft-input";
 import { CraftSelect } from "@/components/craft-select";
 
@@ -41,8 +41,8 @@ export type CraftDataTableFiltersProps = {
   addButton?: {
     label: React.ReactNode;
     icon?: React.ReactNode | string;
-    variant?: "solid" | "outline" | "ghost" | "default" | "primary" | "success";
-    size?: "sm" | "md" | "lg";
+    variant?: CraftButtonProps["variant"];
+    size?: CraftButtonProps["size"];
     disabled?: boolean;
     onClick: () => void;
   };
