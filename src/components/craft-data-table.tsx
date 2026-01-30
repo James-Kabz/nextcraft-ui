@@ -472,9 +472,14 @@ export function CraftDataTable<T>({
     );
 
   const containerClasses = cn(
-    "overflow-hidden rounded-3xl border border-[rgb(var(--nc-border)/0.3)]",
-    " shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl",
-    variant === "minimal" && "border-transparent bg-transparent shadow-none"
+    "relative overflow-hidden rounded-3xl border border-[rgb(var(--nc-border)/0.3)]",
+    "shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl",
+    variant === "minimal"
+      ? "border-transparent bg-transparent shadow-none"
+      : cn(
+          "border-[rgb(var(--nc-accent-1)/0.35)]",
+          "bg-linear-to-br from-[rgb(var(--nc-accent-1)/0.08)] via-[rgb(var(--nc-accent-2)/0.05)] to-[rgb(var(--nc-accent-3)/0.08)]"
+        )
   );
 
   const openModal = (content: string) => {
@@ -568,7 +573,7 @@ export function CraftDataTable<T>({
 
           <div className={cn("overflow-x-auto", (loading || dataLoading) && "opacity-60")}>
             <table className="min-w-full border-collapse text-left text-sm">
-              <thead className="bg-[rgb(var(--nc-surface)/0.12)] text-[rgb(var(--nc-fg-muted))]">
+              <thead className="bg-linear-to-r from-[rgb(var(--nc-accent-1)/0.08)] via-[rgb(var(--nc-accent-2)/0.05)] to-[rgb(var(--nc-accent-3)/0.08)] text-[rgb(var(--nc-fg-muted))]">
                 <tr>
                   {resolvedSelectable && (
                     <th className={cn("w-12", headerPaddingClasses[density])}>
@@ -842,7 +847,7 @@ export function CraftDataTable<T>({
         />
       </div>
 
-      <CraftModal open={showModal} onOpenChange={setShowModal} title="Full Text">
+      <CraftModal open={showModal} onOpenChange={setShowModal} title="Full Text" tone={tone}>
         <div className="space-y-3">
           <p className="text-sm text-[rgb(var(--nc-fg-muted))]">Full content</p>
           <div className="text-sm text-[rgb(var(--nc-fg))] whitespace-pre-wrap wrap-break-words">

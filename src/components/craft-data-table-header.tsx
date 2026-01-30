@@ -24,7 +24,7 @@ const paddingClasses: Record<NonNullable<CraftDataTableHeaderProps["padding"]>, 
 
 const variantClasses: Record<NonNullable<CraftDataTableHeaderProps["variant"]>, string> = {
   default:
-    "border-b border-[rgb(var(--nc-border)/0.35)] bg-[rgb(var(--nc-surface)/0.12)]",
+    "border-b border-[rgb(var(--nc-accent-1)/0.25)] bg-linear-to-r from-[rgb(var(--nc-accent-1)/0.08)] via-[rgb(var(--nc-accent-2)/0.05)] to-[rgb(var(--nc-accent-3)/0.08)]",
   minimal: "border-b border-[rgb(var(--nc-border)/0.25)] bg-transparent",
 };
 
