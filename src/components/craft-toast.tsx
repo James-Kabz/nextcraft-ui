@@ -11,9 +11,9 @@ import {
   type CraftToastCustomOptions,
   type CraftToastOptions,
   type CraftToastVariant,
-} from "@/lib/toast";
+} from "../lib/toast";
 
-export { useCraftToast, useToaster, toast } from "@/lib/toast";
+export { useCraftToast, useToaster, toast } from "../lib/toast";
 export type { CraftToastOptions, CraftToastCustomOptions, CraftToastVariant };
 
 const variantClasses: Record<Exclude<CraftToastVariant, "danger">, string> = {
