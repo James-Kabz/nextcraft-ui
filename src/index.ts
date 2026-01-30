@@ -46,8 +46,14 @@ export type { CraftTabsProps } from "./components/craft-tabs";
 export { CraftTooltip } from "./components/craft-tooltip";
 export type { CraftTooltipProps } from "./components/craft-tooltip";
 
-export { CraftToastHost, useCraftToast } from "./components/craft-toast";
-export type { CraftToast, CraftToastHostProps } from "./components/craft-toast";
+export { CraftToaster, useCraftToast, useToaster, toast } from "./components/craft-toast";
+export type {
+  CraftToasterProps,
+  CraftToastVariant,
+  CraftToastOptions,
+  CraftToastCustomOptions,
+} from "./components/craft-toast";
+export type { CraftToast } from "./lib/toast";
 
 export { CraftSkeleton } from "./components/craft-skeleton";
 export type { CraftSkeletonProps } from "./components/craft-skeleton";

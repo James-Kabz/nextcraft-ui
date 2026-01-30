@@ -10,7 +10,7 @@ import { CraftModal } from "@/components/craft-modal";
 import { CraftDrawer } from "@/components/craft-drawer";
 import { CraftTabs } from "@/components/craft-tabs";
 import { CraftTooltip } from "@/components/craft-tooltip";
-import { CraftToastHost, useCraftToast } from "@/components/craft-toast";
+import { CraftToaster, toast } from "@/components/craft-toast";
 import { CraftSkeleton } from "@/components/craft-skeleton";
 import { CraftEmptyState } from "@/components/craft-empty-state";
 import { CraftDatePicker } from "@/components/craft-date-picker";
@@ -23,7 +23,7 @@ import React from "react";
 export default function Home() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const { toasts, push, remove } = useCraftToast();
+  const push = toast;
 
   return (
     <>
@@ -219,10 +219,9 @@ export default function Home() {
               <button
                 className="rounded-xl border border-white/10 bg-white/10 px-5 py-2 "
                 onClick={() =>
-                  push({
-                    title: "Toast message",
+                  push("Toast message", {
                     description: "Theme-aware toast with quick feedback.",
-                    variant: "info",
+                    variant: "success",
                   })
                 }
               >
@@ -506,7 +505,7 @@ export default function Home() {
 
         </div>
       </div>
-      <CraftToastHost toasts={toasts} onDismiss={remove} />
+      <CraftToaster/>
     </>
   );
 }

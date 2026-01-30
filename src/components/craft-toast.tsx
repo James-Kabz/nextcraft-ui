@@ -4,49 +4,39 @@ import * as React from "react";
 
 import { cn } from "@/utils/cn";
 import type { ThemeName } from "@/theme/theme-context";
+import {
+  normalizeVariant,
+  removeToast,
+  useToaster,
+  type CraftToastCustomOptions,
+  type CraftToastOptions,
+  type CraftToastVariant,
+} from "@/lib/toast";
 
-export type CraftToastVariant = "info" | "success" | "warning" | "error";
+export { useCraftToast, useToaster, toast } from "@/lib/toast";
+export type { CraftToastOptions, CraftToastCustomOptions, CraftToastVariant };
 
-export type CraftToast = {
-  id: string;
-  title: string;
-  description?: string;
-  variant?: CraftToastVariant;
-};
-
-const variantClasses: Record<CraftToastVariant, string> = {
+const variantClasses: Record<Exclude<CraftToastVariant, "danger">, string> = {
   info: "border-[color:rgb(var(--nc-accent-1)/0.4)]",
   success: "border-emerald-400/40",
   warning: "border-amber-400/40",
   error: "border-rose-400/40",
 };
 
-export function useCraftToast() {
-  const [toasts, setToasts] = React.useState<CraftToast[]>([]);
-
-  const push = React.useCallback((toast: Omit<CraftToast, "id">) => {
-    const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-    setToasts((prev) => [...prev, { ...toast, id }]);
-    return id;
-  }, []);
-
-  const remove = React.useCallback((id: string) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
-  }, []);
-
-  return { toasts, push, remove };
-}
-
-export type CraftToastHostProps = {
-  toasts: CraftToast[];
-  onDismiss: (id: string) => void;
+export type CraftToasterProps = {
   tone?: ThemeName;
+  className?: string;
 };
 
-export function CraftToastHost({ toasts, onDismiss, tone }: CraftToastHostProps) {
+export function CraftToaster({ tone, className }: CraftToasterProps) {
+  const toasts = useToaster();
+
   return (
     <div
-      className="fixed right-6 top-6 z-50 flex w-full max-w-sm flex-col gap-3"
+      className={cn(
+        "fixed right-6 top-6 z-50 flex w-full max-w-sm flex-col gap-3",
+        className
+      )}
       data-nc-theme={tone}
     >
       {toasts.map((toast) => (
@@ -54,19 +44,27 @@ export function CraftToastHost({ toasts, onDismiss, tone }: CraftToastHostProps)
           key={toast.id}
           className={cn(
             "rounded-2xl border bg-[rgb(var(--nc-surface)/0.12)] p-4 text-[rgb(var(--nc-fg))] shadow-[0_15px_35px_rgba(0,0,0,0.35)] backdrop-blur-xl",
-            variantClasses[toast.variant ?? "info"]
+            variantClasses[normalizeVariant(toast.variant)]
           )}
         >
           <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold">{toast.title}</p>
-              {toast.description && (
-                <p className="text-xs text-[rgb(var(--nc-fg-muted))]">{toast.description}</p>
+            <div className="min-w-0 flex-1">
+              {toast.custom ? (
+                toast.custom
+              ) : (
+                <>
+                  {toast.title && <p className="text-sm font-semibold">{toast.title}</p>}
+                  {toast.description && (
+                    <p className="text-xs text-[rgb(var(--nc-fg-muted))]">
+                      {toast.description}
+                    </p>
+                  )}
+                </>
               )}
             </div>
             <button
               className="text-[rgb(var(--nc-fg-soft))] hover:text-[rgb(var(--nc-fg))]"
-              onClick={() => onDismiss(toast.id)}
+              onClick={() => removeToast(toast.id)}
             >
               ✕
             </button>
