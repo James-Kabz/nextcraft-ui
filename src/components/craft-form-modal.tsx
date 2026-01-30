@@ -268,8 +268,10 @@ export function CraftFormModal<TValues extends FieldValues>({
     disableSubmitWhenInvalid && !form.formState.isValid;
 
   React.useEffect(() => {
-    form.reset(defaultValues);
-  }, [defaultValues, form]);
+    if (isOpen) {
+      form.reset(defaultValues);
+    }
+  }, [defaultValues, form, isOpen]);
 
   const handleSubmit = form.handleSubmit(async (values) => {
     if (customValidation) {
