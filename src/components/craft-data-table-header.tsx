@@ -43,7 +43,7 @@ export function CraftDataTableHeader({
   return (
     <div
       className={cn(
-        "flex flex-wrap items-start justify-between gap-4",
+        "flex flex-wrap items-start justify-between gap-4 rounded-3xl",
         paddingClasses[padding],
         variantClasses[variant],
         className

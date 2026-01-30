@@ -27,6 +27,12 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --nc-fg: 255 255 255;
+    --nc-fg-muted: 226 232 240;
+    --nc-fg-soft: 148 163 184;
+    --nc-surface: 15 23 42;
+    --nc-surface-muted: 30 41 59;
+    --nc-border: 148 163 184;
   }
 }
 

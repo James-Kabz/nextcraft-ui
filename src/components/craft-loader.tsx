@@ -161,7 +161,7 @@ export function CraftLoader({
   overlay = false,
   text,
   textPosition = "bottom",
-  backgroundColor = "rgb(var(--nc-accent-soft)/0.7)",
+  backgroundColor = "rgba(0, 0, 0, 0.75)",
   tone,
   className,
 }: CraftLoaderProps) {
@@ -193,11 +193,19 @@ export function CraftLoader({
 
   return (
     <div
-      className="absolute inset-0 z-10 flex items-center justify-center"
+      className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden backdrop-blur-md"
       style={{ backgroundColor }}
       data-nc-theme={tone}
     >
-      {content}
+      <span
+        className="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--nc-accent-1)/0.12)] via-transparent to-[rgb(var(--nc-accent-3)/0.12)]"
+        aria-hidden="true"
+      />
+      <span
+        className="pointer-events-none absolute -left-1/4 -top-1/3 h-full w-[120%] rotate-6 bg-white/10 blur-2xl opacity-40"
+        aria-hidden="true"
+      />
+      <div className="relative z-10">{content}</div>
     </div>
   );
 }

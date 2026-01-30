@@ -505,7 +505,7 @@ export function CraftDataTable<T>({
         tone={tone}
         filters={
           resolvedShowGlobalFilter ? (
-            <div className="flex items-center gap-2 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-2 text-xs text-[rgb(var(--nc-fg))]">
+            <div className="flex items-center gap-2 rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.12)] px-3 py-2 text-xs text-[rgb(var(--nc-fg))]">
               <CraftIcon name="search" className="h-4 w-4 text-[rgb(var(--nc-fg-muted))]" />
               <input
                 type="search"
@@ -529,7 +529,7 @@ export function CraftDataTable<T>({
                 Columns
               </CraftButton>
               {showColumns && (
-                <div className="absolute right-0 top-12 z-20 w-56 rounded-2xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.2)] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+                <div className="absolute right-0 top-12 z-20 w-56 rounded-3xl border border-[rgb(var(--nc-border)/0.3)] bg-[rgb(var(--nc-surface)/0.2)] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
                   <div className="grid gap-2">
                     {columns.map((column) => (
                       <label
